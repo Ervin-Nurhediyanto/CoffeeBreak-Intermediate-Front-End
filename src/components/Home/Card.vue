@@ -2,7 +2,7 @@
   <div>
     <div class="select">
       <img v-show="cardActive" class="image" :src="image" @click="addToCart" />
-      <img v-show="cardSelect" v-filter='brightness' class="selectImage" :src="image" @click="addToCart" />
+      <img v-show="cardSelect" v-filter='brightness' class="image" :src="image" @click="addToCart" />
       <div v-show="cardSelect" class="tick"></div>
     </div>
     <h5>{{name}}</h5>
@@ -11,7 +11,7 @@
 </template>
 
 <script>
-// import { mapActions, mapGetters } from 'vuex'
+import { mapActions } from 'vuex'
 // import mixin from '../../store/index'
 // import { Store } from 'vuex'
 
@@ -41,28 +41,40 @@ export default {
     // }
   },
   methods: {
-    // ...mapActions(['addToCart'])
+    ...mapActions(['plusCount']),
+    ...mapActions(['minusCount']),
+    ...mapActions(['addListProduct']),
     addToCart () {
       if (this.cardSelect === false) {
-        this.$emit('addToCart', {
-          count: 1,
-          empty: false,
+        // this.$emit('addToCart', {
+        //   count: 1,
+        //   empty: false,
+        //   name: this.name,
+        //   image: this.image,
+        //   price: this.price,
+        //   id: this.id,
+        //   quality: 1,
+        //   plus: this.price
+        // })
+        const data = {
           name: this.name,
           image: this.image,
           price: this.price,
           id: this.id,
-          quality: 1,
           plus: this.price
-        })
+        }
+        this.plusCount()
+        this.addListProduct(data)
       } else {
-        this.$emit('addToCart', {
-          count: -1,
-          empty: false,
-          name: this.name,
-          image: this.image,
-          price: this.price,
-          id: this.id
-        })
+        // this.$emit('addToCart', {
+        //   count: -1,
+        //   empty: false,
+        //   name: this.name,
+        //   image: this.image,
+        //   price: this.price,
+        //   id: this.id
+        // })
+        this.minusCount()
       }
 
       if (this.cardSelect === true) {

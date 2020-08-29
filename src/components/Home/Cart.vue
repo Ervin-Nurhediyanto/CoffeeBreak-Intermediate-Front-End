@@ -2,19 +2,23 @@
   <div class="row cart m-md-0 m-sm-0 justify-content-center">
       <h2>
         Cart
-        <span class="count" @click="toCart" >{{countItem}}</span>
+        <span class="count" @click="toCart" >{{cartCount}}</span>
       </h2>
     </div>
 </template>
 
 <script>
+import { mapGetters } from 'vuex'
 export default {
   name: 'Cart',
-  props: ['count'],
+  // props: ['count'],
   computed: {
-    countItem: function () {
-      return this.count
-    }
+    // countItem: function () {
+    //   return this.count
+    // }
+    ...mapGetters({
+      cartCount: 'cartCount'
+    })
   },
   methods: {
     toCart () {

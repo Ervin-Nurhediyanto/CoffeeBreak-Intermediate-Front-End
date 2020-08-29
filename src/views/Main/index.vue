@@ -51,6 +51,7 @@ import Checkout from '../../components/Home/checkout'
 import Add from '../../components/Home/Modal-Add'
 import CheckModal from '../../components/Home/Modal-Checkout'
 import CheckoutPay from '../../components/Home/checkoutPay'
+import { mapGetters } from 'vuex'
 
 export default {
   name: 'Main',
@@ -64,15 +65,22 @@ export default {
     Add,
     CheckModal
   },
+  computed: {
+    ...mapGetters({
+      empty: 'empty',
+      productList: 'productList',
+      cartCount: 'cartCount'
+    })
+  },
   data () {
     return {
-      empty: true,
-      count: 0,
-      select: false,
-      cartProducts: [],
-      checkoutProducts: [],
-      totals: 0,
-      quality: 1
+      // empty: true,
+      // count: 0,
+      // select: false,
+      // cartProducts: [],
+      // checkoutProducts: [],
+      // totals: 0,
+      // quality: 1
     }
   },
   methods: {

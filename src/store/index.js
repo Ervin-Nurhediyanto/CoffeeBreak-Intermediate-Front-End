@@ -1,31 +1,29 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 import axios from 'axios'
-// import localStorage from 'localStorage'
 
 Vue.use(Vuex)
 
-// axios.defaults.headers.common.Authorization = `Bearer ${localStorage.getItem('token')}`
+axios.defaults.headers.common.Authorization = `Bearer ${localStorage.getItem('token')}`
 
 export default new Vuex.Store({
   state: {
-    // user: {},
-    token: window.localStorage.getItem('token') || null,
+    user: {},
+    token: localStorage.getItem('token') || null,
     allProduct: [],
     products: [],
     totalPage: '',
     status: '',
     page: '',
     empty: true,
-    cardSelect: false,
-    cardActive: true,
-    cartCount: 0
+    cartCount: 0,
+    productList: []
   },
   mutations: {
-    // setUser (state, payload) {
-    //   state.user = payload
-    //   state.token = payload.token
-    // },
+    setUser (state, payload) {
+      state.user = payload
+      state.token = payload.token
+    },
     setAllProduct (state, payload) {
       state.allproduct = payload
     },
@@ -44,8 +42,11 @@ export default new Vuex.Store({
     prevPage (state) {
       state.page--
     },
-    setEmpty (state, payload) {
-      state.empty = payload
+    setFalseEmpty (state) {
+      state.empty = false
+    },
+    setTrueEmpty (state) {
+      state.empty = true
     },
     setCardSelect (state, payload) {
       state.cardSelect = payload
@@ -58,6 +59,12 @@ export default new Vuex.Store({
     },
     setCartCountMin (state) {
       state.cartCount--
+    },
+    setpayloadUpdate (state, payload) {
+      state.payloadUpdate = payload
+    },
+    setProductList (state, payload) {
+      state.productList.push(payload)
     }
   },
   actions: {
@@ -117,73 +124,129 @@ export default new Vuex.Store({
           })
       })
     },
-    addToCart (setex) {
-    //   return new Promise((resolve, reject) => {
-      if (this.state.cardSelect === false) {
-        setex.commit('setCartCountPlus')
-        setex.commit('setEmpty', false)
-        //   name: this.name,
-        //   image: this.image,
-        //   price: this.price,
-        //   id: this.id,
-        //   quality: 1,
-        //   plus: this.price
-      } else {
-        setex.commit('setCartCountMin')
-        setex.commit('setEmpty', true)
-        //   name: this.name,
-        //   image: this.image,
-        //   price: this.price,
-        //   id: this.id
-        // selectItem: this.selectItem
+    interceptorsResponse () {
+      axios.interceptors.response.use(function (response) {
+        return response
+      }, function (error) {
+        console.log(error)
+        return Promise.reject(error)
+      })
+    },
+    interceptorsRequest (setex) {
+      console.log('interse')
+      axios.interceptors.request.use(function (config) {
+        config.headers.Authorization = `Bearer ${setex.state.token}`
+        return config
+      }, function (error) {
+        return Promise.reject(error)
+      })
+    },
+    login (setex, payload) {
+      console.log(payload)
+      return new Promise((resolve, reject) => {
+        axios.post(process.env.VUE_APP_URL_LOGIN, payload)
+          .then((res) => {
+            setex.commit('setUser', res.data.result)
+            axios.defaults.headers.common.Authorization = `Bearer ${res.data.result.token}`
+            console.log('token:' + this.state.token)
+            localStorage.setItem('token', this.state.token)
+            resolve(res.data.result[0])
+          })
+          .catch((err) => {
+            console.log(err)
+            reject(err)
+          })
+      })
+    },
+    logout () {
+      return new Promise((resolve, reject) => {
+        if (this.state.token !== null) {
+          localStorage.removeItem('token')
+        }
+      })
+    },
+    updateData (setex, payload) {
+      console.log(payload)
+      return new Promise((resolve, reject) => {
+        axios.patch(process.env.VUE_APP_URL_PRODUCT + '/' + payload.id, payload.product, {
+          headers: {
+            Authorization: `Bearer ${this.state.token}`
+          }
+        })
+          .then((res) => {
+            console.log(res)
+          })
+          .catch((err) => {
+            console.log(err)
+          })
+        // if (res.data !== '') { ) }
+        // })
+        // this.getAllData()
+        // alert('Update SUccess')
+        // })
+      })
+    },
+    deleteData (setex, payload) {
+      console.log(payload)
+      return new Promise((resolve, reject) => {
+        axios.delete(process.env.VUE_APP_URL_PRODUCT + '/' + payload.id, {
+          headers: {
+            Authorization: `Bearer ${this.state.token}`
+          }
+        })
+          .then((res) => {
+            console.log(res)
+          })
+          .catch((err) => {
+            console.log(err)
+          })
+        // this.getAllData()
+        // alert('Delete Success')
+      })
+    },
+    register (setex, payload) {
+      console.log(payload)
+      return new Promise((resolve, reject) => {
+        axios.post(process.env.VUE_APP_URL_REG_USER, payload)
+          .then((res) => {
+            console.log(res)
+            resolve(res.data.result[0])
+          })
+          .catch((err) => {
+            console.log(err)
+            reject(err)
+          })
+      })
+    },
+    registerAdmin (setex, payload) {
+      console.log(payload)
+      return new Promise((resolve, reject) => {
+        axios.post(process.env.VUE_APP_URL_REG_ADMIN, payload)
+          .then((res) => {
+            console.log(res)
+            resolve(res.data.result[0])
+          })
+          .catch((err) => {
+            console.log(err)
+            reject(err)
+          })
+      })
+    },
+    plusCount (setex, payload) {
+      setex.commit('setCartCountPlus')
+      if (this.state.cartCount > 0) {
+        setex.commit('setFalseEmpty')
       }
-
-      if (this.state.cardSelect === true) {
-        this.state.cardSelect = false
-      } else {
-        this.state.cardSelect = true
+    },
+    minusCount (setex, payload) {
+      setex.commit('setCartCountMin')
+      if (this.state.cartCount <= 0) {
+        setex.commit('setTrueEmpty')
       }
-
-      if (this.state.cardActive === true) {
-        this.state.cardActive = false
-      } else {
-        this.state.cardActive = true
-      }
-    //   })
+    },
+    addListProduct (setex, paylaod) {
+      setex.commit('setProductList', paylaod)
     }
-    // interceptorsResponse () {
-    //   axios.interceptors.response.use(function (response) {
-    //     return response
-    //   }, function (error) {
-    //     console.log(error)
-    //     return Promise.reject(error)
-    //   })
-    // },
-    // interceptorsRequest (setex) {
-    //   console.log('interse')
-    //   axios.interceptors.request.use(function (config) {
-    //     config.headers.Authorization = `Bearer ${setex.state.token}`
-    //     return config
-    //   }, function (error) {
-    //     return Promise.reject(error)
-    //   })
-    // },
-    // login (setex, payload) {
-    //   console.log(payload)
-    //   return new Promise((resolve, reject) => {
-    //     axios.post('http://localhost:4017/api/v1/users/login', payload)
-    //       .then((res) => {
-    //         console.log(res)
-    //         setex.commit('setUser', res.data.result)
-    //         axios.defaults.headers.common.Authorization = `Bearer ${res.data.result.token}`
-    //         resolve(res.data.result[0])
-    //       })
-    //       .catch((err) => {
-    //         console.log(err)
-    //         reject(err)
-    //       })
-    //   })
-    // },
   },
   getters: {
     allProduct (state) {
@@ -209,6 +272,12 @@ export default new Vuex.Store({
     },
     cartCount (state) {
       return state.cartCount
+    },
+    isLogin (state) {
+      return state.token !== null
+    },
+    productList (state) {
+      return state.productList
     }
 
     // getCount (state) {
@@ -216,9 +285,6 @@ export default new Vuex.Store({
     // },
     // getTodos (state) {
     //   return state.todos
-    // },
-    // isLogin (state) {
-    //   return state.token !== null
     // },
     // books (state) {
     //   console.log(state.books)
