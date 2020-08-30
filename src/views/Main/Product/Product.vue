@@ -110,7 +110,7 @@ export default {
         .then(() => {
         })
       this.$router.go(0)
-      alert('Delete Success')
+      alert('DELETE SUCCESS')
     }
   }
 }
@@ -227,9 +227,6 @@ button {
     font-size: 15px;
     margin: 10px;
   }
-  /* h5.totalPage {
-    font-size: 15px;
-  } */
 }
 
 </style>

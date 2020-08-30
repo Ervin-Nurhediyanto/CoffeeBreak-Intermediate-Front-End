@@ -196,7 +196,7 @@ export default new Vuex.Store({
       })
     },
     updateData (setex, payload) {
-      console.log('payload update: ' + payload)
+      // if (payload.formData.image != null) {
       return new Promise((resolve, reject) => {
         axios.patch(process.env.VUE_APP_URL_PRODUCT + '/' + payload.id, payload.formData, {
           headers: {
@@ -210,6 +210,9 @@ export default new Vuex.Store({
             console.log(err)
           })
       })
+      // } else {
+      //   alert('image tidak boleh kosong')
+      // }
     },
     deleteData (setex, payload) {
       console.log(payload)
