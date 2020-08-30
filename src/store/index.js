@@ -1,10 +1,11 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 import axios from 'axios'
+import router from '../router/index'
 
 Vue.use(Vuex)
 
-axios.defaults.headers.common.Authorization = `Bearer ${localStorage.getItem('token')}`
+// axios.defaults.headers.common.Authorization = `Bearer ${localStorage.getItem('token')}`
 
 export default new Vuex.Store({
   state: {
@@ -17,7 +18,8 @@ export default new Vuex.Store({
     page: '',
     empty: true,
     cartCount: 0,
-    productList: []
+    productList: [],
+    totalPrice: 0
   },
   mutations: {
     setUser (state, payload) {
@@ -60,11 +62,35 @@ export default new Vuex.Store({
     setCartCountMin (state) {
       state.cartCount--
     },
+    setCartCountNull (state) {
+      state.cartCount = 0
+    },
     setpayloadUpdate (state, payload) {
       state.payloadUpdate = payload
     },
     setProductList (state, payload) {
       state.productList.push(payload)
+    },
+    removeProductList (state, index) {
+      // const index = state.productList.name.indexOf(payload.name)
+      if (index > -1) {
+        state.productList.splice(index, 1)
+      }
+    },
+    setProductListClear (state) {
+      state.productList = []
+    },
+    setPlusCountList (state, id) {
+      state.productList[id].countItem++
+    },
+    setTotalPrice (state, payload) {
+      state.totalPrice += payload
+    },
+    setTotalPriceNull (state) {
+      state.totalPrice = 0
+    },
+    setToken (state, payload) {
+      state.token = payload
     }
   },
   actions: {
@@ -124,11 +150,15 @@ export default new Vuex.Store({
           })
       })
     },
-    interceptorsResponse () {
+    interceptorsResponse (setex) {
       axios.interceptors.response.use(function (response) {
         return response
       }, function (error) {
-        console.log(error)
+        console.log(error.response.data.result)
+        localStorage.removeItem('token')
+        setex.commit('setToken', null)
+        router.push('/login')
+        alert(error.response.data.result.message)
         return Promise.reject(error)
       })
     },
@@ -147,7 +177,7 @@ export default new Vuex.Store({
         axios.post(process.env.VUE_APP_URL_LOGIN, payload)
           .then((res) => {
             setex.commit('setUser', res.data.result)
-            axios.defaults.headers.common.Authorization = `Bearer ${res.data.result.token}`
+            // axios.defaults.headers.common.Authorization = `Bearer ${res.data.result.token}`
             console.log('token:' + this.state.token)
             localStorage.setItem('token', this.state.token)
             resolve(res.data.result[0])
@@ -166,9 +196,9 @@ export default new Vuex.Store({
       })
     },
     updateData (setex, payload) {
-      console.log(payload)
+      console.log('payload update: ' + payload)
       return new Promise((resolve, reject) => {
-        axios.patch(process.env.VUE_APP_URL_PRODUCT + '/' + payload.id, payload.product, {
+        axios.patch(process.env.VUE_APP_URL_PRODUCT + '/' + payload.id, payload.formData, {
           headers: {
             Authorization: `Bearer ${this.state.token}`
           }
@@ -179,11 +209,6 @@ export default new Vuex.Store({
           .catch((err) => {
             console.log(err)
           })
-        // if (res.data !== '') { ) }
-        // })
-        // this.getAllData()
-        // alert('Update SUccess')
-        // })
       })
     },
     deleteData (setex, payload) {
@@ -200,8 +225,6 @@ export default new Vuex.Store({
           .catch((err) => {
             console.log(err)
           })
-        // this.getAllData()
-        // alert('Delete Success')
       })
     },
     register (setex, payload) {
@@ -246,6 +269,38 @@ export default new Vuex.Store({
     },
     addListProduct (setex, paylaod) {
       setex.commit('setProductList', paylaod)
+    },
+    removeListProduct (setex, paylaod) {
+      // const indexA = productList.map((item) => {
+      //   return item.id
+      // }).indexOf(2)
+      const index = this.state.productList.map((item) => {
+        return item.id
+      }).indexOf(paylaod.id)
+
+      console.log('index: ' + index)
+      setex.commit('removeProductList', index)
+    },
+    cancelCart (setex) {
+      setex.commit('setProductListClear')
+      setex.commit('setCartCountNull')
+      setex.commit('setTotalPriceNull')
+      setex.commit('setTrueEmpty')
+    },
+    addTotalPrice (setex, payload) {
+      setex.commit('setTotalPrice', payload)
+    },
+    plusCountItem (setex, id) {
+      const index = this.state.productList.map((item) => {
+        return item.id
+      }).indexOf(id)
+
+      console.log(index)
+      setex.commit('setPlusCountList', id)
+      // const index = this.state.productList.map((item) => {
+      //   return item.id.indexOf(id)
+      // })
+      // console.log('index: ' + index)
     }
   },
   getters: {
@@ -278,8 +333,10 @@ export default new Vuex.Store({
     },
     productList (state) {
       return state.productList
+    },
+    totalPrice (state) {
+      return state.totalPrice
     }
-
     // getCount (state) {
     //   return state.count * 2
     // },

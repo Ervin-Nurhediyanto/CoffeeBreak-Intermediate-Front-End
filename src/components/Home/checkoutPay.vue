@@ -15,20 +15,28 @@
 </template>
 
 <script>
+import { mapGetters, mapActions } from 'vuex'
+
 export default {
   name: 'Checkout',
-  props: ['name', 'image', 'price', 'id', 'totalPrice'],
   data () {
     return {
       total: 0
     }
   },
+  computed: {
+    ...mapGetters({
+      productList: 'productList',
+      totalPrice: 'totalPrice'
+    })
+  },
   mounted () {
     this.getTotal()
   },
   methods: {
+    ...mapActions(['cancelCart']),
     cancel () {
-      this.$emit('cancel', { empty: true, count: 0, select: false })
+      this.cancelCart()
     },
     getTotal () {
       this.total += this.price

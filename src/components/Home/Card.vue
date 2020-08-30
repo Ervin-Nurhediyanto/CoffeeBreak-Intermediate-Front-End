@@ -11,9 +11,7 @@
 </template>
 
 <script>
-import { mapActions } from 'vuex'
-// import mixin from '../../store/index'
-// import { Store } from 'vuex'
+import { mapGetters, mapActions } from 'vuex'
 
 export default {
   name: 'Card',
@@ -25,56 +23,46 @@ export default {
       brightness: 50
     }
   },
-  // mixins: [mixin],
   mounted () {
-    // this.selectItem = false
   },
   computed: {
-    // ...mapGetters({
-    //   cardSelect: 'cardSelect',
-    //   cardActive: 'cardActive'
-    // })
-    // total: function () {
-    //   let totalPrice = 0
-    //   totalPrice += this.price
-    //   return totalPrice
-    // }
+    ...mapGetters({
+      cartCount: 'cartCount',
+      productList: 'productList'
+    })
   },
   methods: {
     ...mapActions(['plusCount']),
     ...mapActions(['minusCount']),
     ...mapActions(['addListProduct']),
+    ...mapActions(['removeListProduct']),
+    ...mapActions(['addTotalPrice']),
+
     addToCart () {
+      console.log(this.productList)
       if (this.cardSelect === false) {
-        // this.$emit('addToCart', {
-        //   count: 1,
-        //   empty: false,
-        //   name: this.name,
-        //   image: this.image,
-        //   price: this.price,
-        //   id: this.id,
-        //   quality: 1,
-        //   plus: this.price
-        // })
         const data = {
           name: this.name,
           image: this.image,
           price: this.price,
           id: this.id,
-          plus: this.price
+          countItem: 1
         }
         this.plusCount()
         this.addListProduct(data)
+        this.addTotalPrice(data.price)
       } else {
-        // this.$emit('addToCart', {
-        //   count: -1,
-        //   empty: false,
-        //   name: this.name,
-        //   image: this.image,
-        //   price: this.price,
-        //   id: this.id
-        // })
-        this.minusCount()
+        if (this.cartCount > 0) {
+          const data = {
+            name: this.name,
+            image: this.image,
+            price: this.price * -1,
+            id: this.id
+          }
+          this.minusCount()
+          this.removeListProduct(data)
+          this.addTotalPrice(data.price)
+        }
       }
 
       if (this.cardSelect === true) {
@@ -102,10 +90,6 @@ export default {
   justify-content: center;
   align-items: center;
 }
-
-/* .selectImage {
-  filter: brightness(50%);
-} */
 
 .tick {
   position: absolute;
@@ -158,7 +142,6 @@ div {
     line-height: 20px;
   }
   aside h4 {
-    /* font-size: 8px; */
     line-height: 10px;
   }
   aside .list .item h3 {

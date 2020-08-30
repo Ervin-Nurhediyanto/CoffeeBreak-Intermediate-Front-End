@@ -13,9 +13,6 @@ export default {
   name: 'Cart',
   // props: ['count'],
   computed: {
-    // countItem: function () {
-    //   return this.count
-    // }
     ...mapGetters({
       cartCount: 'cartCount'
     })

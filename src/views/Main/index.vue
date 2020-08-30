@@ -14,12 +14,13 @@
             <Cart :count="count" v-on:toCart="addItemCart($event)" />
             <Empty v-if="empty" />
             <div v-else class="scroll">
-              <div v-for="Product in cartProducts" :key="Product.id">
+              <div v-for="Product in productList" :key="Product.id">
                 <Checkout
                   :name="Product.name"
                   :image="Product.image"
                   :price="Product.price"
                   :id="Product.id"
+                  :countItem="Product.countItem"
                   v-on:plus="plusTotal($event)"
                   v-on:minus="minusTotal($event)"
                 />
@@ -33,9 +34,7 @@
         </div>
         <Add />
         <CheckModal
-          :products='checkoutProducts'
-          :totalPrice='totals'
-          :quality="quality"
+          :products='productList'
         />
       </div>
     </div>

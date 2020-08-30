@@ -17,7 +17,7 @@
               <div class="col-md-6 col-sm-6 list">
                 <div v-for="product in products" :key="product.id">
                   <div class="d-flex justify-content-start">
-                    <h5>{{product.name}} {{product.quality}}x</h5>
+                    <h5>{{product.name}} {{product.countItem}}x</h5>
                   </div>
                 </div>
                 <div class="d-flex justify-content-start">
@@ -66,22 +66,16 @@
 </template>
 
 <script>
+import { mapGetters } from 'vuex'
+
 export default {
   name: 'Checkout',
-  props: ['products', 'totalPrice'],
+  props: ['products'],
   computed: {
-    // total: function () {
-    //   let totalPrice = 0
-    //   this.products.map((item) => {
-    //     totalPrice += item.price
-    //   })
-    //   return totalPrice
-    // }
-    // priceTotal: function () {
-    //   let totalPrice = 0
-    //   totalPrice += (this.products.price * this.quality)
-    //   return totalPrice
-    // }
+    ...mapGetters({
+      productList: 'productList',
+      totalPrice: 'totalPrice'
+    })
   }
 }
 </script>

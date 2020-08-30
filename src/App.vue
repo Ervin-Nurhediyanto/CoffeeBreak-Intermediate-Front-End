@@ -4,6 +4,22 @@
   </div>
 </template>
 
+<script>
+import { mapActions } from 'vuex'
+
+export default {
+  name: 'App',
+  methods: {
+    ...mapActions(['interceptorsRequest']),
+    ...mapActions(['interceptorsResponse'])
+  },
+  created () {
+    this.interceptorsRequest()
+    this.interceptorsResponse()
+  }
+}
+</script>
+
 <style>
 html, body{
   padding: 0;

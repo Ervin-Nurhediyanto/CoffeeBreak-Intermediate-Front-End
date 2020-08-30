@@ -16,14 +16,13 @@
                 <h6>Category</h6>
               </div>
               <div class="col-md-10 col-sm-10">
-                <input class="mb-md-2 mb-sm-2" v-model="form.name" />
-                <input class="mb-md-2 mb-sm-2" v-model="form.image" />
-                <input
-                  class="mb-md-2 mb-sm-2 d-flex justify-content-start price"
-                  v-model="form.price"
+                <input class="mb-md-2 mb-sm-2" v-model="name" placeholder="Name" />
+                <input class="mb-md-2 mb-sm-2" type="file" @change="onFileUpload">
+                <input class="mb-md-2 mb-sm-2 d-flex justify-content-start price"
+                  v-model="price"
+                  placeholder="Price"
                 />
-                <select class="d-flex justify-content-start" v-model="form.idCategory">
-                  <option class="option">Category</option>
+                <select class="d-flex justify-content-start" v-model="idCategory" placeholder="Category">
                   <option value="2">Food</option>
                   <option value="1">Drink</option>
                 </select>
@@ -38,6 +37,7 @@
               </div>
             </div>
           </form>
+
         </div>
       </div>
     </div>
@@ -50,34 +50,35 @@ export default {
   name: 'Add',
   data () {
     return {
-      form: {
-        name: '',
-        image: '',
-        price: '',
-        idCategory: ''
-      },
+      name: '',
+      FILE: null,
+      price: '',
+      idCategory: '',
       Hasil: ''
     }
   },
-  // mounted () {
-  //   this.form.name = ''
-  //   this.form.image = ''
-  //   this.form.price = ''
-  //   this.form.idCategory = ''
-  // },
   methods: {
+    onFileUpload (event) {
+      this.FILE = event.target.files[0]
+    },
     add () {
-      axios.post('http://localhost:4000/api/v1/products', this.form)
-        .then((res) => {
-          this.getData()
-        })
-      // this.getData()
-      this.Hasil = 'ADD DATA SUCCESS'
-      alert(this.Hasil)
-      // this.form.name = ''
-      // this.form.image = ''
-      // this.form.price = ''
-      // this.form.idCategory = ''
+      const formData = new FormData()
+      formData.append('name', this.name)
+      formData.append('image', this.FILE, this.FILE.name)
+      formData.append('price', this.price)
+      formData.append('idCategory', this.idCategory)
+      axios.post(process.env.VUE_APP_URL_PRODUCT, formData, {
+      }).then((res) => {
+        console.log(res)
+        this.$router.go(0)
+        alert('ADD DATA SUCCESS')
+      })
+      // axios.post('http://localhost:4000/api/v1/products', this.form)
+      //   .then((res) => {
+      //     this.getData()
+      //   })
+      // this.Hasil = 'ADD DATA SUCCESS'
+      // alert(this.Hasil)
     },
     getData () {
       axios.get('http://localhost:4000/api/v1/products').then((res) => {

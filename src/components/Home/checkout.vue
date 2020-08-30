@@ -8,11 +8,10 @@
           <div class="row m-md-0 m-sm-0 price justify-content-between">
             <div class="row m-md-0 pb-md-0 m-sm-0 pb-sm-0">
               <button class="min" @click="minus">-</button>
-              <button class="qly">{{quality}}</button>
+              <button class="qly">{{countItem}}</button>
               <button class="pls" @click="plus">+</button>
             </div>
             <h5>Rp.{{total}}</h5>
-            <!-- <h5>{{total}}</h5> -->
           </div>
         </div>
       </div>
@@ -21,37 +20,55 @@
 </template>
 
 <script>
+import { mapGetters, mapActions } from 'vuex'
 
 export default {
   name: 'Checkout',
-  props: ['name', 'image', 'price', 'id'],
+  props: ['name', 'image', 'price', 'id', 'countItem'],
   data () {
     return {
-      quality: 1,
       active: true
     }
   },
   mounted () {
   },
   computed: {
+    ...mapGetters({
+      totalPrice: 'totalPrice',
+      empty: 'empty'
+    }),
     total: function () {
       let totalPrice = 0
-      totalPrice += (this.price * this.quality)
+      totalPrice += (this.price * this.countItem)
       return totalPrice
     }
   },
   methods: {
+    ...mapActions(['minusCount']),
+    ...mapActions(['addTotalPrice']),
+    ...mapActions(['plusCountItem']),
+
     plus () {
-      this.quality += 1
-      this.$emit('plus', { total: this.price, quality: this.quality, id: this.id })
+      this.countItem += 1
+      const plusPrice = this.price
+      this.addTotalPrice(plusPrice)
+      const id = this.id
+      this.plusCountItem(id)
     },
     minus () {
-      if (this.quality > 1) {
-        this.quality -= 1
-        this.$emit('minus', { total: this.price, count: 0, quality: this.quality })
+      if (this.countItem > 1) {
+        this.countItem -= 1
+        const minusPrice = this.price * -1
+        this.addTotalPrice(minusPrice)
       } else {
         this.active = false
-        this.$emit('minus', { total: this.price, count: -1, quality: this.quality })
+        this.minusCount()
+        const minusPrice = this.price * -1
+        this.addTotalPrice(minusPrice)
+
+        if (this.totalPrice === 0) {
+          this.empty = true
+        }
       }
     },
     cancel () {
