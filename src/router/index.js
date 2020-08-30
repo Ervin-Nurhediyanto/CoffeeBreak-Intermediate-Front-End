@@ -7,11 +7,9 @@ import Product from '../views/Main/Product/Product.vue'
 import Register from '../views/Main/User/Register/User.vue'
 import RegisterAdmin from '../views/Main/User/Register/Admin.vue'
 import Login from '../views/Main/User/Login/Login.vue'
+// LoginAdmin
 import LandingPage from '../views/LandingPage/Landing.vue'
-
 import store from '../store/index'
-// import Login from '../views/auth/login/Login.vue'
-// import Register from '../views/auth/register/Register.vue'
 
 Vue.use(VueRouter)
 
@@ -60,6 +58,7 @@ const routes = [
     component: Login,
     meta: { requiresVisitor: true }
   },
+  // LoginAdmin
   {
     path: '/landingpage',
     name: 'landingpage',

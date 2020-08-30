@@ -73,52 +73,12 @@ export default {
         this.$router.go(0)
         alert('ADD DATA SUCCESS')
       })
-      // axios.post('http://localhost:4000/api/v1/products', this.form)
-      //   .then((res) => {
-      //     this.getData()
-      //   })
-      // this.Hasil = 'ADD DATA SUCCESS'
-      // alert(this.Hasil)
-    },
-    getData () {
-      axios.get('http://localhost:4000/api/v1/products').then((res) => {
-        // this.Hasil = 'ADD DATA SUCCESS'
-      })
     }
   }
 }
 </script>
 
 <style scpred>
-.red {
-  background-color: red;
-}
-
-.blue {
-  background-color: blue;
-}
-
-.yellow {
-  background-color: yellow;
-}
-
-.green {
-  background-color: green;
-}
-
-.orange {
-  background-color: orangered;
-}
-
-.black {
-  background-color: black;
-}
-
-.white {
-  background-color: white;
-}
-
-/* End-Background Check */
 
 /* Modal */
 

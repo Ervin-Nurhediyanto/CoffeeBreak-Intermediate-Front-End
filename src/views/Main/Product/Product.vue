@@ -14,7 +14,7 @@
           </div>
           <div class="row data justify-content-between">
             <strong>Image:</strong>
-            <input type="file" @change="onFileUpload">
+            <input type="file" class="type-img" @change="onFileUpload">
           </div>
           <div class="row data justify-content-between">
             <strong>Price:</strong>
@@ -33,11 +33,11 @@
       </form>
 
     </div>
-    <article class="row page desktop">
-      <div class="col-md-2 col-sm-2 mt-md-2">
+    <article class="row">
+      <div class="col-md-2 col-sm-2 mt-md-2 mt-sm-2">
         <h5 class="totalPage">Total Page {{totalPage}}</h5>
       </div>
-      <div class="col-md-8 col-sm-8 mt-md-2">
+      <div class="col-md-8 col-sm-8 mt-md-2 mt-sm-2">
         <div class="row justify-content-center">
           <div class="col-md-4 col-sm-4">
             <button v-show="page > 1" @click="prevPage">prev</button>
@@ -68,7 +68,6 @@ export default {
   data () {
     return {
       output: '',
-      navbarAct: true,
       FILE: null
     }
   },
@@ -129,12 +128,6 @@ export default {
 form {
   width: 300px;
   margin-bottom: 20px;
-  /* margin: 5px */
-}
-
-input,
-select {
-  width: 100px;
 }
 
 input, select {
@@ -174,8 +167,20 @@ input, select {
   outline: none;
 }
 
+.type-img {
+ width: 150px;
+  height: 30px;
+  border-radius: 10px;
+  justify-content: center;
+  padding: 0px 15px 0px 15px;
+  box-shadow: -2px -2px #ffffff73, 4px 4px rgba(94, 104, 121, 0.288);
+  border: none;
+  outline: none;
+  transition: width 1s;
+}
+
 main {
-  height: 610px;
+  height: 570px;
   background: rgba(190, 195, 202, 0.3);
   flex-wrap: wrap;
   overflow-y: scroll;
@@ -184,99 +189,47 @@ main {
 main::-webkit-scrollbar {
   display: none;
 }
+
 .data {
   margin-left: 20px;
   margin-right: 20px;
 }
-nav .col {
-  width: 50px;
-}
-.icon {
-  width: 35px;
-  height: 35px;
-  /* margin-left: 5px; */
-}
+
 button {
   width: 80px;
   height: 30px;
-  margin-top: 10px;
   margin-left: 10px;
-  /* margin-left: 5px; */
+  padding-top: 1px;
 }
-/* Nav */
-
-nav {
-  background: #ffffff;
-  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.25);
-}
-nav.nav {
-  display: flex;
-  flex-direction: column;
-  width: 5%;
-}
-nav .icon {
-  margin-top: 20px;
-}
-
-nav button.btn-primary {
-  background-color: transparent;
-  padding-left: 0;
-  border: 0;
-}
-
-article.page {
-  width: 100%;
-}
-
-/* .mobile {
-  display: none;
-} */
 
 @media (max-width: 768px) {
-/* .mobile {
-  display: flex;
-  flex-direction: column;
-}
-
-.card {
-  display: flex;
-  flex-direction: column;
-} */
-
-  main.col-md-11 {
+  main {
     display: flex;
     flex-direction: column;
-    width: 90%;
-  }
-
-  .image {
-    width: 100px;
-    height: 80px;
-    border-radius: 10px 10px 0px 0px;
-  }
-
-  .icon {
-    width: 20px;
-    height: 20px;
-  }
-  nav {
     width: 200px;
+    height: 320px;
   }
-  main.col-md-11 {
+
+  article {
     display: flex;
-    flex-direction: column;
-    width: 90%;
+    flex-direction: row;
+    position: absolute;
+    top: 2540px;
   }
-  form {
-    width: 300px;
-    margin-bottom: 20px;
-    /* margin: 5px */
-  }
+
   .image {
-    width: 350px;
-    height: 220px;
+    width: 300px;
+    height: 200px;
     border-radius: 10px 10px 0px 0px;
-    margin-bottom: 10px;
   }
+
+  h5 {
+    font-size: 15px;
+    margin: 10px;
+  }
+  /* h5.totalPage {
+    font-size: 15px;
+  } */
 }
+
 </style>

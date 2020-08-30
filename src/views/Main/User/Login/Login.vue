@@ -4,20 +4,20 @@
     <div class="login">
       <form>
         <p>LOGIN</p>
-      <div class="form-group">
-        <label for="exampleInputEmail1">Email address</label>
-        <input type="email" class="form-control type" v-model="email" placeholder="Enter email" aria-describedby="emailHelp">
-      </div>
-      <div class="form-group">
-        <label for="exampleInputPassword1">Password</label>
-        <input type="password" class="form-control type" v-model="password" placeholder="Enter Password">
-      </div>
-      <div class="form-group">
-        <button type="submit" class="btn btn-primary submit" @click="handleLogin">Login</button>
-        <!-- <button type="submit" class="btn btn-primary submit" @click="register">Register</button> -->
-      </div>
-      <h4>Belum punya akun? Silahkan <span class="register" @click="register">Register</span></h4>
-    </form>
+        <div class="form-group">
+          <label for="exampleInputEmail1">Email address</label>
+          <input type="email" class="form-control type" v-model="email" placeholder="Enter email" aria-describedby="emailHelp">
+        </div>
+        <div class="form-group">
+          <label for="exampleInputPassword1">Password</label>
+          <input type="password" class="form-control type" v-model="password" placeholder="Enter Password">
+        </div>
+        <div class="form-group">
+          <button type="submit" class="btn btn-primary submit" @click="handleLogin">Login</button>
+          <!-- <button type="submit" class="btn btn-primary submit" @click="register">Register</button> -->
+        </div>
+        <h4>Belum punya akun? Silahkan <span class="register" @click="register">Register</span></h4>
+      </form>
     </div>
   </div>
 </template>
@@ -177,5 +177,75 @@ color: black;
 .register {
   cursor: pointer;
   color: blue;
+}
+
+@media (max-width: 768px) {
+  * {
+  margin: 0;
+  padding: 0;
+  background-color: transparent;
+  font-family: "Courier New", Courier, monospace;
+  }
+  .main {
+    height: 360px;
+  }
+  .login {
+    position: absolute;
+    top: 80px;
+    width: 300px;
+    height: 270px;
+  }
+  .login:hover {
+    width: 300px;
+    height: 270px;
+  }
+  p {
+  font-size: 40px;
+  }
+  form {
+    position: absolute;
+    top:20;
+  }
+  input {
+  margin: 0px 0px 15px 0px;
+  }
+  .login p {
+  margin: 0px 0px 0px 0px;
+  }
+}
+
+@media (max-width: 576px) {
+  .main {
+    height: 711px;
+    background-size: auto 100%;
+  }
+  .text {
+    position: absolute;
+    top: 80px;
+    display: flex;
+    flex-direction: column;
+    width: 300px;
+    height: 100px;
+  }
+  .text h1, .text h2, .text h3 {
+    font-size: 20px;
+  }
+  .text h2, .text h3 {
+    display: none;
+  }
+  .text h3.text-white {
+    display: flex;
+  }
+  .cafe {
+    font-size: 30px;
+  }
+  .slide {
+    position: absolute;
+    top: 270px;
+  }
+  .order {
+    position: absolute;
+    top: 480px
+  }
 }
 </style>

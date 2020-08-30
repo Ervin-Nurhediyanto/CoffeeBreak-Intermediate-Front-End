@@ -4,6 +4,7 @@
     <img class="icon" src="../../assets/clipboard.png" @click="linkHistory" />
     <img class="icon" src="../../assets/add.png" data-toggle="modal" data-target="#myModal" />
     <img class="icon" src="../../assets/product.png" @click="linkProduct" />
+    <img class="icon" src="../../assets/logout.png" @click="linkLogout" />
   </nav>
 </template>
 
@@ -25,6 +26,10 @@ export default {
       this.$router.push({
         name: 'product'
       })
+    },
+    linkLogout () {
+      this.$router.go(0)
+      this.logout()
     }
   }
 }

@@ -9,7 +9,6 @@
       <h3 class="text-white">Buruan pesan sekarang</h3>
     </div>
 
-    <!-- <div class="list"> -->
       <div class="col slide">
         <div class="col">
          <img class="image" src="https://raw.githubusercontent.com/Ervin-Nurhediyanto/CoffeeBreak-Cafe-App/master/asset/menu/Cappucino.jpg" />
@@ -24,18 +23,17 @@
           <h5>Cofee Latte</h5>
         </div>
       </div>
-    <!-- </div> -->
 
     <div class="col order">
       <button v-show="order" @click="handleOrder" class="submit">Order Now</button>
       <div v-show="loginRegister" class="col">
         <button @click="login" class="submit">Login</button>
-        <button @click="handleRegister" class="submit">Register</button>
+        <button @click="registerUser" class="submit">Register</button>
       </div>
-      <div v-show="regAdminUser" class="col">
+      <!-- <div v-show="regAdminUser" class="col">
         <button @click="registerAdmin" class="submit">Admin</button>
         <button @click="registerUser" class="submit">User</button>
-      </div>
+      </div> -->
     </div>
 
   </div>
@@ -115,7 +113,7 @@ export default {
   align-items: center;
   padding: 20px;
   background-image: url("../../assets/bg-coffee-break.jpg");
-  filter: brightness(80%);
+  /* filter: brightness(80%); */
   background-repeat: no-repeat;
   background-size: 100% 100%;
   height: 663px;
@@ -134,12 +132,22 @@ export default {
 
 .text {
   position: absolute;
-  top: 150px;
+  top: 130px;
+  background-image: url('../../assets/bg-coffee2.jpg');
+  background-size: 100% 100%;
+  border-radius: 20px 0 20px 0;
+  padding: 10px;
+  filter: brightness(90%);
 }
 
 .text h1, .text h2, .text h3 {
   font-weight: bold;
-  text-shadow: 2px 2px rgb(2, 238, 2);
+  color: rgb(248, 13, 13);
+  text-shadow: 2px 2px rgb(242, 243, 242);
+}
+
+.text h3.text-white {
+  text-shadow: 2px 2px rgb(246, 26, 26);
 }
 
 .slide {
@@ -148,7 +156,6 @@ export default {
     overflow-y: scroll;
     height: 200px;
     width: 320px;
-    /* margin-bottom: 20px; */
 }
 
 .slide::-webkit-scrollbar {
@@ -157,7 +164,7 @@ export default {
 
 .slide h5 {
   font-weight: bold;
-  color: aqua;
+  color: rgb(255, 238, 3);
   text-shadow: 3px 3px rgb(44, 49, 44);
 }
 
@@ -187,6 +194,64 @@ export default {
   border-radius: 10px;
   justify-content: center;
   box-shadow: inset -2px -2px #ffffff73, inset 4px 4px rgba(94, 104, 121, 0.288);
+}
+
+@media (max-width: 768px) {
+  .main {
+    height: 360px;
+  }
+  .text {
+    display: none;
+  }
+  .text h1, .text h2, .text h3 {
+    font-size: 15px;
+  }
+  .cafe {
+    font-size: 40px;
+  }
+  .slide {
+    position: absolute;
+    top: 80px;
+  }
+  .order {
+  position: absolute;
+  top: 300px
+  }
+}
+
+@media (max-width: 576px) {
+  .main {
+    height: 640px;
+    background-size: auto 100%;
+  }
+  .text {
+    position: absolute;
+    top: 80px;
+    display: flex;
+    flex-direction: column;
+    width: 300px;
+    height: 100px;
+  }
+  .text h1, .text h2, .text h3 {
+    font-size: 20px;
+  }
+  .text h2, .text h3 {
+    display: none;
+  }
+  .text h3.text-white {
+    display: flex;
+  }
+  .cafe {
+    font-size: 30px;
+  }
+  .slide {
+    position: absolute;
+    top: 270px;
+  }
+  .order {
+    position: absolute;
+    top: 480px
+  }
 }
 
 </style>

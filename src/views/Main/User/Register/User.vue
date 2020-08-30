@@ -4,7 +4,7 @@
     <h1 class='cafe'>Coffee Break Cafe </h1>
     <div class="register">
       <form>
-        <p>Register User</p>
+        <p>Register</p>
       <div class="form-group">
         <label for="exampleInputEmail1">Email address</label>
         <input type="email" class="form-control type" v-model="email" placeholder="Enter email" aria-describedby="emailHelp">
@@ -110,7 +110,7 @@ form {
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  width: 500px;
+  width: 300px;
   height: 650px;
   background-color: #dde1e7;
   border-radius: 20px;
@@ -122,7 +122,7 @@ form {
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  width: 500px;
+  width: 300px;
   height: 650px;
   background-color: #dde1e7;
   border-radius: 20px;
@@ -192,6 +192,54 @@ color: black;
 .login {
   cursor: pointer;
   color: blue;
+}
+
+@media (max-width: 768px) {
+  * {
+  margin: 0;
+  padding: 0;
+  background-color: transparent;
+  font-family: "Courier New", Courier, monospace;
+  }
+  .main {
+    height: 560px;
+  }
+  .register {
+    position: absolute;
+    top: 80px;
+    width: 300px;
+    height: 420px;
+  }
+  .register:hover {
+    width: 300px;
+    height: 420px;
+  }
+  p {
+  font-size: 35px;
+  }
+  form {
+    position: absolute;
+    top:20;
+  }
+  input {
+  margin: 0px 0px 15px 0px;
+  }
+  .register p {
+  margin: 0px 0px 0px 0px;
+  }
+}
+
+@media (max-width: 576px) {
+  .main {
+    height: 711px;
+    background-size: auto 100%;
+  }
+  .cafe {
+    font-size: 30px;
+  }
+  p {
+  font-size: 35px;
+}
 }
 
 </style>
