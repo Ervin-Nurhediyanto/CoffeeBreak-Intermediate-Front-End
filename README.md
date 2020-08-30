@@ -7,9 +7,23 @@
 
 Project demo is available at [http://cafein-coffee.fwdev.online/](http://cafein-coffee.fwdev.online/)
 
-This codebase was created to demonstrate a fully fledged fullstack application built with **Vue.js** including CRUD operations, authentication, routing, pagination, and more.
+This codebase was created to demonstrate a fully fledged fullstack application built with **Vue.js** including CRUD operations, authentication, routing, pagination, and more. 
 
-## Getting started
+This project uses the backend of [Coffeebreak-Backend](https://github.com/Ervin-Nurhediyanto/CoffeeBreak-Intermediate-Back-End)
+
+## Table of Contents
+
+- [CoffeeBreak-Front-End](#coffeebreak-front-end)
+  - [Table of Contents](#table-of-contents)
+  - [Technologies](#technologies)
+  - [Setup](#setup)
+	
+## Technologies
+Project is created with:
+* [![node.js ](https://img.shields.io/badge/realworld-frontend-%23783578.svg)]()
+* [![vue 2.6.11](https://img.shields.io/badge/realworld-frontend-%23783578.s]()
+	
+## Setup
 
 The stack is built using [vue-cli webpack](https://github.com/vuejs-templates/webpack) so to get started all you have to do is:
 
