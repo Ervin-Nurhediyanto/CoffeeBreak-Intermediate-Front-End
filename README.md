@@ -20,8 +20,8 @@ This project uses the backend of [Coffeebreak-Backend](https://github.com/Ervin-
 	
 ## Technologies
 Project is created with:
-* [![node.js ]]()
-* [![vue 2.6.11]]()
+* node.js
+* Vue.js
 	
 ## Setup
 
