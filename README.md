@@ -20,8 +20,8 @@ This project uses the backend of [Coffeebreak-Backend](https://github.com/Ervin-
 	
 ## Technologies
 Project is created with:
-* [![node.js ](https://img.shields.io/badge/realworld-frontend-%23783578.svg)]()
-* [![vue 2.6.11](https://img.shields.io/badge/realworld-frontend-%23783578.s]()
+* [![node.js ]]()
+* [![vue 2.6.11]]()
 	
 ## Setup
 
