@@ -11,23 +11,36 @@ export default new Vuex.Store({
   state: {
     user: {},
     token: localStorage.getItem('token') || null,
+    histories: [],
+    historiesIncome: [],
     allProduct: [],
     products: [],
     totalPage: '',
     status: '',
-    page: '',
+    page: null,
     empty: true,
     cartCount: 0,
     productList: [],
-    totalPrice: 0
+    totalPrice: 0,
+    search: localStorage.getItem('search') || null,
+    sort: localStorage.getItem('sort') || null,
+    message: localStorage.getItem('message') || null,
+    allImage: [],
+    urlImage: localStorage.getItem('image') || null
   },
   mutations: {
     setUser (state, payload) {
       state.user = payload
       state.token = payload.token
     },
+    setHistory (state, payload) {
+      state.histories = payload
+    },
+    setHistoryIncome (state, payload) {
+      state.historiesIncome = payload
+    },
     setAllProduct (state, payload) {
-      state.allproduct = payload
+      state.allProduct = payload
     },
     setProduct (state, payload) {
       state.products = payload
@@ -36,13 +49,23 @@ export default new Vuex.Store({
       state.totalPage = payload
     },
     setPage (state, payload) {
-      state.page = payload
+      state.page = Number(payload)
     },
-    nextPage (state) {
-      state.page++
+    nextPage (state, payload) {
+      state.page += payload
     },
-    prevPage (state) {
-      state.page--
+    prevPage (state, payload) {
+      // state.page--
+      state.page -= payload
+    },
+    setSearch (state, payload) {
+      state.search = payload
+    },
+    setSort (state, payload) {
+      state.sort = payload
+    },
+    setUrlImage (state, payload) {
+      state.allImage.push(payload)
     },
     setFalseEmpty (state) {
       state.empty = false
@@ -91,40 +114,259 @@ export default new Vuex.Store({
     },
     setToken (state, payload) {
       state.token = payload
+    },
+    setMessage (state, payload) {
+      state.message = payload
     }
   },
   actions: {
-    getAllData (setex) {
+    getHistory (setex) {
       return new Promise((resolve, reject) => {
-        axios.get(process.env.VUE_APP_URL_PRODUCT)
+        axios.get(process.env.VUE_APP_URL_HISTORY + '/?sort=date&order=DESC')
           .then((res) => {
-            setex.commit('setAllProduct', res.data.result)
-            setex.commit('setTotalPage', Math.ceil(res.data.result.length / 6))
+            console.log('history:' + res.data.result)
+            setex.commit('setHistory', res.data.result)
             resolve(res.data.result)
           })
           .catch((err) => {
             console.log(err)
             reject(err)
           })
+      })
+    },
+    getHistoryIncome (setex) {
+      return new Promise((resolve, reject) => {
+        axios.get(process.env.VUE_APP_URL_HISTORY + '/?sort=date&order=DESC&group=date')
+          .then((res) => {
+            console.log('history income:' + res.data.result)
+            setex.commit('setHistoryIncome', res.data.result)
+            resolve(res.data.result)
+          })
+          .catch((err) => {
+            console.log(err)
+            reject(err)
+          })
+      })
+    },
+    getAllData (setex) {
+      return new Promise((resolve, reject) => {
+        if (this.state.search != null) {
+          if (this.state.sort != null) {
+            axios.get(process.env.VUE_APP_URL_PRODUCT + '/?search=' + this.state.search + '&sort=' + this.state.sort)
+              .then((res) => {
+                setex.commit('setAllProduct', res.data.result)
+                setex.commit('setTotalPage', Math.ceil(res.data.result.length / 6))
+                resolve(res.data.result)
+              })
+              .catch((err) => {
+                console.log(err)
+                reject(err)
+              })
+          } else {
+            axios.get(process.env.VUE_APP_URL_PRODUCT + '/?search=' + this.state.search)
+              .then((res) => {
+                setex.commit('setAllProduct', res.data.result)
+                setex.commit('setTotalPage', Math.ceil(res.data.result.length / 6))
+                resolve(res.data.result)
+              })
+              .catch((err) => {
+                console.log(err)
+                reject(err)
+              })
+          }
+        } else {
+          axios.get(process.env.VUE_APP_URL_PRODUCT)
+            .then((res) => {
+              console.log('all data: ' + res.data.result)
+              setex.commit('setAllProduct', res.data.result)
+              setex.commit('setTotalPage', Math.ceil(res.data.result.length / 6))
+              resolve(res.data.result)
+            })
+            .catch((err) => {
+              console.log(err)
+              reject(err)
+            })
+        }
       })
     },
     getData (setex) {
       return new Promise((resolve, reject) => {
-        axios.get(process.env.VUE_APP_URL_PRODUCT + '/?page=1')
-          .then((res) => {
-            setex.commit('setProduct', res.data.result)
-            setex.commit('setPage', res.data.page)
-            resolve(res.data.result)
-          })
-          .catch((err) => {
-            console.log(err)
-            reject(err)
-          })
+        if (this.state.search != null) {
+          if (this.state.sort != null) {
+            axios.get(process.env.VUE_APP_URL_PRODUCT + '/?page=1&search=' + this.state.search + '&sort=' + this.state.sort)
+              .then((res) => {
+                setex.commit('setProduct', res.data.result)
+                setex.commit('setPage', res.data.page)
+                // localStorage.setItem('search', payload)
+                const dataImg = res.data.result.map((item) => {
+                  return item.image
+                })
+                setex.commit('setUrlImage', dataImg)
+                localStorage.setItem('image', this.state.allImage)
+
+                resolve(res.data.result)
+              })
+              .catch((err) => {
+                console.log(err)
+                reject(err)
+              })
+          } else {
+            axios.get(process.env.VUE_APP_URL_PRODUCT + '/?page=1&search=' + this.state.search)
+              .then((res) => {
+                setex.commit('setProduct', res.data.result)
+                setex.commit('setPage', res.data.page)
+
+                const dataImg = res.data.result.map((item) => {
+                  return item.image
+                })
+                setex.commit('setUrlImage', dataImg)
+                localStorage.setItem('image', this.state.allImage)
+
+                resolve(res.data.result)
+              })
+              .catch((err) => {
+                console.log(err)
+                reject(err)
+              })
+          }
+        } else if (this.state.sort != null) {
+          if (this.state.search != null) {
+            axios.get(process.env.VUE_APP_URL_PRODUCT + '/?page=1&sort=' + this.state.sort + '&search=' + this.state.search)
+              .then((res) => {
+                setex.commit('setProduct', res.data.result)
+                setex.commit('setPage', res.data.page)
+
+                const dataImg = res.data.result.map((item) => {
+                  return item.image
+                })
+                setex.commit('setUrlImage', dataImg)
+                localStorage.setItem('image', this.state.allImage)
+
+                resolve(res.data.result)
+              })
+              .catch((err) => {
+                console.log(err)
+                reject(err)
+              })
+          } else {
+            axios.get(process.env.VUE_APP_URL_PRODUCT + '/?page=1&sort=' + this.state.sort)
+              .then((res) => {
+                setex.commit('setProduct', res.data.result)
+                setex.commit('setPage', res.data.page)
+
+                const dataImg = res.data.result.map((item) => {
+                  return item.image
+                })
+                setex.commit('setUrlImage', dataImg)
+                localStorage.setItem('image', this.state.allImage)
+
+                resolve(res.data.result)
+              })
+              .catch((err) => {
+                console.log(err)
+                reject(err)
+              })
+          }
+        } else {
+          axios.get(process.env.VUE_APP_URL_PRODUCT + '/?page=1')
+            .then((res) => {
+              setex.commit('setProduct', res.data.result)
+              setex.commit('setPage', res.data.page)
+
+              const dataImg = res.data.result.map((item) => {
+                return item.image
+              })
+              setex.commit('setUrlImage', dataImg)
+              localStorage.setItem('image', this.state.allImage)
+
+              resolve(res.data.result)
+            })
+            .catch((err) => {
+              console.log(err)
+              reject(err)
+            })
+        }
       })
     },
-    nextPage (setex) {
+    getDataSearch (setex, payload) {
       return new Promise((resolve, reject) => {
-        setex.commit('nextPage')
+        localStorage.setItem('search', payload)
+        this.getData()
+      })
+    },
+    getDataSort (setex, payload) {
+      return new Promise((resolve, reject) => {
+        localStorage.setItem('sort', payload)
+        this.getData()
+      })
+    },
+    nextPage (setex, payload) {
+      return new Promise((resolve, reject) => {
+        setex.commit('nextPage', payload)
+        if (this.state.search != null) {
+          if (this.state.sort != null) {
+            axios.get(process.env.VUE_APP_URL_PRODUCT + '/?page=' + this.state.page + '&search=' + this.state.search + '&sort=' + this.state.sort)
+              .then((res) => {
+                setex.commit('setProduct', res.data.result)
+                // setex.commit('setPage', res.data.page)
+                resolve(res.data.result)
+              })
+              .catch((err) => {
+                console.log(err)
+                reject(err)
+              })
+          } else {
+            axios.get(process.env.VUE_APP_URL_PRODUCT + '/?page=' + this.state.page + '&search=' + this.state.search)
+              .then((res) => {
+                setex.commit('setProduct', res.data.result)
+                // setex.commit('setPage', res.data.page)
+                resolve(res.data.result)
+              })
+              .catch((err) => {
+                console.log(err)
+                reject(err)
+              })
+          }
+        } else if (this.state.sort != null) {
+          if (this.state.search != null) {
+            axios.get(process.env.VUE_APP_URL_PRODUCT + '/?page=' + this.state.page + '&sort=' + this.state.sort + '&search=' + this.state.search)
+              .then((res) => {
+                setex.commit('setProduct', res.data.result)
+                // setex.commit('setPage', res.data.page)
+                resolve(res.data.result)
+              })
+              .catch((err) => {
+                console.log(err)
+                reject(err)
+              })
+          } else {
+            axios.get(process.env.VUE_APP_URL_PRODUCT + '/?page=' + this.state.page + '&sort=' + this.state.sort)
+              .then((res) => {
+                setex.commit('setProduct', res.data.result)
+                // setex.commit('setPage', res.data.page)
+                resolve(res.data.result)
+              })
+              .catch((err) => {
+                console.log(err)
+                reject(err)
+              })
+          }
+        } else {
+          axios.get(process.env.VUE_APP_URL_PRODUCT + '/?page=' + this.state.page)
+            .then((res) => {
+              setex.commit('setProduct', res.data.result)
+              resolve(res.data.result)
+            })
+            .catch((err) => {
+              console.log(err)
+              reject(err)
+            })
+        }
+      })
+    },
+    prevPage (setex, payload) {
+      return new Promise((resolve, reject) => {
+        setex.commit('prevPage', payload)
         axios.get(process.env.VUE_APP_URL_PRODUCT + '/?page=' + this.state.page)
           .then((res) => {
             setex.commit('setProduct', res.data.result)
@@ -136,20 +378,7 @@ export default new Vuex.Store({
           })
       })
     },
-    prevPage (setex) {
-      return new Promise((resolve, reject) => {
-        setex.commit('prevPage')
-        axios.get(process.env.VUE_APP_URL_PRODUCT + '/?page=' + this.state.page)
-          .then((res) => {
-            setex.commit('setProduct', res.data.result)
-            resolve(res.data.result)
-          })
-          .catch((err) => {
-            console.log(err)
-            reject(err)
-          })
-      })
-    },
+
     interceptorsResponse (setex) {
       axios.interceptors.response.use(function (response) {
         return response
@@ -192,6 +421,7 @@ export default new Vuex.Store({
       return new Promise((resolve, reject) => {
         if (this.state.token !== null) {
           localStorage.removeItem('token')
+          localStorage.removeItem('search')
         }
       })
     },
@@ -204,15 +434,17 @@ export default new Vuex.Store({
           }
         })
           .then((res) => {
-            console.log(res)
+            console.log('update res:' + res.data.result)
+            setex.commit('setMessage', res.data.result)
+            localStorage.setItem('message', this.state.maessage)
           })
           .catch((err) => {
-            console.log(err)
+            // console.log('update err:' + err)
+            console.log(err.response.data.result)
+            setex.commit('setMessage', err.data.result.message)
+            localStorage.setItem('message', this.state.maessage)
           })
       })
-      // } else {
-      //   alert('image tidak boleh kosong')
-      // }
     },
     deleteData (setex, payload) {
       console.log(payload)
@@ -274,9 +506,6 @@ export default new Vuex.Store({
       setex.commit('setProductList', paylaod)
     },
     removeListProduct (setex, paylaod) {
-      // const indexA = productList.map((item) => {
-      //   return item.id
-      // }).indexOf(2)
       const index = this.state.productList.map((item) => {
         return item.id
       }).indexOf(paylaod.id)
@@ -297,16 +526,18 @@ export default new Vuex.Store({
       const index = this.state.productList.map((item) => {
         return item.id
       }).indexOf(id)
-
       console.log(index)
       setex.commit('setPlusCountList', id)
-      // const index = this.state.productList.map((item) => {
-      //   return item.id.indexOf(id)
-      // })
-      // console.log('index: ' + index)
     }
   },
+
   getters: {
+    histories (state) {
+      return state.histories
+    },
+    historiesIncome (state) {
+      return state.historiesIncome
+    },
     allProduct (state) {
       return state.allProduct
     },
@@ -339,18 +570,21 @@ export default new Vuex.Store({
     },
     totalPrice (state) {
       return state.totalPrice
+    },
+    search (state) {
+      return state.search
+    },
+    sort (state) {
+      return state.sort
+    },
+    urlImage (state) {
+      return state.urlImage
+    },
+    message (state) {
+      return state.message
     }
-    // getCount (state) {
-    //   return state.count * 2
-    // },
-    // getTodos (state) {
-    //   return state.todos
-    // },
-    // books (state) {
-    //   console.log(state.books)
-    //   return state.books
-    // }
   },
+
   modules: {
   }
 })

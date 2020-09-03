@@ -132,13 +132,53 @@
         </table>
       </div>
     </div>
+
+    <!-- testChart -->
+    <div class="container">
+      <line-chart
+        v-if="loaded"
+        :chartdata="chartdata"
+        :options="options"/>
+    </div>
   </div>
 </template>
 
 <script>
+import LineChart from '../LineChart/LineChart'
+// import axios from 'axios'
+import { mapActions } from 'vuex'
+
 export default {
-  name: 'Revenue'
+  name: 'LineChartContainer',
+  components: { LineChart },
+  data: () => ({
+    loaded: false,
+    chartdata: null
+  }),
+  mounted () {
+    this.loaded = false
+    this.getHistory().then((res) => {
+      this.chartdata = res
+      this.loaded = true
+    })
+    // const userlist () =>  new Promise((resolve, reject) => {
+    //   axios.get('http://localhost:4000/api/v1/histories//?sort=date&order=DESC', {
+    //     headers: {
+    //       Authorization: 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiZW1haWwiOiJhZG1pbkBnbWFpbC5jb20iLCJyb2xlSWQiOjEsImlhdCI6MTU5OTE0NDk5MywiZXhwIjoxNTk5MTU1NzkzfQ.2eDdCk8ojnfHAdK_ZelP_77AZdTg0yhbvgqZiAezOPQ'
+    //     }
+    //   })
+    //     .then((res) => {
+    //       resolve(res.data.result)
+    //     })
+    //   this.chartdata = userlist
+    //   this.loaded = true
+    // })
+  },
+  methods: {
+    ...mapActions(['getHistory'])
+  }
 }
+
 </script>
 
 <style scoped>

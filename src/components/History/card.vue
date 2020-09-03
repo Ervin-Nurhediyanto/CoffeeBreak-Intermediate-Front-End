@@ -5,8 +5,10 @@
         <div class="row">
           <div class="col pl-md-5">
             <h5>Today’s Income</h5>
-            <h3>Rp.1.000.000</h3>
-            <h5>+2% Yesterday</h5>
+            <!-- <h3>Rp.1.000.000</h3> -->
+            <h3>Rp.{{historiesIncome[0].amount}}</h3>
+            <!-- <h5>+2% Yesterday</h5> -->
+            <h5>+{{((historiesIncome[0].amount - historiesIncome[1].amount) / historiesIncome[1].amount).toFixed(2)}}% Yesterday</h5>
           </div>
         </div>
         <div class="elipse1"></div>
@@ -46,8 +48,22 @@
 </template>
 
 <script>
+import { mapGetters } from 'vuex'
+
 export default {
-  name: 'cardIncome'
+  name: 'cardIncome',
+  computed: {
+    ...mapGetters({
+      historiesIncome: 'historiesIncome',
+      percenTodayIncome: () => {
+        if (this.historiesIncome[0].amount > this.historiesIncome[1].amount) {
+          let percenIncome = 0
+          percenIncome += ((this.historiesIncome[0].amount - this.historiesIncome[1].amount) / this.historiesIncome[1].amount)
+          return percenIncome
+        }
+      }
+    })
+  }
 }
 </script>
 

@@ -1,6 +1,23 @@
 <template>
   <main class="col-md-11">
     <div class="row">
+
+      <div class="col-md-12 col-sm-12">
+        <article>
+            <input type="text" v-model="search" placeholder="search" />
+            <button @click="handleSearch(search)">Search</button>
+        </article>
+        <article class="sort d-flex justify-content-end">
+          <select @change="handleSort(sort)" v-model="sort" placeholder="sort">
+            <option value="">Sort</option>
+            <option value="name">a-z</option>
+            <option value="name&order=DESC">z-a</option>
+            <option value="price">low price</option>
+            <option value="price&order=DESC">high price</option>
+          </select>
+        </article>
+      </div>
+
       <article class="row main justify-content-center" v-for="product in products" :key="product.id">
         <Card
           :name="product.name"
@@ -11,27 +28,34 @@
           v-on:addToCart="updateCart($event)"
         />
       </article>
-      <article class="row page">
-        <div class="col-md-2 col-sm-2">
-          <h5 class="totalPage">Total Page {{totalPage}}</h5>
-        </div>
-        <div class="col-md-8 col-sm-8">
-          <div class="row justify-content-center">
-            <div class="col-md-4 col-sm-4">
-              <button v-show="page > 1" @click="prevPage">prev</button>
-            </div>
-            <div class="col-md-4 col-sm-4">
-              <h5 class>Page {{page}}</h5>
-            </div>
-            <div class="col-md-4 col-sm-4">
-              <button v-show="page < totalPage" @click="nextPage">next</button>
-            </div>
-          </div>
-        </div>
-        <div class="col-md-2 col-sm-2">
-          <!-- {{select}} -->
-        </div>
-      </article>
+
+      <nav aria-label="..." class="col-md-12">
+        <ul class="pagination">
+          <li class="page-item">
+            <a v-show="page > 1" @click="prevPage(1)" class="page-link" href="#">Prev</a>
+          </li>
+          <li class="page-item disabled">
+            <a v-show="page <= 1" class="page-link">Prev</a>
+          </li>
+          <li v-show="page >= totalPage && page != 1" @click="prevPage(2)" class="page-item"><a class="page-link" href="#">{{page - 2}}</a></li>
+          <li v-show="page > 1" @click="prevPage(1)" class="page-item"><a class="page-link" href="#">{{page - 1}}</a></li>
+          <li class="page-item active" aria-current="page">
+            <span class="page-link">
+              {{page}}
+              <span class="sr-only">(current)</span>
+            </span>
+          </li>
+          <li v-show="page < totalPage" @click="nextPage(1)" class="page-item"><a class="page-link" href="#">{{page + 1}}</a></li>
+          <li v-show="page <= 1 && totalPage != 1" @click="nextPage(2)" class="page-item"><a class="page-link" href="#">{{page + 2}}</a></li>
+          <li class="page-item">
+            <a v-show="page < totalPage" @click="nextPage(1)" class="page-link" href="#">Next</a>
+          </li>
+          <li class="page-item disabled">
+            <a v-show="page >= totalPage" class="page-link">Next</a>
+          </li>
+        </ul>
+      </nav>
+
     </div>
   </main>
 </template>
@@ -45,9 +69,10 @@ export default {
   components: {
     Card
   },
-  props: ['select'],
   data () {
     return {
+      search: '',
+      sort: ''
     }
   },
   computed: {
@@ -55,7 +80,6 @@ export default {
       allProduct: 'allProduct',
       products: 'products',
       totalPage: 'totalPage',
-      status: 'status',
       page: 'page',
       empty: 'empty'
     })
@@ -67,8 +91,21 @@ export default {
   methods: {
     ...mapActions(['getAllData']),
     ...mapActions(['getData']),
+    ...mapActions(['getDataSearch']),
+    ...mapActions(['getDataSort']),
     ...mapActions(['nextPage']),
     ...mapActions(['prevPage']),
+
+    handleSearch (key) {
+      this.getDataSearch(key)
+      this.$router.go(0)
+    },
+
+    handleSort (sort) {
+      this.getDataSort(sort)
+      this.$router.go(0)
+    },
+
     updateCart (updateCart) {
       if (this.checkId !== updateCart.id) {
         this.checkId.push(updateCart.id)
@@ -90,6 +127,19 @@ export default {
 </script>
 
 <style scoped>
+
+.red {
+  background-color: red;
+}
+
+.search {
+  margin-top: 20px;
+}
+
+.sort {
+  margin-right: 10px;
+  margin-left: auto;
+}
 
 aside {
   background: #ffffff;
@@ -223,57 +273,4 @@ article .select .image {
   }
 }
 
-/* @media (max-width: 576px) {
-  .icon {
-    width: 15px;
-    height: 15px;
-  }
-  .image {
-    width: 180px;
-    height: 150px;
-    border-radius: 10px 10px 0px 0px;
-  }
-  main {
-    height: 600px;
-  }
-  main .menu .row {
-    flex-direction: column;
-  }
-  article h6 {
-    font-size: 20px;
-  }
-  aside .scroll {
-    overflow-y: scroll;
-    height: 600px;
-  }
-  aside .scroll::-webkit-scrollbar {
-    display: none;
-  }
-  aside .list h3 {
-    font-size: 12px;
-    flex-direction: column;
-  }
-  aside .list h4 {
-    flex-direction: column;
-    font-size: 12px;
-    padding-top: 5px;
-  }
-  aside .list .select {
-    justify-content: center;
-    padding: 10px;
-    padding-top: 0;
-  }
-  aside .list .price {
-    flex-direction: column;
-  }
-  aside .btm {
-    padding: 5px;
-  }
-  aside .btm h3 {
-    font-size: 11px;
-  }
-  aside .btm p {
-    font-size: 10px;
-  }
-} */
 </style>

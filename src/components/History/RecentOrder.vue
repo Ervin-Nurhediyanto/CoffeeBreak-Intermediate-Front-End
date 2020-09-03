@@ -66,12 +66,15 @@
           <div class="row">
             <div class="col">
               <table>
-                <tr>
+                <tr v-for="history in histories" :key="history.id">
                   <td class="left">#10928</td>
-                  <td>Cashier 1</td>
-                  <td>06 October 2019</td>
-                  <td>Ice Tea, Salad With peanut sauce</td>
-                  <td>Rp.120.000</td>
+                  <td>{{history.firstName}} {{history.lastName}}</td>
+                  <!-- <td>06 October 2019</td> -->
+                  <td>{{history.date}}</td>
+                  <!-- <td>Ice Tea, Salad With peanut sauce</td> -->
+                  <td>{{history.name}} {{history.countItem}}x</td>
+                  <!-- <td>Rp.120.000</td> -->
+                  <td>Rp.{{history.Total}}</td>
                 </tr>
               </table>
             </div>
@@ -83,8 +86,15 @@
 </template>
 
 <script>
+import { mapGetters } from 'vuex'
+
 export default {
-  name: 'RecentOrder'
+  name: 'RecentOrder',
+  computed: {
+    ...mapGetters({
+      histories: 'histories'
+    })
+  }
 }
 </script>
 

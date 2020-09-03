@@ -7,7 +7,8 @@
             <Header />
             <div class="row">
               <Navbar />
-              <router-view v-on:updateCart="addToCart($event)" :select="select" />
+              <!-- <router-view v-on:updateCart="addToCart($event)" :select="select" /> -->
+              <router-view />
             </div>
           </div>
           <aside class="col-md-3 p-md-0 col-sm-3 p-sm-0">
@@ -83,21 +84,21 @@ export default {
     }
   },
   methods: {
-    addToCart (addToCart) {
-      if (this.count >= 0) {
-        this.count += addToCart.count
-        if (this.count < 0) {
-          this.count = 0
-        }
-      }
-      if (this.count === 0) {
-        this.cartProducts = []
-      }
-      this.empty = addToCart.empty
-      this.totals += addToCart.plus
-      this.cartProducts.push(addToCart)
-      this.checkoutProducts.push(addToCart)
-    },
+    // addToCart (addToCart) {
+    //   if (this.count >= 0) {
+    //     this.count += addToCart.count
+    //     if (this.count < 0) {
+    //       this.count = 0
+    //     }
+    //   }
+    //   if (this.count === 0) {
+    //     this.cartProducts = []
+    //   }
+    //   this.empty = addToCart.empty
+    //   this.totals += addToCart.plus
+    //   this.cartProducts.push(addToCart)
+    //   this.checkoutProducts.push(addToCart)
+    // },
     plusTotal (plusTotal) {
       this.totals += plusTotal.total
       this.checkoutProducts.map((item) => {

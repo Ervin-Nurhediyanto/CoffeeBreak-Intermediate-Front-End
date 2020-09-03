@@ -2,24 +2,30 @@
   <div class="main">
 
     <h1 class="cafe">Coffee Break Cafe</h1>
-    <div class="text">
+    <!-- <div class="text">
       <h1>Mau ngopi enak ga bikin kembung?</h1>
       <h2>Disini solusinya</h2>
       <h3>Kopi pilihan dari biji kopi terbaik</h3>
       <h3 class="text-white">Buruan pesan sekarang</h3>
-    </div>
+    </div> -->
 
       <div class="col slide">
         <div class="col">
+          <div class="container-image">
          <img class="image" src="https://raw.githubusercontent.com/Ervin-Nurhediyanto/CoffeeBreak-Cafe-App/master/asset/menu/Cappucino.jpg" />
+          </div>
           <h5>Cappucino</h5>
         </div>
         <div class="col">
+          <div class="container-image">
           <img class="image" src="https://raw.githubusercontent.com/Ervin-Nurhediyanto/CoffeeBreak-Cafe-App/master/asset/menu/Espresso.jpg" />
+          </div>
          <h5>Espresso</h5>
         </div>
         <div class="col">
+          <div class="container-image">
           <img class="image" src="https://raw.githubusercontent.com/Ervin-Nurhediyanto/CoffeeBreak-Cafe-App/master/asset/menu/Cofee%20Latte.jpg" />
+          </div>
           <h5>Cofee Latte</h5>
         </div>
       </div>
@@ -95,10 +101,18 @@ export default {
   background-color: red;
 }
 
+.container-image {
+  width: 270px;
+  height: 200px;
+  margin-left: 40px;
+  margin-top: 5px;
+  margin-bottom: 5px;
+}
+
 .image {
-    width: 250px;
-    height: 180px;
-    border-radius: 10px;
+  width: 100%;
+  height: 100%;
+  border-radius: 10px;
 }
 
 /* .list {
@@ -112,7 +126,7 @@ export default {
   justify-content: center;
   align-items: center;
   padding: 20px;
-  background-image: url("../../assets/bg-coffee-break.jpg");
+  background-image: url("../../assets/bg_coffee.jpg");
   /* filter: brightness(80%); */
   background-repeat: no-repeat;
   background-size: 100% 100%;
@@ -152,10 +166,11 @@ export default {
 
 .slide {
     position: absolute;
-    top: 330px;
+    top: 117px;
+    left: 0px;
     overflow-y: scroll;
-    height: 200px;
-    width: 320px;
+    height: 250px;
+    width: 350px;
 }
 
 .slide::-webkit-scrollbar {
@@ -163,14 +178,17 @@ export default {
 }
 
 .slide h5 {
+  font-size: 30px;
   font-weight: bold;
   color: rgb(255, 238, 3);
   text-shadow: 3px 3px rgb(44, 49, 44);
+  margin-bottom: 20px;
 }
 
 .order {
   position: absolute;
-  top: 550px
+  top: 380px;
+  left: -510px;
 }
 
 .submit {

@@ -20,6 +20,7 @@ import Card from '../../../components/History/card'
 import Revenue from '../../../components/History/Revenue'
 import Recent from '../../../components/History/RecentOrder'
 import AddProduct from '../../../components/Home/Modal-Add'
+import { mapGetters, mapActions } from 'vuex'
 
 export default {
   name: 'Histoy',
@@ -35,6 +36,19 @@ export default {
     Revenue,
     Recent,
     AddProduct
+  },
+  mounted () {
+    this.getHistory()
+    this.getHistoryIncome()
+  },
+  computed: {
+    ...mapGetters({
+      histories: 'histories'
+    })
+  },
+  methods: {
+    ...mapActions(['getHistory']),
+    ...mapActions(['getHistoryIncome'])
   }
 }
 </script>

@@ -1,7 +1,11 @@
-/* eslint-disable eqeqeq */
 <template>
   <main class="col-md-11 card-body">
     <div class="row">
+
+      <div class="col-md-12 col-sm-12">
+        <Search />
+        <Sort />
+      </div>
 
       <form @submit.prevent="update_Data(product, product.id)" v-for="product in products" :key="product.id">
         <div class="col">
@@ -27,13 +31,13 @@
               <option value="1">Drink</option>
             </select>
           </div>
-          <button type="submit" class="btn btn-success">Update</button>
+          <button type="submit" class="btn btn-success" data-toggle="modal" data-target="#Notif">Update</button>
           <button class="btn btn-success" @click="delete_Data(product.id)">Delete</button>
         </div>
       </form>
 
     </div>
-    <article class="row">
+    <!-- <article class="row">
       <div class="col-md-2 col-sm-2 mt-md-2 mt-sm-2">
         <h5 class="totalPage">Total Page {{totalPage}}</h5>
       </div>
@@ -52,18 +56,28 @@
       </div>
       <div class="col-md-2 col-sm-2">
       </div>
-    </article>
+    </article> -->
 
+    <Pagination />
+    <Notif />
   </main>
 </template>
 
 <script>
-import { mapActions } from 'vuex'
+import { mapGetters, mapActions } from 'vuex'
 import DataMixin from '../Home/Home'
+import Search from '../../../components/Home/Search'
+import Sort from '../../../components/Home/Sort'
+import Pagination from '../../../components/Home/Pagination'
+import Notif from '../../../components/Home/Modal-Notif'
 
 export default {
   name: 'Product',
-  computed: {
+  components: {
+    Search,
+    Sort,
+    Pagination,
+    Notif
   },
   data () {
     return {
@@ -72,6 +86,11 @@ export default {
     }
   },
   mixins: [DataMixin],
+  computed: {
+    ...mapGetters({
+      urlImage: 'urlImage'
+    })
+  },
   mounted () {
   },
   methods: {
@@ -95,11 +114,14 @@ export default {
         formData: formData,
         id: id
       }
+      // console.log('image: ' + data.formData.image)
+
       this.updateData(data)
-        .then(() => {
+        .then((res) => {
+          // console.log('update:' + res.data.result.image)
         })
-      this.$router.push('/home')
-      alert('UPDATE DATA SUCCESS')
+      // this.$router.push('/home')
+      // alert('UPDATE DATA SUCCESS')
     },
 
     delete_Data (id) {
