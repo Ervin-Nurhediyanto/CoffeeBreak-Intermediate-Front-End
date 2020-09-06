@@ -26,7 +26,6 @@ import { mapGetters, mapActions } from 'vuex'
 
 export default {
   name: 'Checkout',
-  // props: ['name', 'image', 'price', 'id', 'countItem'],
   data () {
     return {
       active: true
@@ -66,15 +65,11 @@ export default {
         const minusPrice = product.price * -1
         this.addTotalPrice(minusPrice)
       } else {
-        // this.active = false
         this.removeListProduct(product)
         this.removeProduct(product.id)
         this.minusCount()
         const minusPrice = product.price * -1
         this.addTotalPrice(minusPrice)
-        // if (product.total * product.countItem === 0) {
-        // this.empty = true
-        // }
       }
     },
     cancel () {
@@ -104,7 +99,6 @@ export default {
   width: 100px;
   height: 100px;
   object-fit: cover;
-  /* border-radius: 5px; */
   padding-top: 0;
 }
 
@@ -137,7 +131,6 @@ export default {
     line-height: 20px;
   }
   aside h4 {
-    /* font-size: 8px; */
     line-height: 10px;
   }
   aside .list .item h3 {

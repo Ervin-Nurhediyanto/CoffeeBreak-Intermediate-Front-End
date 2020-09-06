@@ -2,7 +2,7 @@
   <div class="row cart m-md-0 m-sm-0 justify-content-center">
       <h2>
         Cart
-        <span class="count" @click="toCart" >{{cartCount}}</span>
+        <span class="count" >{{cartCount}}</span>
       </h2>
     </div>
 </template>
@@ -11,16 +11,10 @@
 import { mapGetters } from 'vuex'
 export default {
   name: 'Cart',
-  // props: ['count'],
   computed: {
     ...mapGetters({
       cartCount: 'cartCount'
     })
-  },
-  methods: {
-    toCart () {
-      this.$emit('toCart', false)
-    }
   }
 }
 </script>
@@ -77,7 +71,6 @@ button {
     line-height: 20px;
   }
   aside h4 {
-    /* font-size: 8px; */
     line-height: 10px;
   }
   aside .list .item h3 {

@@ -46,25 +46,6 @@ export default {
 </script>
 
 <style scoped>
-/* Background Check */
-
-.red {
-  background-color: red;
-}
-
-.blue {
-  background-color: blue;
-}
-
-.green {
-  background-color: green;
-}
-
-.yellow {
-  background-color: yellow;
-}
-
-/* Image, Text */
 
 .image-cart {
   width: 100px;
@@ -184,54 +165,16 @@ aside .btm .cancel {
   color: #ffffff;
 }
 
+.checkout, .cancel {
+  cursor: pointer;
+}
+
 @media (max-width: 768px) {
   .btm h3 {
     font-size: 15px;
     font-weight: bold;
   }
-  /* .image {
-    width: 100px;
-    height: 80px;
-    border-radius: 10px 10px 0px 0px;
-  }
-  header,
-  aside .cart {
-    height: 50px;
-  }
-  header h2,
-  aside .cart h2 {
-    font-size: 20px;
-    line-height: 20px;
-  }
-  main {
-    height: 310px;
-  }
-  article h6 {
-    font-size: 10px;
-  }
-  article h3 {
-    font-size: 13px;
-  }
-  aside h3 {
-    font-size: 12px;
-    line-height: 20px;
-  }
-  aside h4 {
-    line-height: 10px;
-  }
-  aside .list .item h3 {
-    font-size: 10px;
-  }
-  aside .list .price h4 {
-    font-size: 10px;
-  }
-  aside .scroll {
-    overflow-y: scroll;
-    height: 300px;
-  }
-  aside .scroll::-webkit-scrollbar {
-    display: none;
-  } */
+
   .checkout, .cancel {
       height: 30px;
       justify-content: center;
@@ -239,60 +182,4 @@ aside .btm .cancel {
   }
 }
 
-/* @media (max-width: 576px) {
-  .icon {
-    width: 15px;
-    height: 15px;
-  }
-  .image {
-    width: 180px;
-    height: 150px;
-    border-radius: 10px 10px 0px 0px;
-  }
-  main {
-    height: 600px;
-  }
-  main .menu .row {
-    flex-direction: column;
-  }
-  article h6 {
-    font-size: 20px;
-  }
-  aside .scroll {
-    overflow-y: scroll;
-    height: 600px;
-  }
-  aside .scroll::-webkit-scrollbar {
-    display: none;
-  }
-  aside .list h3 {
-    font-size: 12px;
-    flex-direction: column;
-  }
-  aside .list h4 {
-    flex-direction: column;
-    font-size: 12px;
-    padding-top: 5px;
-  }
-  aside .list .select {
-    justify-content: center;
-    padding: 10px;
-    padding-top: 0;
-  }
-  aside .list .price {
-    flex-direction: column;
-  }
-  aside .btm {
-    padding: 5px;
-  }
-  .btm h3 {
-    font-size: 11px;
-  }
-  .btm p {
-    font-size: 10px;
-  }
-  .checkout, .cancel {
-      height: 200px;
-  }
-} */
 </style>

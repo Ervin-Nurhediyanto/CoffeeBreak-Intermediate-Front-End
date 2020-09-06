@@ -19,8 +19,8 @@ export default new Vuex.Store({
     totalPrice: 0,
     totalPage: '',
     page: null,
-    status: '',
     empty: true,
+    status: '',
     cartCount: 0,
     token: localStorage.getItem('token') || null,
     search: localStorage.getItem('search') || null,
@@ -46,21 +46,17 @@ export default new Vuex.Store({
     },
     setProduct (state, payload) {
       state.products = payload
-
       const changeProduct = state.products.map((item) => {
         const resProduct = Object.assign({}, item, { cardSelect: false }, { cardActive: true })
         return resProduct
       })
-
       state.products = changeProduct
     },
     setProductNonAct (state, id) {
       state.products.map((item) => {
         if (item.id === id) {
-          // if (item.cardSelect === true) {
           item.cardSelect = false
           item.cardActive = true
-          // }
         }
       })
     },
@@ -147,7 +143,6 @@ export default new Vuex.Store({
       return new Promise((resolve, reject) => {
         axios.get(process.env.VUE_APP_URL_HISTORY + '/?sort=date&order=DESC')
           .then((res) => {
-            // console.log('history:' + res.data.result)
             setex.commit('setHistory', res.data.result)
             resolve(res.data.result)
           })
@@ -161,7 +156,6 @@ export default new Vuex.Store({
       return new Promise((resolve, reject) => {
         axios.get(process.env.VUE_APP_URL_HISTORY + '/?sort=date&order=DESC&group=history.date')
           .then((res) => {
-            // console.log('history income:' + res.data.result)
             setex.commit('setHistoryIncome', res.data.result)
             resolve(res.data.result)
           })
@@ -234,7 +228,6 @@ export default new Vuex.Store({
               .then((res) => {
                 setex.commit('setProduct', res.data.result)
                 setex.commit('setPage', res.data.page)
-                // localStorage.setItem('search', payload)
                 const dataImg = res.data.result.map((item) => {
                   return item.image
                 })
@@ -345,7 +338,6 @@ export default new Vuex.Store({
             axios.get(process.env.VUE_APP_URL_PRODUCT + '/?page=' + this.state.page + '&search=' + this.state.search + '&sort=' + this.state.sort)
               .then((res) => {
                 setex.commit('setProduct', res.data.result)
-                // setex.commit('setPage', res.data.page)
                 resolve(res.data.result)
               })
               .catch((err) => {
@@ -356,7 +348,6 @@ export default new Vuex.Store({
             axios.get(process.env.VUE_APP_URL_PRODUCT + '/?page=' + this.state.page + '&search=' + this.state.search)
               .then((res) => {
                 setex.commit('setProduct', res.data.result)
-                // setex.commit('setPage', res.data.page)
                 resolve(res.data.result)
               })
               .catch((err) => {
@@ -369,7 +360,6 @@ export default new Vuex.Store({
             axios.get(process.env.VUE_APP_URL_PRODUCT + '/?page=' + this.state.page + '&sort=' + this.state.sort + '&search=' + this.state.search)
               .then((res) => {
                 setex.commit('setProduct', res.data.result)
-                // setex.commit('setPage', res.data.page)
                 resolve(res.data.result)
               })
               .catch((err) => {
@@ -380,7 +370,6 @@ export default new Vuex.Store({
             axios.get(process.env.VUE_APP_URL_PRODUCT + '/?page=' + this.state.page + '&sort=' + this.state.sort)
               .then((res) => {
                 setex.commit('setProduct', res.data.result)
-                // setex.commit('setPage', res.data.page)
                 resolve(res.data.result)
               })
               .catch((err) => {
@@ -450,7 +439,6 @@ export default new Vuex.Store({
           })
           .catch((err) => {
             setex.commit('setMessage', err.response.data.result)
-            // localStorage.setItem('message', this.state.maessage)
             reject(err)
           })
       })
@@ -466,8 +454,22 @@ export default new Vuex.Store({
         }
       })
     },
+    addData (setex, payload) {
+      console.log(payload)
+      return new Promise((resolve, reject) => {
+        axios.post(process.env.VUE_APP_URL_PRODUCT, payload)
+          .then((res) => {
+            setex.commit('setMessage', res.data.result)
+            localStorage.setItem('message', this.state.maessage)
+          })
+          .catch((err) => {
+            console.log(err.response.data.result)
+            setex.commit('setMessage', err.data.result.message)
+            localStorage.setItem('message', this.state.maessage)
+          })
+      })
+    },
     updateData (setex, payload) {
-      // if (payload.formData.image != null) {
       return new Promise((resolve, reject) => {
         axios.patch(process.env.VUE_APP_URL_PRODUCT + '/' + payload.id, payload.formData, {
           headers: {
@@ -475,12 +477,10 @@ export default new Vuex.Store({
           }
         })
           .then((res) => {
-            // console.log('update res:' + res.data.result)
             setex.commit('setMessage', res.data.result)
             localStorage.setItem('message', this.state.maessage)
           })
           .catch((err) => {
-            // console.log('update err:' + err)
             console.log(err.response.data.result)
             setex.commit('setMessage', err.data.result.message)
             localStorage.setItem('message', this.state.maessage)
@@ -488,33 +488,34 @@ export default new Vuex.Store({
       })
     },
     deleteData (setex, payload) {
-      console.log(payload)
       return new Promise((resolve, reject) => {
-        axios.delete(process.env.VUE_APP_URL_PRODUCT + '/' + payload.id, {
+        axios.delete(process.env.VUE_APP_URL_PRODUCT + '/' + payload, {
           headers: {
             Authorization: `Bearer ${this.state.token}`
           }
         })
           .then((res) => {
-            // console.log(res)
             setex.commit('setMessage', res.data.result)
             localStorage.setItem('message', this.state.maessage)
           })
           .catch((err) => {
             console.log(err)
+            setex.commit('setMessage', err.data.result.message)
+            localStorage.setItem('message', this.state.maessage)
           })
       })
     },
     register (setex, payload) {
-      console.log(payload)
       return new Promise((resolve, reject) => {
         axios.post(process.env.VUE_APP_URL_REG_USER, payload)
           .then((res) => {
-            console.log(res)
+            setex.commit('setMessage', res.data.result)
+            localStorage.setItem('message', this.state.maessage)
             resolve(res.data.result[0])
           })
           .catch((err) => {
-            console.log(err)
+            setex.commit('setMessage', err.response.data.result)
+            localStorage.setItem('message', this.state.maessage)
             reject(err)
           })
       })
@@ -552,8 +553,6 @@ export default new Vuex.Store({
       const index = this.state.productList.map((item) => {
         return item.id
       }).indexOf(paylaod.id)
-
-      // console.log('index: ' + index)
       setex.commit('removeProductList', index)
     },
     removeProduct (setex, id) {

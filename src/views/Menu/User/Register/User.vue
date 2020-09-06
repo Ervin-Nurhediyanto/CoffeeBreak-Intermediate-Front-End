@@ -1,7 +1,5 @@
 <template>
 
-<!-- <div class="main">
-    <h1 class='cafe'>Coffee Break Cafe </h1> -->
     <div class="register">
       <form>
         <p>Register</p>
@@ -22,17 +20,19 @@
         <input type="text" class="form-control type" v-model="lastName" placeholder="Last name">
       </div>
       <div class="form-group">
-        <button type="submit" class="btn btn-primary submit" @click="handleRegister">Submit</button>
+        <button type="submit" class="btn btn-primary submit" @click="handleRegister" data-toggle="modal" data-target="#Notif">Register</button>
       </div>
       <h4>Sudah punya akun? Silahkan <span class="login" @click="login">Login</span></h4>
     </form>
+    <Notif />
     </div>
-  <!-- </div> -->
 
 </template>
 
 <script>
 import { mapActions } from 'vuex'
+import Notif from '../../../../components/Home/Modal-Notif'
+
 export default {
   name: 'RegisterUser',
   data () {
@@ -42,6 +42,9 @@ export default {
       firstName: '',
       lastName: ''
     }
+  },
+  components: {
+    Notif
   },
   methods: {
     handleRegister (e) {
@@ -53,8 +56,7 @@ export default {
         lastName: this.lastName
       }
       this.register(data)
-        .then(() => {
-          this.$router.push('/login')
+        .then((res) => {
         })
     },
     login () {
@@ -88,7 +90,6 @@ form {
   justify-content: center;
   align-items: center;
   padding: 200px;
-  background-image: url("../../../../assets/bg-coffee-break.jpg");
   background-repeat: no-repeat;
   background-size: 100% 100%;
   height: 663px;
@@ -227,19 +228,6 @@ color: black;
   .register p {
   margin: 0px 0px 0px 0px;
   }
-}
-
-@media (max-width: 576px) {
-  .main {
-    height: 711px;
-    background-size: auto 100%;
-  }
-  .cafe {
-    font-size: 30px;
-  }
-  p {
-  font-size: 35px;
-}
 }
 
 </style>

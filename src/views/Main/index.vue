@@ -7,25 +7,13 @@
             <Header />
             <div class="row">
               <Navbar />
-              <!-- <router-view v-on:updateCart="addToCart($event)" :select="select" /> -->
               <router-view />
             </div>
           </div>
           <aside class="col-md-3 p-md-0 col-sm-3 p-sm-0">
-            <Cart :count="count" v-on:toCart="addItemCart($event)" />
+            <Cart v-on:toCart="addItemCart($event)" />
             <Empty v-if="empty" />
             <div v-else class="scroll">
-              <!-- <div v-for="Product in productList" :key="Product.id">
-                <Checkout
-                  :name="Product.name"
-                  :image="Product.image"
-                  :price="Product.price"
-                  :id="Product.id"
-                  :countItem="Product.countItem"
-                  v-on:plus="plusTotal($event)"
-                  v-on:minus="minusTotal($event)"
-                />
-              </div> -->
               <div class="checkout">
                 <Checkout />
               </div>
@@ -79,31 +67,9 @@ export default {
   },
   data () {
     return {
-      // empty: true,
-      // count: 0,
-      // select: false,
-      // cartProducts: [],
-      // checkoutProducts: [],
-      // totals: 0,
-      // quality: 1
     }
   },
   methods: {
-    // addToCart (addToCart) {
-    //   if (this.count >= 0) {
-    //     this.count += addToCart.count
-    //     if (this.count < 0) {
-    //       this.count = 0
-    //     }
-    //   }
-    //   if (this.count === 0) {
-    //     this.cartProducts = []
-    //   }
-    //   this.empty = addToCart.empty
-    //   this.totals += addToCart.plus
-    //   this.cartProducts.push(addToCart)
-    //   this.checkoutProducts.push(addToCart)
-    // },
     plusTotal (plusTotal) {
       this.totals += plusTotal.total
       this.checkoutProducts.map((item) => {
@@ -169,8 +135,5 @@ export default {
     bottom: 0;
     top: auto;
   }
-  /* aside { */
-    /* height: 310px; */
-  /* } */
 }
 </style>

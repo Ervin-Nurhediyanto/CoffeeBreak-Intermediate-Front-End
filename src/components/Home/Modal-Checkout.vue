@@ -1,9 +1,7 @@
 <template>
-  <!-- The Modal -->
   <div class="modal" id="checkModal">
     <div class="modal-dialog">
       <div class="modal-content">
-        <!-- Modal body -->
         <div class="modal-body">
           <div class="col">
             <div class="row p-md-2 p-sm-2 justify-content-between">
@@ -51,7 +49,6 @@
               <div class="d-flex justify-content-start">
                 <h5>Payment: Cash</h5>
               </div>
-              <!-- <h2>{{products}}</h2> -->
             </div>
             <div class="col mb-md-2 mb-sm-2">
               <button type="button" class="btn btn-primary">Print</button>

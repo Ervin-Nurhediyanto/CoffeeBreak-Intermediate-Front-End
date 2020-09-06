@@ -69,11 +69,8 @@
                 <tr v-for="history in histories" :key="history.id">
                   <td class="left">#10928</td>
                   <td>{{history.firstName}} {{history.lastName}}</td>
-                  <!-- <td>06 October 2019</td> -->
                   <td>{{history.date}}</td>
-                  <!-- <td>Ice Tea, Salad With peanut sauce</td> -->
                   <td>{{history.name}} {{history.countItem}}x</td>
-                  <!-- <td>Rp.120.000</td> -->
                   <td>Rp.{{history.Total}}</td>
                 </tr>
               </table>

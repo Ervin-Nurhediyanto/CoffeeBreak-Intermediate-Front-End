@@ -38,14 +38,11 @@ header .menubar {
   justify-content: center;
   padding-left: 20px;
   width: 6%;
-  /* padding: auto; */
-  /* background-color: yellow; */
 }
 header .history {
   display: flex;
   flex-direction: column;
   width: 94%;
-  /* background-color: red; */
   padding: 15px;
 }
 header h4 {
@@ -80,7 +77,6 @@ header .col-md {
   .icon {
     width: 20px;
     height: 20px;
-    /* margin-right: 5px; */
   }
   header .menubar {
   margin-top: 5px;

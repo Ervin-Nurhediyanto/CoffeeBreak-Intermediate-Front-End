@@ -11,35 +11,35 @@ Vue.directive('filter', {
   }
 })
 
-// Vue.directive('position', {
-//   bind (el, binding) {
-//     el.style.position = binding.value
-//   }
-// })
+Vue.directive('position', {
+  bind (el, binding) {
+    el.style.position = binding.value
+  }
+})
 
-// Vue.directive('top', {
-//   bind (el, binding) {
-//     el.style.top = `${binding.value}px`
-//   }
-// })
+Vue.directive('top', {
+  bind (el, binding) {
+    el.style.top = `${binding.value}px`
+  }
+})
 
-// Vue.directive('bottom', {
-//   bind (el, binding) {
-//     el.style.bottom = `${binding.value}px`
-//   }
-// })
+Vue.directive('bottom', {
+  bind (el, binding) {
+    el.style.bottom = `${binding.value}px`
+  }
+})
 
-// Vue.directive('right', {
-//   bind (el, binding) {
-//     el.style.right = `${binding.value}px`
-//   }
-// })
+Vue.directive('right', {
+  bind (el, binding) {
+    el.style.right = `${binding.value}px`
+  }
+})
 
-// Vue.directive('left', {
-//   bind (el, binding) {
-//     el.style.left = `${binding.value}px`
-//   }
-// })
+Vue.directive('left', {
+  bind (el, binding) {
+    el.style.left = `${binding.value}px`
+  }
+})
 
 new Vue({
   router,

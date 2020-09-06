@@ -89,9 +89,6 @@ nav button.btn-primary {
     width: 20%;
   }
 
-  nav img {
-  }
-
   .image {
     width: 100px;
     height: 80px;
@@ -115,15 +112,11 @@ nav button.btn-primary {
   article h3 {
     font-size: 13px;
   }
-  article h4.text {
-    /* font-size: 9px; */
-  }
   aside h3 {
     font-size: 12px;
     line-height: 20px;
   }
   aside h4 {
-    /* font-size: 8px; */
     line-height: 10px;
   }
   aside .list .item h3 {

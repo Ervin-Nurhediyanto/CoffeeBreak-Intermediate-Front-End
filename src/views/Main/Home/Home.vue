@@ -44,8 +44,6 @@ export default {
     return {
       search: '',
       sort: ''
-      // cardSelect: false,
-      // cardActive: true
     }
   },
   computed: {
@@ -108,18 +106,10 @@ export default {
 .search-sort {
   padding-top: 15px;
   padding-left: 0px;
-  /* background-color: yellow; */
 }
 
 .search {
-/* background-color: blue; */
 padding-top: 10px;
-}
-
-.sort {
-  /* margin-right: 10px; */
-  /* margin-left: auto; */
-  /* background-color: red; */
 }
 
 aside {
@@ -207,10 +197,6 @@ main div {
     font-size: 15px;
   }
 
-  .main {
-    /* background-color: red; */
-    /* width: 300px; */
-  }
 }
 
 </style>

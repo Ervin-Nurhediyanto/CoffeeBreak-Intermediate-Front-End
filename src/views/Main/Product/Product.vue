@@ -1,7 +1,6 @@
 <template>
   <main class="col-md-11 card-body">
     <div class="row">
-
       <div class="col-md-12 col-sm-12">
         <div class="search-sort row">
           <div class="col-md-10 col-sm-10 d-flex justify-content-start search">
@@ -12,8 +11,8 @@
           </div>
         </div>
       </div>
-
       <div class="row">
+
       <form @submit.prevent="update_Data(product, product.id)" v-for="product in products" :key="product.id">
         <div class="col">
           <div class="row container-img">
@@ -42,17 +41,13 @@
             <button type="submit" class="btn btn-success" data-toggle="modal" data-target="#Notif">Update</button>
             <button class="btn btn-danger" data-toggle="modal" data-target="#NotifDelete" @click="delete_Data(product.id)">Delete</button>
           </div>
-          <!-- <div>
-            <button type="button" class="btn btn-secondary" @click="cancel">No</button>
-            <button type="button" class="btn btn-primary" @click="delete_Data(product.id)" data-toggle="modal" data-target="#Notif">Yes</button>
-          </div> -->
         </div>
       </form>
-      </div>
 
+      </div>
     <Pagination />
-    <Notif :delId='delId' />
-    <NotifDelete />
+    <Notif />
+    <NotifDelete :delId='delId' />
     </div>
   </main>
 </template>
@@ -88,8 +83,10 @@ export default {
     })
   },
   mounted () {
+    this.getData()
   },
   methods: {
+    ...mapActions(['getData']),
     ...mapActions(['nextPage']),
     ...mapActions(['prevPage']),
     ...mapActions(['getAllData']),
@@ -113,20 +110,12 @@ export default {
 
       this.updateData(data)
         .then((res) => {
+          this.$router.go(0)
         })
-      // this.$router.go(0)
     },
 
     delete_Data (id) {
       this.delId = id
-      // const data = {
-      //   id: id
-      // }
-      // this.deleteData(data)
-      //   .then(() => {
-      //   })
-      // this.$router.go(0)
-      // alert('DELETE SUCCESS')
     },
 
     option () {
@@ -235,21 +224,15 @@ button {
 }
 
 @media (max-width: 768px) {
-  .search-sort {
-    /* background-color: red; */
-  }
 
   .search {
-    /* background-color: blue; */
     position: absolute;
     top: -2530px;
     left: -10px
   }
 
   .sort {
-    /* position: absolute; */
     top: 0px;
-    /* left: 0px */
     right: -150px;
   }
 

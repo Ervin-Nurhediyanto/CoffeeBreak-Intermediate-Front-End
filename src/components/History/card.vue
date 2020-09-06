@@ -5,9 +5,7 @@
         <div class="row">
           <div class="col pl-md-5">
             <h5>Today’s Income</h5>
-            <!-- <h3>Rp.1.000.000</h3> -->
             <h3>Rp.{{historiesIncome[0].amount}}</h3>
-            <!-- <h5>+2% Yesterday</h5> -->
             <h5>+{{((historiesIncome[0].amount - historiesIncome[1].amount) / historiesIncome[1].amount).toFixed(2)}}% Yesterday</h5>
           </div>
         </div>

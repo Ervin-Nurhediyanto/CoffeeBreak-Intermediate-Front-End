@@ -24,23 +24,6 @@ export default {
 </script>
 
 <style scoped>
-/* Background Check */
-
-.red {
-  background-color: red;
-}
-
-.blue {
-  background-color: blue;
-}
-
-.green {
-  background-color: green;
-}
-
-.yellow {
-  background-color: yellow;
-}
 
 h2,
 h3,
@@ -112,7 +95,6 @@ input {
     line-height: 20px;
   }
   aside h4 {
-    /* font-size: 8px; */
     line-height: 10px;
   }
   aside .list .item h3 {

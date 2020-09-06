@@ -8,7 +8,7 @@
           <span aria-hidden="true">&times;</span>
         </button>
       <div class="modal-body">
-        <h3>{{message}}</h3>
+        <h3>Delete Product?</h3>
       </div>
       <div>
         <button type="button" class="btn btn-secondary" data-dismiss="modal">No</button>
@@ -37,18 +37,18 @@ export default {
       message: 'message'
     })
   },
+  mounted () {
+    this.getData()
+  },
   methods: {
     ...mapActions(['deleteData']),
+    ...mapActions(['getData']),
+
     delete_Data (id) {
-      this.delId = id
-      const data = {
-        id: id
-      }
-      this.deleteData(data)
+      this.deleteData(id)
         .then(() => {
         })
-    //   this.$router.go(0)
-    //   alert('DELETE SUCCESS')
+      this.getData()
     }
   }
 }
@@ -62,6 +62,10 @@ export default {
 
 .modal-content {
 border-radius: 40px 0 40px 0;
+}
+
+.modal h3 {
+  font-family: 'Lobster', cursive;
 }
 
 button.close {

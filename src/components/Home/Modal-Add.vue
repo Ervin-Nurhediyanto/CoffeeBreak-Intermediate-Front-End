@@ -1,9 +1,7 @@
 <template>
-  <!-- The Modal -->
   <div class="modal" id="myModal">
     <div class="modal-dialog">
       <div class="modal-content">
-        <!-- Modal body -->
         <div class="modal-body col">
           <h5 class="modal-title">Add Item</h5>
 
@@ -33,7 +31,7 @@
                 <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
               </div>
               <div class="pr-md-4 pr-sm-4">
-                <button type="submit" class="btn btn-primary">Add</button>
+                <button type="submit" class="btn btn-primary" data-toggle="modal" data-target="#Notif">Add</button>
               </div>
             </div>
           </form>
@@ -41,11 +39,14 @@
         </div>
       </div>
     </div>
+    <Notif />
   </div>
 </template>
 
 <script>
-import axios from 'axios'
+import Notif from './Modal-Notif'
+import { mapActions } from 'vuex'
+
 export default {
   name: 'Add',
   data () {
@@ -57,22 +58,27 @@ export default {
       Hasil: ''
     }
   },
+  components: {
+    Notif
+  },
   methods: {
+    ...mapActions(['addData']),
+
     onFileUpload (event) {
       this.FILE = event.target.files[0]
     },
+
     add () {
       const formData = new FormData()
       formData.append('name', this.name)
       formData.append('image', this.FILE, this.FILE.name)
       formData.append('price', this.price)
       formData.append('idCategory', this.idCategory)
-      axios.post(process.env.VUE_APP_URL_PRODUCT, formData, {
-      }).then((res) => {
-        console.log(res)
-        this.$router.go(0)
-        alert('ADD DATA SUCCESS')
-      })
+      this.addData(formData)
+        .then((res) => {
+          console.log(res)
+          this.$router.go(0)
+        })
     }
   }
 }

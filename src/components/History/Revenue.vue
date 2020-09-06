@@ -30,117 +30,12 @@
       </div>
       <div class="row p-md-3 p-sm-3">
 
-        <!-- testChart -->
         <div class="container">
           <line-chart
           :chartdata="histories"
           />
         </div>
 
-        <!-- :thisM="historiesMonth[0].month.toString()"
-          :lastM="historiesMonth[1].month.toString()" -->
-
-        <!-- <table>
-          <tr>
-            <th>50k</th>
-            <td rowspan="8"></td>
-
-            <td rowspan="4"></td>
-            <td rowspan="3"></td>
-            <td rowspan="7"></td>
-
-            <td rowspan="3"></td>
-            <td rowspan="2"></td>
-            <td rowspan="7"></td>
-
-            <td rowspan="4"></td>
-            <td rowspan="5"></td>
-            <td rowspan="7"></td>
-
-            <td rowspan="3"></td>
-            <td rowspan="4"></td>
-            <td rowspan="7"></td>
-
-            <td rowspan="3"></td>
-            <td rowspan="1"></td>
-            <td rowspan="7"></td>
-
-            <td rowspan="1"></td>
-            <td rowspan="3"></td>
-            <td rowspan="7"></td>
-
-            <td rowspan="3"></td>
-            <td rowspan="6" class="lastMonth"></td>
-            <td rowspan="7"></td>
-
-            <td rowspan="6" class="thisMonth"></td>
-            <td rowspan="4"></td>
-            <td rowspan="7"></td>
-
-            <td rowspan="1"></td>
-            <td rowspan="2"></td>
-            <td rowspan="7"></td>
-
-            <td rowspan="2"></td>
-            <td rowspan="1"></td>
-            <td rowspan="7"></td>
-            <td colspan="3" class="info">This Month :</td>
-            <td colspan="2" class="thisMonth info"></td>
-          </tr>
-          <tr>
-            <th>40k</th>
-            <td rowspan="5" class="lastMonth"></td>
-            <td rowspan="5" class="thisMonth"></td>
-            <td rowspan="5" class="thisMonth"></td>
-            <td rowspan="5" class="lastMonth"></td>
-            <td colspan="3" class="info">Last Month :</td>
-            <td colspan="2" class="lastMonth info"></td>
-          </tr>
-          <tr>
-            <th>30k</th>
-            <td rowspan="4" class="lastMonth"></td>
-            <td rowspan="4" class="lastMonth"></td>
-            <td rowspan="4" class="thisMonth"></td>
-            <td rowspan="5"></td>
-            <td rowspan="5"></td>
-            <td rowspan="5"></td>
-            <td rowspan="5"></td>
-            <td rowspan="5"></td>
-          </tr>
-          <tr>
-            <th>20k</th>
-            <td rowspan="3" class="lastMonth"></td>
-            <td rowspan="3" class="thisMonth"></td>
-            <td rowspan="3" class="thisMonth"></td>
-            <td rowspan="3" class="thisMonth"></td>
-            <td rowspan="3" class="lastMonth"></td>
-            <td rowspan="3" class="thisMonth"></td>
-          </tr>
-          <tr>
-            <th>10k</th>
-            <td rowspan="2" class="thisMonth"></td>
-            <td rowspan="2" class="thisMonth"></td>
-            <td rowspan="2" class="lastMonth"></td>
-            <td rowspan="2" class="lastMonth"></td>
-          </tr>
-          <tr>
-            <th>0</th>
-            <td class="lastMonth"></td>
-          </tr>
-          <tr>
-            <th class="date">Date</th>
-            <td colspan="2">3</td>
-            <td colspan="2">6</td>
-            <td colspan="2">9</td>
-            <td colspan="2">12</td>
-            <td colspan="2">15</td>
-            <td colspan="2">18</td>
-            <td colspan="2">21</td>
-            <td colspan="2">24</td>
-            <td colspan="2">27</td>
-            <td colspan="2">30</td>
-          </tr>
-        </table> -->
       </div>
     </div>
   </div>
@@ -148,15 +43,11 @@
 
 <script>
 import LineChart from '../LineChart/LineChart'
-// import axios from 'axios'
 import { mapGetters, mapActions } from 'vuex'
 
 export default {
   name: 'LineChartContainer',
   components: { LineChart },
-  data: () => ({
-    // chartdata: null
-  }),
   computed: {
     ...mapGetters({
       histories: 'histories',
@@ -168,18 +59,6 @@ export default {
     this.getHistory().then((res) => {
       this.chartdata = res
     })
-    // const userlist () =>  new Promise((resolve, reject) => {
-    //   axios.get('http://localhost:4000/api/v1/histories//?sort=date&order=DESC', {
-    //     headers: {
-    //       Authorization: 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiZW1haWwiOiJhZG1pbkBnbWFpbC5jb20iLCJyb2xlSWQiOjEsImlhdCI6MTU5OTE0NDk5MywiZXhwIjoxNTk5MTU1NzkzfQ.2eDdCk8ojnfHAdK_ZelP_77AZdTg0yhbvgqZiAezOPQ'
-    //     }
-    //   })
-    //     .then((res) => {
-    //       resolve(res.data.result)
-    //     })
-    //   this.chartdata = userlist
-    //   this.loaded = true
-    // })
   },
   methods: {
     ...mapActions(['getHistory'])
@@ -208,12 +87,6 @@ h5 {
   font-size: 12px;
   font-weight: bold;
 }
-
-/* Revenue */
-
-/* line-chart {
-  max-height: 300px;
-} */
 
 .revenue {
   background: #ffffff;

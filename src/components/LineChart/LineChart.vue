@@ -50,19 +50,15 @@ export default {
           borderColor: 'rgba(50, 115, 220, 0.5)',
           backgroundColor: '#00f1ff',
           data: this.dataThisM
-          // height: '300px'
         },
         {
           label: 'Last Month',
           borderColor: '#fad8df',
           backgroundColor: '#ffb8c6',
           data: this.dataLastM
-          // height: '300px'
         }
       ]
     })
-
-    // this.options = true
   }
 }
 </script>

@@ -12,11 +12,11 @@
         </div>
         <div class="form-group">
           <button type="submit" class="btn btn-primary submit" @click="handleLogin" data-toggle="modal" data-target="#Notif">Login</button>
-          <!-- <button type="submit" class="btn btn-primary submit" @click="handleLogin">Login</button> -->
         </div>
         <h4>Belum punya akun? Silahkan <span class="register" @click="register">Register</span></h4>
       </form>
-      <Notif />
+      <Notif
+      />
     </div>
 </template>
 
