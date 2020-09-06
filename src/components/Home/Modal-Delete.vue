@@ -1,6 +1,7 @@
 <template>
 
-<div class="modal fade" id="Notif" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true" v-position="position" v-top="top" v-bottom="bottom" v-right="right" v-left="left">
+<div>
+<div class="modal fade" id="NotifDelete" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog">
     <div class="modal-content">
       <button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -9,31 +10,46 @@
       <div class="modal-body">
         <h3>{{message}}</h3>
       </div>
-      <!-- <div v-show="confirm">
+      <div>
         <button type="button" class="btn btn-secondary" data-dismiss="modal">No</button>
-        <button type="button" class="btn btn-primary">Yes</button>
-      </div> -->
+        <button type="button" class="btn btn-primary" @click="delete_Data(delId)" data-toggle="modal" data-target="#Notif">Yes</button>
+      </div>
     </div>
   </div>
+</div>
+<Notif />
 </div>
 
 </template>
 
 <script>
-import { mapGetters } from 'vuex'
+import { mapGetters, mapActions } from 'vuex'
+import Notif from './Modal-Notif'
 
 export default {
-  name: 'Notif',
-  props: ['position', 'top', 'bottom', 'right', 'left'],
-  data () {
-    return {
-      confirm: true
-    }
+  name: 'NotifDelete',
+  props: ['delId'],
+  components: {
+    Notif
   },
   computed: {
     ...mapGetters({
       message: 'message'
     })
+  },
+  methods: {
+    ...mapActions(['deleteData']),
+    delete_Data (id) {
+      this.delId = id
+      const data = {
+        id: id
+      }
+      this.deleteData(data)
+        .then(() => {
+        })
+    //   this.$router.go(0)
+    //   alert('DELETE SUCCESS')
+    }
   }
 }
 </script>
@@ -41,11 +57,6 @@ export default {
 <style scoped>
 .modal {
   position: absolute;
-  /* top: 500px; */
-  /* bottom: 0px;
-  right: 0px;
-  left: 1030px;
-  width: 320px; */
   background-color: transparent;
 }
 

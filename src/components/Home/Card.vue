@@ -1,12 +1,14 @@
 <template>
-  <div>
-    <div class="select">
-      <img v-show="cardActive" class="image" :src="image" @click="addToCart" />
-      <img v-show="cardSelect" v-filter='brightness' class="image" :src="image" @click="addToCart" />
-      <div v-show="cardSelect" class="tick"></div>
+  <div class="row">
+    <div v-for="product in products" :key="product.id">
+    <div class="select container-img">
+      <img v-show="product.cardActive" class="image" :src="product.image" @click="addToCart(product)" />
+      <img v-show="product.cardSelect" v-filter='brightness' class="image" :src="product.image" @click="addToCart" />
+      <div v-show="product.cardSelect" class="tick"></div>
     </div>
-    <h5>{{name}}</h5>
-    <h5>Rp. {{price}}</h5>
+    <h5>{{product.name}}</h5>
+    <h5>Rp. {{product.price}}</h5>
+    </div>
   </div>
 </template>
 
@@ -15,11 +17,12 @@ import { mapGetters, mapActions } from 'vuex'
 
 export default {
   name: 'Card',
-  props: ['name', 'image', 'price', 'id'],
+  // props: ['name', 'image', 'price', 'id', 'cardSelect', 'cardActive'],
+  // props: ['products']
   data () {
     return {
-      cardSelect: false,
-      cardActive: true,
+      // cardSelect: false,
+      // cardActive: true,
       brightness: 50
     }
   },
@@ -28,6 +31,7 @@ export default {
   computed: {
     ...mapGetters({
       cartCount: 'cartCount',
+      products: 'products',
       productList: 'productList'
     })
   },
@@ -37,45 +41,41 @@ export default {
     ...mapActions(['addListProduct']),
     ...mapActions(['removeListProduct']),
     ...mapActions(['addTotalPrice']),
+    ...mapActions(['removeProduct']),
 
-    addToCart () {
-      console.log(this.productList)
-      if (this.cardSelect === false) {
+    addToCart (product) {
+      if (product.cardSelect === false) {
+        product.cardSelect = true
+        product.cardActive = false
         const data = {
-          name: this.name,
-          image: this.image,
-          price: this.price,
-          id: this.id,
-          countItem: 1
+          name: product.name,
+          image: product.image,
+          price: product.price,
+          total: product.price,
+          id: product.id,
+          countItem: 1,
+          cardSelect: product.cardSelect,
+          cardActive: product.cardActive
         }
         this.plusCount()
         this.addListProduct(data)
         this.addTotalPrice(data.price)
-      } else {
-        if (this.cartCount > 0) {
-          const data = {
-            name: this.name,
-            image: this.image,
-            price: this.price * -1,
-            id: this.id
-          }
-          this.minusCount()
-          this.removeListProduct(data)
-          this.addTotalPrice(data.price)
-        }
       }
-
-      if (this.cardSelect === true) {
-        this.cardSelect = false
-      } else {
-        this.cardSelect = true
-      }
-
-      if (this.cardActive === true) {
-        this.cardActive = false
-      } else {
-        this.cardActive = true
-      }
+      // else if (this.cartCount > 0) {
+      //   product.cardSelect = false
+      //   product.cardActive = true
+      //   if (this.cartCount > 0) {
+      //     const data = {
+      //       name: product.name,
+      //       image: product.image,
+      //       price: product.price * -1,
+      //       id: product.id
+      //     }
+      //     this.minusCount()
+      //     this.removeListProduct(data)
+      //     this.addTotalPrice(data.price)
+      //   }
+      // }
     }
   }
 }
@@ -83,16 +83,11 @@ export default {
 </script>
 
 <style scoped>
-.select {
-  margin-bottom: 5px;
-  position: relative;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
 
 .tick {
   position: absolute;
+  top: 70px;
+  left: 90px;
   width: 40px;
   height: 40px;
   background-image: url("../../assets/tick.png");
@@ -105,33 +100,64 @@ button {
   font-family: Airbnb Cereal App;
 }
 
-.image, .selectImage {
-  width: 220px;
-  height: 180px;
+.container-img {
+  width: 250px;
+  height: 200px;
   border-radius: 10px 10px 0px 0px;
+  margin-bottom: 5px;
+  position: relative;
 }
+
+.image {
+  width: 250px;
+  height: 200px;
+  object-fit: cover;
+  border-radius: 20px 0px 20px 0px;
+}
+
 div {
   margin: 10px;
 }
 @media (max-width: 768px) {
+
+  .container-img {
+  width: 100%;
+  height: 200px;
+  border-radius: 10px 10px 0px 0px;
+  margin-bottom: 5px;
+  position: relative;
+  /* background-color: blue; */
+}
+
   .image {
-    width: 350px;
-    height: 220px;
-    border-radius: 10px 10px 0px 0px;
+    width: 100%;
+    height: 100%;
+    border-radius: 20px 0px 20px 0px;
   }
-  header,
+
+  .tick {
+  position: absolute;
+  top: 70px;
+  left: 150px;
+}
+
+h5 {
+  font-size: 25px;
+  font-family:'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif
+}
+  /* header,
   aside .cart {
     height: 50px;
-  }
-  header h2,
+  } */
+  /* header h2,
   aside .cart h2 {
     font-size: 20px;
     line-height: 20px;
-  }
+  } */
   main {
     height: 310px;
   }
-  article h6 {
+  /* article h6 {
     font-size: 10px;
   }
   article h3 {
@@ -165,10 +191,10 @@ div {
   }
   aside .btm .cancel {
     padding: 10px;
-  }
+  } */
 }
 
-@media (max-width: 576px) {
+/* @media (max-width: 576px) {
   .icon {
     width: 15px;
     height: 15px;
@@ -220,5 +246,5 @@ div {
   aside .btm p {
     font-size: 10px;
   }
-}
+} */
 </style>

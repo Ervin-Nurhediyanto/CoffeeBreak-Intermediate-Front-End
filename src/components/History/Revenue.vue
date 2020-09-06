@@ -29,47 +29,58 @@
         </div>
       </div>
       <div class="row p-md-3 p-sm-3">
-        <table>
+
+        <!-- testChart -->
+        <div class="container">
+          <line-chart
+          :chartdata="histories"
+          />
+        </div>
+
+        <!-- :thisM="historiesMonth[0].month.toString()"
+          :lastM="historiesMonth[1].month.toString()" -->
+
+        <!-- <table>
           <tr>
             <th>50k</th>
             <td rowspan="8"></td>
-            <!-- date 3 -->
+
             <td rowspan="4"></td>
             <td rowspan="3"></td>
             <td rowspan="7"></td>
-            <!-- date 6 -->
+
             <td rowspan="3"></td>
             <td rowspan="2"></td>
             <td rowspan="7"></td>
-            <!-- date 9 -->
+
             <td rowspan="4"></td>
             <td rowspan="5"></td>
             <td rowspan="7"></td>
-            <!-- date 12 -->
+
             <td rowspan="3"></td>
             <td rowspan="4"></td>
             <td rowspan="7"></td>
-            <!-- date 15 -->
+
             <td rowspan="3"></td>
             <td rowspan="1"></td>
             <td rowspan="7"></td>
-            <!-- date 18 -->
+
             <td rowspan="1"></td>
             <td rowspan="3"></td>
             <td rowspan="7"></td>
-            <!-- date 21 -->
+
             <td rowspan="3"></td>
             <td rowspan="6" class="lastMonth"></td>
             <td rowspan="7"></td>
-            <!-- date 24 -->
+
             <td rowspan="6" class="thisMonth"></td>
             <td rowspan="4"></td>
             <td rowspan="7"></td>
-            <!-- date 27 -->
+
             <td rowspan="1"></td>
             <td rowspan="2"></td>
             <td rowspan="7"></td>
-            <!-- date 30 -->
+
             <td rowspan="2"></td>
             <td rowspan="1"></td>
             <td rowspan="7"></td>
@@ -129,16 +140,8 @@
             <td colspan="2">27</td>
             <td colspan="2">30</td>
           </tr>
-        </table>
+        </table> -->
       </div>
-    </div>
-
-    <!-- testChart -->
-    <div class="container">
-      <line-chart
-        v-if="loaded"
-        :chartdata="chartdata"
-        :options="options"/>
     </div>
   </div>
 </template>
@@ -146,20 +149,24 @@
 <script>
 import LineChart from '../LineChart/LineChart'
 // import axios from 'axios'
-import { mapActions } from 'vuex'
+import { mapGetters, mapActions } from 'vuex'
 
 export default {
   name: 'LineChartContainer',
   components: { LineChart },
   data: () => ({
-    loaded: false,
-    chartdata: null
+    // chartdata: null
   }),
+  computed: {
+    ...mapGetters({
+      histories: 'histories',
+      historiesMonth: 'historiesMonth'
+    })
+  },
   mounted () {
     this.loaded = false
     this.getHistory().then((res) => {
       this.chartdata = res
-      this.loaded = true
     })
     // const userlist () =>  new Promise((resolve, reject) => {
     //   axios.get('http://localhost:4000/api/v1/histories//?sort=date&order=DESC', {
@@ -204,6 +211,10 @@ h5 {
 
 /* Revenue */
 
+/* line-chart {
+  max-height: 300px;
+} */
+
 .revenue {
   background: #ffffff;
   box-shadow: 10px 10px 20px rgba(0, 0, 0, 0.25);
@@ -242,7 +253,7 @@ h5 {
 }
 
 .revenue .lastMonth {
-  background-color: #ffb8c6;
+  background-color: #fad8df;
 }
 
 @media (max-width: 992px) {

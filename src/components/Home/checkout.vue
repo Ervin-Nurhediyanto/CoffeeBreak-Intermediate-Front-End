@@ -1,17 +1,19 @@
 <template>
   <div v-show="active" class="row m-md-0 m-sm-0 justify-content-start list">
-    <div class="col p-md-3 p-sm-1">
+    <div class="col p-md-3 p-sm-1" v-for="product in productList" :key="product.id">
       <div class="row m-md-2 p-md-0 m-sm-2 p-sm-0 select">
-        <img class="image-cart" :src="image" />
+        <div class="container-img">
+          <img class="image-cart" :src="product.image" />
+        </div>
         <div class="col item m-md-0 m-sm-0">
-          <h3>{{name}}</h3>
+          <h3>{{product.name}}</h3>
           <div class="row m-md-0 m-sm-0 price justify-content-between">
             <div class="row m-md-0 pb-md-0 m-sm-0 pb-sm-0">
-              <button class="min" @click="minus">-</button>
-              <button class="qly">{{countItem}}</button>
-              <button class="pls" @click="plus">+</button>
+              <button class="min" @click="minus(product)">-</button>
+              <button class="qly">{{product.countItem}}</button>
+              <button class="pls" @click="plus(product)">+</button>
             </div>
-            <h5>Rp.{{total}}</h5>
+            <h5>Rp.{{product.total * product.countItem}}</h5>
           </div>
         </div>
       </div>
@@ -24,7 +26,7 @@ import { mapGetters, mapActions } from 'vuex'
 
 export default {
   name: 'Checkout',
-  props: ['name', 'image', 'price', 'id', 'countItem'],
+  // props: ['name', 'image', 'price', 'id', 'countItem'],
   data () {
     return {
       active: true
@@ -35,6 +37,7 @@ export default {
   computed: {
     ...mapGetters({
       totalPrice: 'totalPrice',
+      productList: 'productList',
       empty: 'empty'
     }),
     total: function () {
@@ -47,28 +50,31 @@ export default {
     ...mapActions(['minusCount']),
     ...mapActions(['addTotalPrice']),
     ...mapActions(['plusCountItem']),
+    ...mapActions(['removeListProduct']),
+    ...mapActions(['removeProduct']),
 
-    plus () {
-      this.countItem += 1
-      const plusPrice = this.price
+    plus (product) {
+      product.countItem += 1
+      const plusPrice = product.price
       this.addTotalPrice(plusPrice)
-      const id = this.id
+      const id = product.id
       this.plusCountItem(id)
     },
-    minus () {
-      if (this.countItem > 1) {
-        this.countItem -= 1
-        const minusPrice = this.price * -1
+    minus (product) {
+      if (product.countItem > 1) {
+        product.countItem -= 1
+        const minusPrice = product.price * -1
         this.addTotalPrice(minusPrice)
       } else {
-        this.active = false
+        // this.active = false
+        this.removeListProduct(product)
+        this.removeProduct(product.id)
         this.minusCount()
-        const minusPrice = this.price * -1
+        const minusPrice = product.price * -1
         this.addTotalPrice(minusPrice)
-
-        if (this.totalPrice === 0) {
-          this.empty = true
-        }
+        // if (product.total * product.countItem === 0) {
+        // this.empty = true
+        // }
       }
     },
     cancel () {
@@ -85,142 +91,21 @@ export default {
 </script>
 
 <style scoped>
-/* Background Check */
 
-.red {
+.container-img {
+  max-width: 100px;
+  max-height: 100px;
+  border-radius: 20px 0px 20px 0px;
+  margin-bottom: 10px;
   background-color: red;
 }
-
-.blue {
-  background-color: blue;
-}
-
-.green {
-  background-color: green;
-}
-
-.yellow {
-  background-color: yellow;
-}
-
-/* Image, Text */
 
 .image-cart {
   width: 100px;
   height: 100px;
-  border-radius: 5px;
+  object-fit: cover;
+  /* border-radius: 5px; */
   padding-top: 0;
-}
-
-/* Aside */
-
-aside {
-  background: #ffffff;
-  border: 1px solid #cecece;
-}
-
-aside .cart {
-  box-shadow: 0px 4px 1px rgba(0, 0, 0, 0.25);
-  padding: 20px;
-}
-
-aside .cart .count {
-  background: #57cad5;
-  border-radius: 100%;
-  padding-left: 5px;
-  padding-right: 5px;
-  font-size: 20px;
-  line-height: 26px;
-  color: #ffffff;
-}
-
-/* Aside List */
-
-aside .scroll {
-  height: 610px;
-  overflow-y: scroll;
-}
-
-aside .scroll::-webkit-scrollbar {
-  display: none;
-}
-
-aside .list .col {
-  width: 100%;
-  padding: 20px;
-}
-
-aside .list .row {
-  justify-content: start;
-}
-
-aside .list .select {
-  margin-bottom: 15px;
-}
-
-aside .list .item {
-  height: 100%;
-  padding-left: 10px;
-  padding-right: 0;
-  padding-top: 0;
-  padding-bottom: 0;
-}
-
-aside .list .item h3 {
-  font-size: 25px;
-}
-
-aside .list .price {
-  margin-top: auto;
-  justify-content: space-between;
-}
-
-aside .list .price .row {
-  margin-right: 10px;
-}
-
-aside .list .price h4 {
-  font-size: 15px;
-}
-
-/* Aside btm*/
-
-aside .btm {
-  margin-top: auto;
-  margin-bottom: 0;
-  padding: 40px 20px 20px 20px;
-}
-
-aside .btm .row {
-  justify-content: space-between;
-}
-
-aside .btm p {
-  margin-top: 5px;
-}
-
-aside .btm .checkout {
-  background-color: #57cad5;
-  display: flex;
-  justify-content: center;
-  margin-top: 10px;
-  padding: 10px;
-  color: #ffffff;
-}
-
-aside .btm .checkout button {
-  width: 100%;
-  background-color: #57cad5;
-  border: 0;
-}
-
-aside .btm .cancel {
-  background-color: #f24f8a;
-  display: flex;
-  justify-content: center;
-  margin-top: 20px;
-  padding: 10px;
-  color: #ffffff;
 }
 
 @media (max-width: 768px) {

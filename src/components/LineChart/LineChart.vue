@@ -8,28 +8,58 @@ export default {
       type: Object,
       default: null
     },
-    options: {
-    //   type: Object,
-    //   default: null
-    //   tooltips: {
-    //     mode: 'point'
-    //   }
+    thisM: {
+      type: String,
+      default: '08'
+    },
+    lastM: {
+      type: String,
+      default: '07'
+    }
+  },
+  data () {
+    return {
+      thisMonth: [],
+      lastMonth: [],
+      dataThisM: [],
+      dataLastM: []
     }
   },
   mounted () {
-    const dates = this.chartdata.map((d) => {
-      return d.date
+    const dateThisM = this.chartdata.filter((d) => {
+      return d.month === this.thisM
     })
-    const income = this.chartdata.map((d) => {
-      return d.Total
+    this.thisMonth.push(dateThisM)
+    this.thisMonth[0].map((d) => {
+      this.dataThisM.push(d.Total)
+    })
+
+    const dateLastM = this.chartdata.filter((d) => {
+      return d.month === this.lastM
+    })
+    this.lastMonth.push(dateLastM)
+    this.lastMonth[0].map((d) => {
+      this.dataLastM.push(d.Total)
     })
 
     this.renderChart({
-      label: dates,
-      datasets: [{
-        label: dates,
-        data: income
-      }]
+      labels: ['01', '02', '03', '04', '05', '06', '07', '08', '09', '10', '11', '12', '13', '14', '15', '16', '17', '18', '19', '20', '21', '22', '23', '24', '25', '26', '27', '28', '29', '30', '31'],
+      datasets: [
+        {
+          label: 'This Month',
+          borderColor: 'rgba(50, 115, 220, 0.5)',
+          backgroundColor: '#00f1ff',
+          data: this.dataThisM
+          // height: '300px'
+        },
+        {
+          label: 'Last Month',
+          borderColor: '#fad8df',
+          backgroundColor: '#ffb8c6',
+          data: this.dataLastM
+          // height: '300px'
+        }
+      ]
     })
 
     // this.options = true

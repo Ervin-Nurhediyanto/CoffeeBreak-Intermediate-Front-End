@@ -3,59 +3,22 @@
     <div class="row">
 
       <div class="col-md-12 col-sm-12">
-        <article>
-            <input type="text" v-model="search" placeholder="search" />
-            <button @click="handleSearch(search)">Search</button>
-        </article>
-        <article class="sort d-flex justify-content-end">
-          <select @change="handleSort(sort)" v-model="sort" placeholder="sort">
-            <option value="">Sort</option>
-            <option value="name">a-z</option>
-            <option value="name&order=DESC">z-a</option>
-            <option value="price">low price</option>
-            <option value="price&order=DESC">high price</option>
-          </select>
-        </article>
+        <div class="search-sort row">
+          <div class="col-md-9 col-sm-9 d-flex justify-content-start search">
+            <Search />
+          </div>
+          <div class="col-md-2 col-sm-2 sort">
+            <Sort />
+          </div>
+        </div>
       </div>
 
-      <article class="row main justify-content-center" v-for="product in products" :key="product.id">
-        <Card
-          :name="product.name"
-          :image="product.image"
-          :price="product.price"
-          :id="product.id"
-          :select="select"
-          v-on:addToCart="updateCart($event)"
-        />
+      <article class="col main">
+        <Card />
       </article>
 
-      <nav aria-label="..." class="col-md-12">
-        <ul class="pagination">
-          <li class="page-item">
-            <a v-show="page > 1" @click="prevPage(1)" class="page-link" href="#">Prev</a>
-          </li>
-          <li class="page-item disabled">
-            <a v-show="page <= 1" class="page-link">Prev</a>
-          </li>
-          <li v-show="page >= totalPage && page != 1" @click="prevPage(2)" class="page-item"><a class="page-link" href="#">{{page - 2}}</a></li>
-          <li v-show="page > 1" @click="prevPage(1)" class="page-item"><a class="page-link" href="#">{{page - 1}}</a></li>
-          <li class="page-item active" aria-current="page">
-            <span class="page-link">
-              {{page}}
-              <span class="sr-only">(current)</span>
-            </span>
-          </li>
-          <li v-show="page < totalPage" @click="nextPage(1)" class="page-item"><a class="page-link" href="#">{{page + 1}}</a></li>
-          <li v-show="page <= 1 && totalPage != 1" @click="nextPage(2)" class="page-item"><a class="page-link" href="#">{{page + 2}}</a></li>
-          <li class="page-item">
-            <a v-show="page < totalPage" @click="nextPage(1)" class="page-link" href="#">Next</a>
-          </li>
-          <li class="page-item disabled">
-            <a v-show="page >= totalPage" class="page-link">Next</a>
-          </li>
-        </ul>
-      </nav>
-
+      <Pagination />
+      <Notif />
     </div>
   </main>
 </template>
@@ -63,16 +26,26 @@
 <script>
 import Card from '../../../components/Home/Card'
 import { mapActions, mapGetters } from 'vuex'
+import Search from '../../../components/Home/Search'
+import Sort from '../../../components/Home/Sort'
+import Pagination from '../../../components/Home/Pagination'
+import Notif from '../../../components/Home/Modal-Notif'
 
 export default {
   name: 'Home',
   components: {
-    Card
+    Card,
+    Search,
+    Sort,
+    Pagination,
+    Notif
   },
   data () {
     return {
       search: '',
       sort: ''
+      // cardSelect: false,
+      // cardActive: true
     }
   },
   computed: {
@@ -132,13 +105,21 @@ export default {
   background-color: red;
 }
 
+.search-sort {
+  padding-top: 15px;
+  padding-left: 0px;
+  /* background-color: yellow; */
+}
+
 .search {
-  margin-top: 20px;
+/* background-color: blue; */
+padding-top: 10px;
 }
 
 .sort {
-  margin-right: 10px;
-  margin-left: auto;
+  /* margin-right: 10px; */
+  /* margin-left: auto; */
+  /* background-color: red; */
 }
 
 aside {
@@ -152,23 +133,6 @@ h3,
 h4,
 button {
   font-family: Airbnb Cereal App;
-}
-/* Article */
-
-article {
-  padding: 20px;
-}
-
-article.page {
-  width: 100%;
-}
-
-article .select {
-  margin-bottom: 5px;
-  position: relative;
-  display: flex;
-  justify-content: center;
-  align-items: center;
 }
 
 /* Main */
@@ -184,30 +148,11 @@ main::-webkit-scrollbar {
   display: none;
 }
 
-main .menu {
-  width: 100%;
-}
-
 .menu .row {
   justify-content: center;
 }
 main div {
   padding: 0;
-}
-article {
-  margin: 0;
-}
-
-article .select .image {
-  filter: brightness(50%);
-}
-
-.tick {
-  position: absolute;
-  width: 40px;
-  height: 40px;
-  background-image: url("../../../assets/tick.png");
-  background-size: 40px;
 }
 
 @media (max-width: 768px) {
@@ -232,16 +177,6 @@ article .select .image {
   }
   main {
     height: 310px;
-  }
-  article h6 {
-    font-size: 10px;
-  }
-  article h3 {
-    font-size: 13px;
-  }
-  aside h3 {
-    font-size: 12px;
-    line-height: 20px;
   }
   aside h4 {
     line-height: 10px;
@@ -270,6 +205,11 @@ article .select .image {
   }
   h5.totalPage {
     font-size: 15px;
+  }
+
+  .main {
+    /* background-color: red; */
+    /* width: 300px; */
   }
 }
 

@@ -43,7 +43,8 @@ export default {
   },
   computed: {
     ...mapGetters({
-      histories: 'histories'
+      histories: 'histories',
+      historiesMonth: 'historiesMonth'
     })
   },
   methods: {

@@ -1,6 +1,4 @@
 <template>
-  <div class="main">
-    <h1 class='cafe'>Coffee Break Cafe </h1>
     <div class="login">
       <form>
         <p>LOGIN</p>
@@ -13,17 +11,19 @@
           <input type="password" class="form-control type" v-model="password" placeholder="Enter Password">
         </div>
         <div class="form-group">
-          <button type="submit" class="btn btn-primary submit" @click="handleLogin">Login</button>
-          <!-- <button type="submit" class="btn btn-primary submit" @click="register">Register</button> -->
+          <button type="submit" class="btn btn-primary submit" @click="handleLogin" data-toggle="modal" data-target="#Notif">Login</button>
+          <!-- <button type="submit" class="btn btn-primary submit" @click="handleLogin">Login</button> -->
         </div>
         <h4>Belum punya akun? Silahkan <span class="register" @click="register">Register</span></h4>
       </form>
+      <Notif />
     </div>
-  </div>
 </template>
 
 <script>
 import { mapActions } from 'vuex'
+import Notif from '../../../../components/Home/Modal-Notif'
+
 export default {
   name: 'Login',
   data () {
@@ -32,6 +32,9 @@ export default {
       password: ''
     }
   },
+  components: {
+    Notif
+  },
   methods: {
     handleLogin (e) {
       e.preventDefault()
@@ -39,9 +42,11 @@ export default {
         email: this.email,
         password: this.password
       }
-      this.login(data).then(() => {
-        this.$router.push('/home')
-      })
+      this.$router.go(0)
+      this.login(data)
+        .then((res) => {
+          this.$router.push('/home')
+        })
     },
     register () {
       this.$router.push('/register')

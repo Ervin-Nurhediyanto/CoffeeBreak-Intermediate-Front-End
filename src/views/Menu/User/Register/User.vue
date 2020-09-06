@@ -1,7 +1,7 @@
 <template>
 
-<div class="main">
-    <h1 class='cafe'>Coffee Break Cafe </h1>
+<!-- <div class="main">
+    <h1 class='cafe'>Coffee Break Cafe </h1> -->
     <div class="register">
       <form>
         <p>Register</p>
@@ -27,7 +27,7 @@
       <h4>Sudah punya akun? Silahkan <span class="login" @click="login">Login</span></h4>
     </form>
     </div>
-  </div>
+  <!-- </div> -->
 
 </template>
 
@@ -79,7 +79,7 @@ form {
   justify-content: center;
   align-items: center;
   width: 500px;
-  height: 430px;
+  height: 330px;
 }
 
 .main {
@@ -111,7 +111,7 @@ form {
   justify-content: center;
   align-items: center;
   width: 300px;
-  height: 650px;
+  height: 450px;
   background-color: #dde1e7;
   border-radius: 20px;
   box-shadow: -3px -3px #ffffff73, 5px 5px rgba(94, 104, 121, 0.288);
@@ -123,7 +123,7 @@ form {
   justify-content: center;
   align-items: center;
   width: 300px;
-  height: 650px;
+  height: 450px;
   background-color: #dde1e7;
   border-radius: 20px;
   box-shadow: inset -3px -3px #ffffff73, inset 5px 5px rgba(94, 104, 121, 0.288);

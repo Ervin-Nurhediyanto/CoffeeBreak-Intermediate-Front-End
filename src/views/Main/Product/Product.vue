@@ -3,13 +3,20 @@
     <div class="row">
 
       <div class="col-md-12 col-sm-12">
-        <Search />
-        <Sort />
+        <div class="search-sort row">
+          <div class="col-md-10 col-sm-10 d-flex justify-content-start search">
+            <Search />
+          </div>
+          <div class="col-md-2 col-sm-2 sort">
+            <Sort />
+          </div>
+        </div>
       </div>
 
+      <div class="row">
       <form @submit.prevent="update_Data(product, product.id)" v-for="product in products" :key="product.id">
         <div class="col">
-          <div class="row">
+          <div class="row container-img">
             <img class="image" :src="product.image" />
           </div>
           <div class="row data justify-content-between">
@@ -31,35 +38,22 @@
               <option value="1">Drink</option>
             </select>
           </div>
-          <button type="submit" class="btn btn-success" data-toggle="modal" data-target="#Notif">Update</button>
-          <button class="btn btn-success" @click="delete_Data(product.id)">Delete</button>
+          <div>
+            <button type="submit" class="btn btn-success" data-toggle="modal" data-target="#Notif">Update</button>
+            <button class="btn btn-danger" data-toggle="modal" data-target="#NotifDelete" @click="delete_Data(product.id)">Delete</button>
+          </div>
+          <!-- <div>
+            <button type="button" class="btn btn-secondary" @click="cancel">No</button>
+            <button type="button" class="btn btn-primary" @click="delete_Data(product.id)" data-toggle="modal" data-target="#Notif">Yes</button>
+          </div> -->
         </div>
       </form>
-
-    </div>
-    <!-- <article class="row">
-      <div class="col-md-2 col-sm-2 mt-md-2 mt-sm-2">
-        <h5 class="totalPage">Total Page {{totalPage}}</h5>
       </div>
-      <div class="col-md-8 col-sm-8 mt-md-2 mt-sm-2">
-        <div class="row justify-content-center">
-          <div class="col-md-4 col-sm-4">
-            <button v-show="page > 1" @click="prevPage">prev</button>
-          </div>
-          <div class="col-md-4 col-sm-4">
-            <h5>Page {{page}}</h5>
-          </div>
-          <div class="col-md-4 col-sm-4">
-            <button v-show="page < totalPage" @click="nextPage">next</button>
-          </div>
-        </div>
-      </div>
-      <div class="col-md-2 col-sm-2">
-      </div>
-    </article> -->
 
     <Pagination />
-    <Notif />
+    <Notif :delId='delId' />
+    <NotifDelete />
+    </div>
   </main>
 </template>
 
@@ -70,6 +64,7 @@ import Search from '../../../components/Home/Search'
 import Sort from '../../../components/Home/Sort'
 import Pagination from '../../../components/Home/Pagination'
 import Notif from '../../../components/Home/Modal-Notif'
+import NotifDelete from '../../../components/Home/Modal-Delete'
 
 export default {
   name: 'Product',
@@ -77,18 +72,19 @@ export default {
     Search,
     Sort,
     Pagination,
-    Notif
+    Notif,
+    NotifDelete
   },
   data () {
     return {
       output: '',
-      FILE: null
+      FILE: null,
+      delId: null
     }
   },
   mixins: [DataMixin],
   computed: {
     ...mapGetters({
-      urlImage: 'urlImage'
     })
   },
   mounted () {
@@ -114,25 +110,31 @@ export default {
         formData: formData,
         id: id
       }
-      // console.log('image: ' + data.formData.image)
 
       this.updateData(data)
         .then((res) => {
-          // console.log('update:' + res.data.result.image)
         })
-      // this.$router.push('/home')
-      // alert('UPDATE DATA SUCCESS')
+      // this.$router.go(0)
     },
 
     delete_Data (id) {
-      const data = {
-        id: id
-      }
-      this.deleteData(data)
-        .then(() => {
-        })
-      this.$router.go(0)
-      alert('DELETE SUCCESS')
+      this.delId = id
+      // const data = {
+      //   id: id
+      // }
+      // this.deleteData(data)
+      //   .then(() => {
+      //   })
+      // this.$router.go(0)
+      // alert('DELETE SUCCESS')
+    },
+
+    option () {
+      this.Updel = false
+    },
+
+    cancel () {
+      this.Updel = true
     }
   }
 }
@@ -140,11 +142,19 @@ export default {
 
 <style scoped>
 
-.image {
-  width: 220px;
-  height: 180px;
+.container-img {
+  width: 250px;
+  height: 200px;
   border-radius: 10px 10px 0px 0px;
   margin-bottom: 10px;
+  margin-left: 25px;
+}
+
+.image {
+  width: 250px;
+  height: 200px;
+  object-fit: cover;
+  border-radius: 20px 0px 20px 0px;
 }
 
 form {
@@ -225,6 +235,24 @@ button {
 }
 
 @media (max-width: 768px) {
+  .search-sort {
+    /* background-color: red; */
+  }
+
+  .search {
+    /* background-color: blue; */
+    position: absolute;
+    top: -2530px;
+    left: -10px
+  }
+
+  .sort {
+    /* position: absolute; */
+    top: 0px;
+    /* left: 0px */
+    right: -150px;
+  }
+
   main {
     display: flex;
     flex-direction: column;

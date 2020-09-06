@@ -34,7 +34,7 @@
                   <div class="col-md-6 pr-md-0 col-sm-6 pr-sm-0">
                       <div v-for="product in products" :key="product.id">
                         <div class="d-flex justify-content-start">
-                          <h5>Rp.{{product.price}}</h5>
+                          <h5>Rp.{{product.price * product.countItem}}</h5>
                         </div>
                       </div>
                       <div class="d-flex justify-content-start">

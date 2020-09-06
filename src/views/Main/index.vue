@@ -15,7 +15,7 @@
             <Cart :count="count" v-on:toCart="addItemCart($event)" />
             <Empty v-if="empty" />
             <div v-else class="scroll">
-              <div v-for="Product in productList" :key="Product.id">
+              <!-- <div v-for="Product in productList" :key="Product.id">
                 <Checkout
                   :name="Product.name"
                   :image="Product.image"
@@ -25,11 +25,16 @@
                   v-on:plus="plusTotal($event)"
                   v-on:minus="minusTotal($event)"
                 />
+              </div> -->
+              <div class="checkout">
+                <Checkout />
               </div>
+              <div class="checkoutPay">
               <CheckoutPay
                   :totalPrice="totals"
                   v-on:cancel="cancelCart($event)"
               />
+              </div>
             </div>
           </aside>
         </div>
@@ -149,5 +154,23 @@ export default {
   .scroll {
     height: 310px;
   }
+  .checkout {
+    position: relative;
+    bottom: auto;
+    top: 0px;
+    height: 310px;
+    overflow-y: scroll;
+  }
+  .checkout::-webkit-scrollbar {
+  display: none;
+  }
+  .checkoutPay {
+    position: relative;
+    bottom: 0;
+    top: auto;
+  }
+  /* aside { */
+    /* height: 310px; */
+  /* } */
 }
 </style>

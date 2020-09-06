@@ -2,13 +2,12 @@ import Vue from 'vue'
 import VueRouter from 'vue-router'
 import Main from '../views/Main/index.vue'
 import Home from '../views/Main/Home/Home.vue'
-import History from '../views/Main/History/History.vue'
 import Product from '../views/Main/Product/Product.vue'
-import Register from '../views/Main/User/Register/User.vue'
-import RegisterAdmin from '../views/Main/User/Register/Admin.vue'
-import Login from '../views/Main/User/Login/Login.vue'
-// LoginAdmin
-import LandingPage from '../views/LandingPage/Landing.vue'
+import History from '../views/Main/History/History.vue'
+import Menu from '../views/Menu/Menu.vue'
+import Landp from '../views/Menu/LandP/LandP.vue'
+import Register from '../views/Menu/User/Register/User.vue'
+import Login from '../views/Menu/User/Login/Login.vue'
 import store from '../store/index'
 
 Vue.use(VueRouter)
@@ -18,7 +17,7 @@ const routes = [
     path: '/',
     name: 'main',
     component: Main,
-    redirect: '/landingpage',
+    redirect: '/menu',
     children: [
       {
         path: 'home',
@@ -35,34 +34,36 @@ const routes = [
     ]
   },
   {
+    path: '/menu',
+    name: 'menu',
+    component: Menu,
+    redirect: '/landp',
+    children: [
+      {
+        path: '/landp',
+        name: 'landp',
+        component: Landp,
+        meta: { requiresVisitor: true }
+      },
+      {
+        path: '/register',
+        name: 'register',
+        component: Register,
+        meta: { requiresVisitor: true }
+      },
+      {
+        path: '/login',
+        name: 'login',
+        component: Login,
+        meta: { requiresVisitor: true }
+      }
+    ]
+  },
+  {
     path: '/history',
     name: 'history',
     component: History,
     meta: { requiresAuth: true }
-  },
-  {
-    path: '/register',
-    name: 'register',
-    component: Register,
-    meta: { requiresVisitor: true }
-  },
-  {
-    path: '/registerAdmin',
-    name: 'registerAdmin',
-    component: RegisterAdmin,
-    meta: { requiresVisitor: true }
-  },
-  {
-    path: '/login',
-    name: 'login',
-    component: Login,
-    meta: { requiresVisitor: true }
-  },
-  // LoginAdmin
-  {
-    path: '/landingpage',
-    name: 'landingpage',
-    component: LandingPage
   }
 ]
 

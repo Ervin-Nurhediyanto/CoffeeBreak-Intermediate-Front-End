@@ -1,7 +1,8 @@
 <template>
-  <article>
-    <input type="text" v-model="search" placeholder="search" />
-    <button @click="handleSearch(search)">Search</button>
+  <article class="search-box">
+    <input type="text" v-model="search" placeholder="search......" />
+    <!-- <button @click="handleSearch(search)"><i class="fa fa-search" aria-hidden="true"></i></button> -->
+    <i class="fa fa-search" aria-hidden="true" @click="handleSearch(search)"></i>
   </article>
 </template>
 
@@ -26,5 +27,55 @@ export default {
 </script>
 
 <style scoped>
+.search-box{
+ /* background-color: yellow; */
+}
+
+input {
+  width: 320px;
+  height: 45px;
+  border-radius: 10px;
+  padding: 10px;
+  /* background: #e44949;
+  box-shadow: 6px 6px 12px #C94040,-6px -6px 12px #FF5252; */
+  /* background: #adadb4; */
+  background: #dedee0;
+  box-shadow: 3px 3px 6px #5a5a5a,-3px -3px 6px #5c5e5f;
+  border: none;
+  outline: none;
+}
+
+input::placeholder {
+  color: white;
+}
+
+i {
+  color: black;
+  background: #dedee0;
+  /* box-shadow: 6px 6px 12px #5a5a5a,-6px -6px 12px #5c5e5f; */
+  box-shadow: 3px 3px 6px #5a5a5a,-3px -3px 6px #5c5e5f;
+  padding: 15px;
+  cursor: pointer;
+  border-radius: 15px;
+  /* margin-top: 15px; */
+  margin-left: 12px;
+  /* height: 50px; */
+  font-size: 12px;
+  font-weight: bold;
+  border: none;
+}
+
+@media (max-width: 768px) {
+  input {
+    width: 120px;
+    height: 40px;
+    margin-left: 10px;
+  }
+  button {
+    width: 100px;
+    /* height: 40px; */
+    /* margin-top: 10px; */
+  }
+}
 
 </style>

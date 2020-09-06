@@ -10,23 +10,22 @@ Vue.use(Vuex)
 export default new Vuex.Store({
   state: {
     user: {},
-    token: localStorage.getItem('token') || null,
     histories: [],
     historiesIncome: [],
+    historiesMonth: [],
     allProduct: [],
     products: [],
-    totalPage: '',
-    status: '',
-    page: null,
-    empty: true,
-    cartCount: 0,
     productList: [],
     totalPrice: 0,
+    totalPage: '',
+    page: null,
+    status: '',
+    empty: true,
+    cartCount: 0,
+    token: localStorage.getItem('token') || null,
     search: localStorage.getItem('search') || null,
     sort: localStorage.getItem('sort') || null,
-    message: localStorage.getItem('message') || null,
-    allImage: [],
-    urlImage: localStorage.getItem('image') || null
+    message: localStorage.getItem('message') || 'Loading'
   },
   mutations: {
     setUser (state, payload) {
@@ -39,11 +38,31 @@ export default new Vuex.Store({
     setHistoryIncome (state, payload) {
       state.historiesIncome = payload
     },
+    sethistoriesMonth (state, payload) {
+      state.historiesMonth = payload
+    },
     setAllProduct (state, payload) {
       state.allProduct = payload
     },
     setProduct (state, payload) {
       state.products = payload
+
+      const changeProduct = state.products.map((item) => {
+        const resProduct = Object.assign({}, item, { cardSelect: false }, { cardActive: true })
+        return resProduct
+      })
+
+      state.products = changeProduct
+    },
+    setProductNonAct (state, id) {
+      state.products.map((item) => {
+        if (item.id === id) {
+          // if (item.cardSelect === true) {
+          item.cardSelect = false
+          item.cardActive = true
+          // }
+        }
+      })
     },
     setTotalPage (state, payload) {
       state.totalPage = payload
@@ -55,7 +74,6 @@ export default new Vuex.Store({
       state.page += payload
     },
     prevPage (state, payload) {
-      // state.page--
       state.page -= payload
     },
     setSearch (state, payload) {
@@ -95,13 +113,18 @@ export default new Vuex.Store({
       state.productList.push(payload)
     },
     removeProductList (state, index) {
-      // const index = state.productList.name.indexOf(payload.name)
       if (index > -1) {
         state.productList.splice(index, 1)
       }
     },
     setProductListClear (state) {
       state.productList = []
+      state.products.map((item) => {
+        if (item.cardSelect === true) {
+          item.cardSelect = false
+          item.cardActive = true
+        }
+      })
     },
     setPlusCountList (state, id) {
       state.productList[id].countItem++
@@ -124,7 +147,7 @@ export default new Vuex.Store({
       return new Promise((resolve, reject) => {
         axios.get(process.env.VUE_APP_URL_HISTORY + '/?sort=date&order=DESC')
           .then((res) => {
-            console.log('history:' + res.data.result)
+            // console.log('history:' + res.data.result)
             setex.commit('setHistory', res.data.result)
             resolve(res.data.result)
           })
@@ -136,14 +159,28 @@ export default new Vuex.Store({
     },
     getHistoryIncome (setex) {
       return new Promise((resolve, reject) => {
-        axios.get(process.env.VUE_APP_URL_HISTORY + '/?sort=date&order=DESC&group=date')
+        axios.get(process.env.VUE_APP_URL_HISTORY + '/?sort=date&order=DESC&group=history.date')
           .then((res) => {
-            console.log('history income:' + res.data.result)
+            // console.log('history income:' + res.data.result)
             setex.commit('setHistoryIncome', res.data.result)
             resolve(res.data.result)
           })
           .catch((err) => {
             console.log(err)
+            reject(err)
+          })
+      })
+    },
+    getHistoryMonth (setex) {
+      return new Promise((resolve, reject) => {
+        axios.get(process.env.VUE_APP_URL_HISTORY + '/?sort=date&order=DESC&group=month')
+          .then((res) => {
+            console.log('thisM: ' + res.data.result)
+            setex.commit('sethistoriesMonth', res.data.result)
+            resolve(res.data.result)
+          })
+          .catch((err) => {
+            console.log('thisM: ' + err)
             reject(err)
           })
       })
@@ -401,18 +438,19 @@ export default new Vuex.Store({
       })
     },
     login (setex, payload) {
-      console.log(payload)
       return new Promise((resolve, reject) => {
+        setex.commit('setMessage', 'loading')
         axios.post(process.env.VUE_APP_URL_LOGIN, payload)
           .then((res) => {
+            setex.commit('setMessage', 'Success')
             setex.commit('setUser', res.data.result)
-            // axios.defaults.headers.common.Authorization = `Bearer ${res.data.result.token}`
-            console.log('token:' + this.state.token)
             localStorage.setItem('token', this.state.token)
+            // axios.defaults.headers.common.Authorization = `Bearer ${res.data.result.token}`
             resolve(res.data.result[0])
           })
           .catch((err) => {
-            console.log(err)
+            setex.commit('setMessage', err.response.data.result)
+            // localStorage.setItem('message', this.state.maessage)
             reject(err)
           })
       })
@@ -422,6 +460,9 @@ export default new Vuex.Store({
         if (this.state.token !== null) {
           localStorage.removeItem('token')
           localStorage.removeItem('search')
+          localStorage.removeItem('sort')
+          localStorage.removeItem('message')
+          localStorage.removeItem('image')
         }
       })
     },
@@ -434,7 +475,7 @@ export default new Vuex.Store({
           }
         })
           .then((res) => {
-            console.log('update res:' + res.data.result)
+            // console.log('update res:' + res.data.result)
             setex.commit('setMessage', res.data.result)
             localStorage.setItem('message', this.state.maessage)
           })
@@ -455,7 +496,9 @@ export default new Vuex.Store({
           }
         })
           .then((res) => {
-            console.log(res)
+            // console.log(res)
+            setex.commit('setMessage', res.data.result)
+            localStorage.setItem('message', this.state.maessage)
           })
           .catch((err) => {
             console.log(err)
@@ -510,8 +553,11 @@ export default new Vuex.Store({
         return item.id
       }).indexOf(paylaod.id)
 
-      console.log('index: ' + index)
+      // console.log('index: ' + index)
       setex.commit('removeProductList', index)
+    },
+    removeProduct (setex, id) {
+      setex.commit('setProductNonAct', id)
     },
     cancelCart (setex) {
       setex.commit('setProductListClear')
@@ -537,6 +583,9 @@ export default new Vuex.Store({
     },
     historiesIncome (state) {
       return state.historiesIncome
+    },
+    historiesMonth (state) {
+      return state.historiesMonth
     },
     allProduct (state) {
       return state.allProduct

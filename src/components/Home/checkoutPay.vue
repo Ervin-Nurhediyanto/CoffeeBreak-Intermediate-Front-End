@@ -185,7 +185,11 @@ aside .btm .cancel {
 }
 
 @media (max-width: 768px) {
-  .image {
+  .btm h3 {
+    font-size: 15px;
+    font-weight: bold;
+  }
+  /* .image {
     width: 100px;
     height: 80px;
     border-radius: 10px 10px 0px 0px;
@@ -227,7 +231,7 @@ aside .btm .cancel {
   }
   aside .scroll::-webkit-scrollbar {
     display: none;
-  }
+  } */
   .checkout, .cancel {
       height: 30px;
       justify-content: center;
@@ -235,7 +239,7 @@ aside .btm .cancel {
   }
 }
 
-@media (max-width: 576px) {
+/* @media (max-width: 576px) {
   .icon {
     width: 15px;
     height: 15px;
@@ -290,5 +294,5 @@ aside .btm .cancel {
   .checkout, .cancel {
       height: 200px;
   }
-}
+} */
 </style>
