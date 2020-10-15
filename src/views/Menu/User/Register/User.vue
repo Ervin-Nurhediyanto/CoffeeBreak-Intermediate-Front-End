@@ -230,4 +230,21 @@ color: black;
   }
 }
 
+@media (max-width: 576px) {
+  .register {
+    top: 200px;
+    left: 90px;
+    height: 430px;
+  }
+  .register:hover {
+    height: 430px;
+  }
+  p {
+    font-size: 40px;
+  }
+  h4 {
+    font-size: 15px;
+  }
+}
+
 </style>

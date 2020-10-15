@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="cover-bg">
     <div class="manu-landP">
       <nav class="navbar navbar-expand-lg navbar-light">
         <button
@@ -167,7 +167,6 @@ export default {
     top: 0px;
   }
   .navbar button {
-    /* background-color: blue; */
     margin-bottom: 20px;
     padding: 5px;
     border-radius: 10px 0 10px 0;
@@ -179,7 +178,6 @@ export default {
 
   #navbarNav {
     padding: 10px;
-    /* background-color: red; */
     border-radius: 10px;
     border: none;
     box-shadow: -2px -2px #ffffff73, 4px 4px rgba(94, 104, 121, 0.288);
@@ -198,6 +196,27 @@ export default {
   .cafe {
     top: 5px;
     left: 80px;
+  }
+}
+
+@media (max-width: 576px) {
+  .cover-bg {
+    width: 500px;
+  }
+  .cafe {
+    width: 400px;
+    top: 20px;
+    left: 60px;
+  }
+
+  h1.cafe {
+    font-size: 35px;
+  }
+  .navbar {
+    margin: 18px;
+    min-width: 430px;
+    position: absolute;
+    top: 0px;
   }
 }
 

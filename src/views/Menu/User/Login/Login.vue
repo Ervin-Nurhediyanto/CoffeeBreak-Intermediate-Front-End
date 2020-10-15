@@ -1,23 +1,44 @@
 <template>
-    <div class="login">
-      <form>
-        <p>LOGIN</p>
-        <div class="form-group">
-          <label for="exampleInputEmail1">Email address</label>
-          <input type="email" class="form-control type" v-model="email" placeholder="Enter email" aria-describedby="emailHelp">
-        </div>
-        <div class="form-group">
-          <label for="exampleInputPassword1">Password</label>
-          <input type="password" class="form-control type" v-model="password" placeholder="Enter Password">
-        </div>
-        <div class="form-group">
-          <button type="submit" class="btn btn-primary submit" @click="handleLogin" data-toggle="modal" data-target="#Notif">Login</button>
-        </div>
-        <h4>Belum punya akun? Silahkan <span class="register" @click="register">Register</span></h4>
-      </form>
-      <Notif
-      />
-    </div>
+  <div class="login">
+    <form>
+      <p>LOGIN</p>
+      <div class="form-group">
+        <label for="exampleInputEmail1">Email address</label>
+        <input
+          type="email"
+          class="form-control type"
+          v-model="email"
+          placeholder="Enter email"
+          aria-describedby="emailHelp"
+        />
+      </div>
+      <div class="form-group">
+        <label for="exampleInputPassword1">Password</label>
+        <input
+          type="password"
+          class="form-control type"
+          v-model="password"
+          placeholder="Enter Password"
+        />
+      </div>
+      <div class="form-group">
+        <button
+          type="submit"
+          class="btn btn-primary submit"
+          @click="handleLogin"
+          data-toggle="modal"
+          data-target="#Notif"
+        >
+          Login
+        </button>
+      </div>
+      <h4>
+        Belum punya akun? Silahkan
+        <span class="register" @click="register">Register</span>
+      </h4>
+    </form>
+    <Notif />
+  </div>
 </template>
 
 <script>
@@ -43,10 +64,9 @@ export default {
         password: this.password
       }
       this.$router.go(0)
-      this.login(data)
-        .then((res) => {
-          this.$router.push('/home')
-        })
+      this.login(data).then((res) => {
+        this.$router.push('/home')
+      })
     },
     register () {
       this.$router.push('/register')
@@ -95,7 +115,7 @@ form {
   text-shadow: 3px 3px #ff0000;
   position: absolute;
   top: 20px;
-  font-size: 50px
+  font-size: 50px;
 }
 
 .login {
@@ -174,9 +194,9 @@ p {
   box-shadow: inset -2px -2px #ffffff73, inset 4px 4px rgba(94, 104, 121, 0.288);
 }
 
-h4{
-font-size: 12px;
-color: black;
+h4 {
+  font-size: 12px;
+  color: black;
 }
 
 .register {
@@ -186,10 +206,10 @@ color: black;
 
 @media (max-width: 768px) {
   * {
-  margin: 0;
-  padding: 0;
-  background-color: transparent;
-  font-family: "Courier New", Courier, monospace;
+    margin: 0;
+    padding: 0;
+    background-color: transparent;
+    font-family: "Courier New", Courier, monospace;
   }
   .main {
     height: 360px;
@@ -205,17 +225,21 @@ color: black;
     height: 270px;
   }
   p {
-  font-size: 40px;
+    font-size: 40px;
+  }
+  h4 {
+    font-size: 12px;
+    color: black;
   }
   form {
     position: absolute;
-    top:20;
+    top: 20;
   }
   input {
-  margin: 0px 0px 15px 0px;
+    margin: 0px 0px 15px 0px;
   }
   .login p {
-  margin: 0px 0px 0px 0px;
+    margin: 0px 0px 0px 0px;
   }
 }
 
@@ -232,10 +256,13 @@ color: black;
     width: 300px;
     height: 100px;
   }
-  .text h1, .text h2, .text h3 {
+  .text h1,
+  .text h2,
+  .text h3 {
     font-size: 20px;
   }
-  .text h2, .text h3 {
+  .text h2,
+  .text h3 {
     display: none;
   }
   .text h3.text-white {
@@ -250,7 +277,26 @@ color: black;
   }
   .order {
     position: absolute;
-    top: 480px
+    top: 480px;
+  }
+  .login {
+    top: 200px;
+    left: 90px;
+    width: 300px;
+    height: 350px;
+  }
+  .login:hover {
+    width: 300px;
+    height: 350px;
+  }
+  p {
+    font-size: 40px;
+  }
+  h4 {
+    font-size: 16px;
+  }
+  form {
+    top: 10px;
   }
 }
 </style>
