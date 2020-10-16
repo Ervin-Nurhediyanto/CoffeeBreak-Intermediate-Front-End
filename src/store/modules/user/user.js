@@ -27,7 +27,6 @@ const user = {
         console.log(error.response.data.result)
         localStorage.removeItem('token')
         setex.commit('setToken', null)
-        // alert(error.response.data.result.message)
         router.push('/login')
         return Promise.reject(error)
       })
@@ -43,7 +42,6 @@ const user = {
     },
     login (setex, payload) {
       return new Promise((resolve, reject) => {
-        // setex.commit('setMessage', 'loading')
         axios.post(process.env.VUE_APP_URL_LOGIN, payload)
           .then((res) => {
             setex.commit('setUser', res.data.result)
@@ -51,7 +49,6 @@ const user = {
             resolve(res.data.result)
           })
           .catch((err) => {
-            setex.commit('setMessage', err.response.data.result)
             reject(err)
           })
       })
@@ -60,13 +57,9 @@ const user = {
       return new Promise((resolve, reject) => {
         axios.post(process.env.VUE_APP_URL_REG_USER, payload)
           .then((res) => {
-            // setex.commit('setMessage', res.data.result)
-            // localStorage.setItem('message', this.state.maessage)
             resolve(res.data.result[0])
           })
           .catch((err) => {
-            // setex.commit('setMessage', err.response.data.result)
-            // localStorage.setItem('message', this.state.maessage)
             reject(err)
           })
       })
@@ -76,11 +69,9 @@ const user = {
       return new Promise((resolve, reject) => {
         axios.post(process.env.VUE_APP_URL_REG_ADMIN, payload)
           .then((res) => {
-            console.log(res)
             resolve(res.data.result[0])
           })
           .catch((err) => {
-            console.log(err)
             reject(err)
           })
       })

@@ -60,9 +60,18 @@ export default {
         email: this.email,
         password: this.password
       }
-      this.login(data).then((res) => {
-        this.$router.push('/')
-      })
+      this.login(data)
+        .then((res) => {
+          this.$router.push('/')
+        })
+        .catch((err) => {
+          this.$swal({
+            icon: 'error',
+            title: err.response.data.result,
+            showConfirmButton: false,
+            timer: 1500
+          })
+        })
     },
     register () {
       this.$router.push('/register')
