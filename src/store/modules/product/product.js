@@ -258,7 +258,7 @@ const product = {
         this.getData()
       })
     },
-    nextPage (setex, payload) {
+    changePage (setex, payload) {
       return new Promise((resolve, reject) => {
         setex.commit('setPage', payload)
         if (this.state.search != null) {
@@ -319,20 +319,6 @@ const product = {
         }
       })
     },
-    prevPage (setex, payload) {
-      return new Promise((resolve, reject) => {
-        setex.commit('setPage', payload)
-        axios.get(process.env.VUE_APP_URL_PRODUCT + '/?page=' + payload)
-          .then((res) => {
-            setex.commit('setProduct', res.data.result)
-            resolve(res.data.result)
-          })
-          .catch((err) => {
-            console.log(err)
-            reject(err)
-          })
-      })
-    },
     addData (setex, payload) {
       console.log(payload)
       return new Promise((resolve, reject) => {
@@ -386,9 +372,10 @@ const product = {
     },
     plusCount (setex, payload) {
       setex.commit('setCartCountPlus')
-      if (this.state.cartCount > 0) {
-        setex.commit('setFalseEmpty')
-      }
+      setex.commit('setFalseEmpty')
+      // if (payload > 0) {
+      //   setex.commit('setFalseEmpty')
+      // }
     },
     minusCount (setex, payload) {
       setex.commit('setCartCountMin')

@@ -3,7 +3,7 @@
     <div v-for="product in products" :key="product.id">
     <div class="select container-img">
       <img v-show="product.cardActive" class="image" :src="product.image" @click="addToCart(product)" />
-      <img v-show="product.cardSelect" v-filter='brightness' class="image" :src="product.image" @click="addToCart" />
+      <img v-show="product.cardSelect" class="image" :src="product.image" v-filter='brightness' />
       <div v-show="product.cardSelect" class="tick"></div>
     </div>
     <h5>{{product.name}}</h5>
@@ -53,7 +53,7 @@ export default {
           cardSelect: product.cardSelect,
           cardActive: product.cardActive
         }
-        this.plusCount()
+        this.plusCount(this.cartCount)
         this.addListProduct(data)
         this.addTotalPrice(data.price)
       }
