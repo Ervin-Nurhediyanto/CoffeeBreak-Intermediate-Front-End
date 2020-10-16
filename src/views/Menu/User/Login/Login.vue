@@ -37,13 +37,11 @@
         <span class="register" @click="register">Register</span>
       </h4>
     </form>
-    <Notif />
   </div>
 </template>
 
 <script>
 import { mapActions } from 'vuex'
-import Notif from '../../../../components/Home/Modal-Notif'
 
 export default {
   name: 'Login',
@@ -54,7 +52,6 @@ export default {
     }
   },
   components: {
-    Notif
   },
   methods: {
     handleLogin (e) {
@@ -63,9 +60,8 @@ export default {
         email: this.email,
         password: this.password
       }
-      this.$router.go(0)
       this.login(data).then((res) => {
-        this.$router.push('/home')
+        this.$router.push('/')
       })
     },
     register () {
