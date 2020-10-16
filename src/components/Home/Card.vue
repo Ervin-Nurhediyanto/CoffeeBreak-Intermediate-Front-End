@@ -3,7 +3,7 @@
     <div v-for="product in products" :key="product.id">
     <div class="select container-img">
       <img v-show="product.cardActive" class="image" :src="product.image" @click="addToCart(product)" />
-      <img v-show="product.cardSelect" class="image" :src="product.image" v-filter='brightness' />
+      <img v-show="product.cardSelect" class="image" :src="product.image" @click="removeFromCart(product)" v-filter='brightness' />
       <div v-show="product.cardSelect" class="tick"></div>
     </div>
     <h5>{{product.name}}</h5>
@@ -13,7 +13,7 @@
 </template>
 
 <script>
-import { mapGetters, mapActions } from 'vuex'
+import { mapGetters, mapActions, mapMutations } from 'vuex'
 
 export default {
   name: 'Card',
@@ -38,6 +38,7 @@ export default {
     ...mapActions(['removeListProduct']),
     ...mapActions(['addTotalPrice']),
     ...mapActions(['removeProduct']),
+    ...mapMutations(['setTrueEmpty']),
 
     addToCart (product) {
       if (product.cardSelect === false) {
@@ -53,10 +54,33 @@ export default {
           cardSelect: product.cardSelect,
           cardActive: product.cardActive
         }
-        this.plusCount(this.cartCount)
+        this.plusCount()
         this.addListProduct(data)
         this.addTotalPrice(data.price)
       }
+    },
+
+    removeFromCart (product) {
+      product.cardSelect = false
+      product.cardActive = true
+      this.minusCount()
+      if (this.cartCount === 0) {
+        this.setTrueEmpty()
+      }
+      const index = this.productList.map((item) => {
+        return item.id
+      }).indexOf(product.id)
+      const price = this.productList.map((item) => {
+        return item.price
+      })
+      const count = this.productList.map((item) => {
+        return item.countItem
+      })
+      const total = (price[index] * count[index]) * -1
+      console.log(total)
+
+      this.removeListProduct(index)
+      this.addTotalPrice(total)
     }
   }
 }

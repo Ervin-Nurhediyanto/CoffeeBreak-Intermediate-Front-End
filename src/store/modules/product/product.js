@@ -376,18 +376,15 @@ const product = {
     },
     minusCount (setex, payload) {
       setex.commit('setCartCountMin')
-      if (this.state.cartCount <= 0) {
-        setex.commit('setTrueEmpty')
-      }
     },
     addListProduct (setex, paylaod) {
       setex.commit('setProductList', paylaod)
     },
     removeListProduct (setex, paylaod) {
-      const index = this.state.productList.map((item) => {
-        return item.id
-      }).indexOf(paylaod.id)
-      setex.commit('removeProductList', index)
+      // const index = this.state.productList.map((item) => {
+      //   return item.id
+      // }).indexOf(paylaod.id)
+      setex.commit('removeProductList', paylaod)
     },
     removeProduct (setex, id) {
       setex.commit('setProductNonAct', id)
