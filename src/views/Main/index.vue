@@ -18,10 +18,10 @@
                 <Checkout />
               </div>
               <div class="checkoutPay">
-              <CheckoutPay
+                <CheckoutPay
                   :totalPrice="totals"
                   v-on:cancel="cancelCart($event)"
-              />
+                />
               </div>
             </div>
           </aside>

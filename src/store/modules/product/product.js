@@ -370,12 +370,9 @@ const product = {
           })
       })
     },
-    plusCount (setex, payload) {
+    plusCount (setex) {
       setex.commit('setCartCountPlus')
       setex.commit('setFalseEmpty')
-      // if (payload > 0) {
-      //   setex.commit('setFalseEmpty')
-      // }
     },
     minusCount (setex, payload) {
       setex.commit('setCartCountMin')
