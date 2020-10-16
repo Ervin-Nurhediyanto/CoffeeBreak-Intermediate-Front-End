@@ -6,7 +6,8 @@
           <img class="image-cart" :src="product.image" />
         </div>
         <div class="col item m-md-0 m-sm-0">
-          <h3>{{product.name}}</h3>
+          <h3 v-if="product.name.length < 17">{{product.name}}</h3>
+          <h4 v-else>{{product.name}}</h4>
           <div class="row m-md-0 m-sm-0 price justify-content-between">
             <div class="row m-md-0 pb-md-0 m-sm-0 pb-sm-0">
               <button class="min" @click="minus(product)">-</button>
@@ -25,7 +26,7 @@
 import { mapGetters, mapActions } from 'vuex'
 
 export default {
-  name: 'Checkout',
+  name: 'Cart List',
   data () {
     return {
       active: true
@@ -100,6 +101,20 @@ export default {
   height: 100px;
   object-fit: cover;
   padding-top: 0;
+}
+
+.item h3 {
+  font-size: 18px;
+}
+
+.item h4 {
+  font-size: 16px;
+  font-weight: bold;
+  color: black;
+}
+
+.select {
+  width: 300px;
 }
 
 @media (max-width: 768px) {
