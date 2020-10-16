@@ -24,14 +24,14 @@
       </div>
       <h4>Sudah punya akun? Silahkan <span class="login" @click="login">Login</span></h4>
     </form>
-    <Notif />
+    <!-- <Notif /> -->
     </div>
 
 </template>
 
 <script>
 import { mapActions } from 'vuex'
-import Notif from '../../../../components/Home/Modal-Notif'
+// import Notif from '../../../../components/Home/Modal-Notif'
 
 export default {
   name: 'RegisterUser',
@@ -44,7 +44,7 @@ export default {
     }
   },
   components: {
-    Notif
+    // Notif
   },
   methods: {
     handleRegister (e) {
@@ -57,6 +57,20 @@ export default {
       }
       this.register(data)
         .then((res) => {
+          this.$swal({
+            icon: 'success',
+            title: 'Register Success',
+            showConfirmButton: false,
+            timer: 1500
+          })
+        })
+        .catch((err) => {
+          this.$swal({
+            icon: 'error',
+            title: err.response.data.result,
+            showConfirmButton: false,
+            timer: 1500
+          })
         })
     },
     login () {

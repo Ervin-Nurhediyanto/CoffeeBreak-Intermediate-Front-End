@@ -27,7 +27,7 @@ const user = {
         console.log(error.response.data.result)
         localStorage.removeItem('token')
         setex.commit('setToken', null)
-        alert(error.response.data.result.message)
+        // alert(error.response.data.result.message)
         router.push('/login')
         return Promise.reject(error)
       })
@@ -60,13 +60,13 @@ const user = {
       return new Promise((resolve, reject) => {
         axios.post(process.env.VUE_APP_URL_REG_USER, payload)
           .then((res) => {
-            setex.commit('setMessage', res.data.result)
-            localStorage.setItem('message', this.state.maessage)
+            // setex.commit('setMessage', res.data.result)
+            // localStorage.setItem('message', this.state.maessage)
             resolve(res.data.result[0])
           })
           .catch((err) => {
-            setex.commit('setMessage', err.response.data.result)
-            localStorage.setItem('message', this.state.maessage)
+            // setex.commit('setMessage', err.response.data.result)
+            // localStorage.setItem('message', this.state.maessage)
             reject(err)
           })
       })
