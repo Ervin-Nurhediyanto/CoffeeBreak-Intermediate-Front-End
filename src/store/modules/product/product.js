@@ -381,9 +381,6 @@ const product = {
       setex.commit('setProductList', paylaod)
     },
     removeListProduct (setex, paylaod) {
-      // const index = this.state.productList.map((item) => {
-      //   return item.id
-      // }).indexOf(paylaod.id)
       setex.commit('removeProductList', paylaod)
     },
     removeProduct (setex, id) {
