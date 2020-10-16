@@ -65,12 +65,6 @@ export default {
         product.countItem -= 1
         const minusPrice = product.price * -1
         this.addTotalPrice(minusPrice)
-      } else {
-        this.removeListProduct(product)
-        this.removeProduct(product.id)
-        this.minusCount()
-        const minusPrice = product.price * -1
-        this.addTotalPrice(minusPrice)
       }
     },
     cancel () {
