@@ -33,8 +33,6 @@ export default {
       this.getData(data)
       this.getAllData(data)
       this.getDataSearch(searching)
-      //   .then((res) => {
-      //   })
     }
   }
 }

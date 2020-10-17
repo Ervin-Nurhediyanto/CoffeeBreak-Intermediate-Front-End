@@ -40,12 +40,6 @@ const product = {
     setPage (state, payload) {
       state.page = Number(payload)
     },
-    // nextPage (state, payload) {
-    //   state.page += Number(payload)
-    // },
-    // prevPage (state, payload) {
-    //   state.page -= payload
-    // },
     setSearch (state, payload) {
       state.search = payload
     },
@@ -110,8 +104,8 @@ const product = {
     getAllData (setex, payload) {
       return new Promise((resolve, reject) => {
         if (payload.search) {
-          if (this.state.sort != null) {
-            axios.get(process.env.VUE_APP_URL_PRODUCT + '/?search=' + payload.search + '&sort=' + this.state.sort)
+          if (payload.sort) {
+            axios.get(process.env.VUE_APP_URL_PRODUCT + '/?search=' + payload.search + '&sort=' + payload.sort)
               .then((res) => {
                 setex.commit('setAllProduct', res.data.result)
                 setex.commit('setTotalPage', Math.ceil(res.data.result.length / 6))
@@ -151,8 +145,8 @@ const product = {
     getData (setex, payload) {
       return new Promise((resolve, reject) => {
         if (payload.search) {
-          if (this.state.sort != null) {
-            axios.get(process.env.VUE_APP_URL_PRODUCT + '/?page=1&search=' + payload.search + '&sort=' + this.state.sort)
+          if (payload.sort) {
+            axios.get(process.env.VUE_APP_URL_PRODUCT + '/?page=1&search=' + payload.search + '&sort=' + payload.sort)
               .then((res) => {
                 setex.commit('setProduct', res.data.result)
                 setex.commit('setPage', res.data.page)
@@ -187,9 +181,9 @@ const product = {
                 reject(err)
               })
           }
-        } else if (this.state.sort != null) {
+        } else if (payload.sort) {
           if (payload.search) {
-            axios.get(process.env.VUE_APP_URL_PRODUCT + '/?page=1&sort=' + this.state.sort + '&search=' + payload.search)
+            axios.get(process.env.VUE_APP_URL_PRODUCT + '/?page=1&sort=' + payload.sort + '&search=' + payload.search)
               .then((res) => {
                 setex.commit('setProduct', res.data.result)
                 setex.commit('setPage', res.data.page)
@@ -207,7 +201,7 @@ const product = {
                 reject(err)
               })
           } else {
-            axios.get(process.env.VUE_APP_URL_PRODUCT + '/?page=1&sort=' + this.state.sort)
+            axios.get(process.env.VUE_APP_URL_PRODUCT + '/?page=1&sort=' + payload.sort)
               .then((res) => {
                 setex.commit('setProduct', res.data.result)
                 setex.commit('setPage', res.data.page)
@@ -250,7 +244,6 @@ const product = {
       return new Promise((resolve, reject) => {
         setex.commit('setSearch', payload)
         localStorage.setItem('search', payload)
-        // this.getData()
       })
     },
     getDataSort (setex, payload) {
