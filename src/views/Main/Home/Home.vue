@@ -56,8 +56,12 @@ export default {
     })
   },
   mounted () {
-    this.getAllData()
-    this.getData()
+    const data = {
+      search: '',
+      sort: ''
+    }
+    this.getAllData(data)
+    this.getData(data)
   },
   methods: {
     ...mapActions(['getAllData']),

@@ -30,9 +30,10 @@ export default {
       const data = {
         search: searching
       }
-      this.getData(data)
-      this.getAllData(data)
       this.getDataSearch(searching)
+      this.getAllData(data)
+      this.getData(data)
+      this.searching = ''
     }
   }
 }
