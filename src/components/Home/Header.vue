@@ -2,9 +2,7 @@
   <header class="row justify-content-between">
     <img class="icon" src="../../assets/menu.png" />
     <h2 class>Food Items</h2>
-    <div class="row">
-      <img class="icon" src="../../assets/magnifying-glass.png" />
-    </div>
+    <div class="row"></div>
   </header>
 </template>
 

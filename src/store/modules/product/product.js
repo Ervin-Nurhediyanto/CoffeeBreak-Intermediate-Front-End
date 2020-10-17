@@ -317,17 +317,14 @@ const product = {
       })
     },
     addData (setex, payload) {
-      console.log(payload)
       return new Promise((resolve, reject) => {
         axios.post(process.env.VUE_APP_URL_PRODUCT, payload)
           .then((res) => {
-            setex.commit('setMessage', res.data.result)
-            localStorage.setItem('message', this.state.maessage)
+            resolve(res)
           })
           .catch((err) => {
             console.log(err.response.data.result)
-            setex.commit('setMessage', err.data.result.message)
-            localStorage.setItem('message', this.state.maessage)
+            reject(err)
           })
       })
     },
@@ -355,13 +352,11 @@ const product = {
           }
         })
           .then((res) => {
-            setex.commit('setMessage', res.data.result)
-            localStorage.setItem('message', this.state.maessage)
+            resolve(res)
           })
           .catch((err) => {
             console.log(err)
-            setex.commit('setMessage', err.data.result.message)
-            localStorage.setItem('message', this.state.maessage)
+            reject(err)
           })
       })
     },

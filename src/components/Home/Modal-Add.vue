@@ -5,7 +5,7 @@
         <div class="modal-body col">
           <h5 class="modal-title">Add Item</h5>
 
-          <form @submit.prevent="add">
+          <form>
             <div class="row mt-md-4 mt-sm-4">
               <div class="col-md-2 pl-md-3 pb-md-2 col-sm-2 pl-sm-3 pb-sm-2">
                 <h6>Name</h6>
@@ -31,7 +31,7 @@
                 <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
               </div>
               <div class="pr-md-4 pr-sm-4">
-                <button type="submit" class="btn btn-primary" data-toggle="modal" data-target="#Notif">Add</button>
+                <button class="btn btn-primary" @click.prevent="add">Add</button>
               </div>
             </div>
           </form>
@@ -39,13 +39,11 @@
         </div>
       </div>
     </div>
-    <Notif />
   </div>
 </template>
 
 <script>
-import Notif from './Modal-Notif'
-import { mapActions } from 'vuex'
+import { mapGetters, mapActions } from 'vuex'
 
 export default {
   name: 'Add',
@@ -59,7 +57,13 @@ export default {
     }
   },
   components: {
-    Notif
+  },
+  computed: {
+    ...mapGetters({
+      page: 'page',
+      search: 'search',
+      sort: 'sort'
+    })
   },
   methods: {
     ...mapActions(['addData']),
@@ -76,9 +80,40 @@ export default {
       formData.append('idCategory', this.idCategory)
       this.addData(formData)
         .then((res) => {
-          console.log(res)
-          this.$router.go(0)
+          if (res.data.result !== 'jpg Only!') {
+            this.$swal({
+              icon: 'success',
+              title: res.data.result,
+              showConfirmButton: false,
+              timer: 1500
+            })
+            this.name = ''
+            this.FILE = ''
+            this.price = ''
+            this.idCategory = ''
+          } else {
+            this.$swal({
+              icon: 'error',
+              title: res.data.result,
+              showConfirmButton: false,
+              timer: 1500
+            })
+          }
         })
+        .catch((err) => {
+          this.$swal({
+            icon: 'error',
+            title: err.response.data.result,
+            showConfirmButton: false,
+            timer: 1500
+          })
+        })
+      const data = {
+        page: this.page,
+        search: this.search,
+        sort: this.sort
+      }
+      this.changePage(data)
     }
   }
 }

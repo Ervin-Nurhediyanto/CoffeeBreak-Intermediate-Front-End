@@ -47,6 +47,11 @@ export default {
   margin-left: 5px;
 }
 
+.icon:hover {
+  width: 40px;
+  height: 40px;
+}
+
 nav .col {
   width: 50px;
 }
@@ -65,7 +70,12 @@ nav.nav {
   width: 5%;
 }
 nav .icon {
-  margin-top: 20px;
+  margin-top: 30px;
+  cursor: pointer;
+}
+
+nav .icon:hover {
+  margin-top: 25px;
 }
 
 nav button.btn-primary {
