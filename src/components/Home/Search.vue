@@ -1,25 +1,40 @@
 <template>
   <article class="search-box">
-    <input type="text" v-model="search" placeholder="search......" />
-    <i class="fa fa-search" aria-hidden="true" @click="handleSearch(search)"></i>
+    <input type="text" v-model="searching" placeholder="search......" />
+    <i class="fa fa-search" aria-hidden="true" @click="handleSearch(searching)"></i>
   </article>
 </template>
 
 <script>
-import { mapActions } from 'vuex'
+import { mapGetters, mapActions } from 'vuex'
 
 export default {
   name: 'Search',
   data () {
     return {
-      search: ''
+      searching: ''
     }
   },
+  computed: {
+    ...mapGetters({
+      search: 'search'
+    })
+  },
   methods: {
-    ...mapActions(['getDataSearch']),
-    handleSearch (key) {
-      this.getDataSearch(key)
-      this.$router.go(0)
+    ...mapActions([
+      'getDataSearch',
+      'getAllData',
+      'getData'
+    ]),
+    handleSearch (searching) {
+      const data = {
+        search: searching
+      }
+      this.getData(data)
+      this.getAllData(data)
+      this.getDataSearch(searching)
+      //   .then((res) => {
+      //   })
     }
   }
 }

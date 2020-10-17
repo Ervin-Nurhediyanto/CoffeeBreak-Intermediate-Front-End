@@ -11,8 +11,8 @@ const product = {
     empty: true,
     status: '',
     cartCount: 0,
-    search: localStorage.getItem('search') || null,
-    sort: localStorage.getItem('sort') || null
+    search: localStorage.getItem('search') || '',
+    sort: localStorage.getItem('sort') || ''
   },
   mutations: {
     setAllProduct (state, payload) {
@@ -40,12 +40,12 @@ const product = {
     setPage (state, payload) {
       state.page = Number(payload)
     },
-    nextPage (state, payload) {
-      state.page += Number(payload)
-    },
-    prevPage (state, payload) {
-      state.page -= payload
-    },
+    // nextPage (state, payload) {
+    //   state.page += Number(payload)
+    // },
+    // prevPage (state, payload) {
+    //   state.page -= payload
+    // },
     setSearch (state, payload) {
       state.search = payload
     },
@@ -107,11 +107,11 @@ const product = {
     }
   },
   actions: {
-    getAllData (setex) {
+    getAllData (setex, payload) {
       return new Promise((resolve, reject) => {
-        if (this.state.search != null) {
+        if (payload.search) {
           if (this.state.sort != null) {
-            axios.get(process.env.VUE_APP_URL_PRODUCT + '/?search=' + this.state.search + '&sort=' + this.state.sort)
+            axios.get(process.env.VUE_APP_URL_PRODUCT + '/?search=' + payload.search + '&sort=' + this.state.sort)
               .then((res) => {
                 setex.commit('setAllProduct', res.data.result)
                 setex.commit('setTotalPage', Math.ceil(res.data.result.length / 6))
@@ -122,7 +122,7 @@ const product = {
                 reject(err)
               })
           } else {
-            axios.get(process.env.VUE_APP_URL_PRODUCT + '/?search=' + this.state.search)
+            axios.get(process.env.VUE_APP_URL_PRODUCT + '/?search=' + payload.search)
               .then((res) => {
                 setex.commit('setAllProduct', res.data.result)
                 setex.commit('setTotalPage', Math.ceil(res.data.result.length / 6))
@@ -148,11 +148,11 @@ const product = {
         }
       })
     },
-    getData (setex) {
+    getData (setex, payload) {
       return new Promise((resolve, reject) => {
-        if (this.state.search != null) {
+        if (payload.search) {
           if (this.state.sort != null) {
-            axios.get(process.env.VUE_APP_URL_PRODUCT + '/?page=1&search=' + this.state.search + '&sort=' + this.state.sort)
+            axios.get(process.env.VUE_APP_URL_PRODUCT + '/?page=1&search=' + payload.search + '&sort=' + this.state.sort)
               .then((res) => {
                 setex.commit('setProduct', res.data.result)
                 setex.commit('setPage', res.data.page)
@@ -169,7 +169,7 @@ const product = {
                 reject(err)
               })
           } else {
-            axios.get(process.env.VUE_APP_URL_PRODUCT + '/?page=1&search=' + this.state.search)
+            axios.get(process.env.VUE_APP_URL_PRODUCT + '/?page=1&search=' + payload.search)
               .then((res) => {
                 setex.commit('setProduct', res.data.result)
                 setex.commit('setPage', res.data.page)
@@ -188,8 +188,8 @@ const product = {
               })
           }
         } else if (this.state.sort != null) {
-          if (this.state.search != null) {
-            axios.get(process.env.VUE_APP_URL_PRODUCT + '/?page=1&sort=' + this.state.sort + '&search=' + this.state.search)
+          if (payload.search) {
+            axios.get(process.env.VUE_APP_URL_PRODUCT + '/?page=1&sort=' + this.state.sort + '&search=' + payload.search)
               .then((res) => {
                 setex.commit('setProduct', res.data.result)
                 setex.commit('setPage', res.data.page)
@@ -248,8 +248,9 @@ const product = {
     },
     getDataSearch (setex, payload) {
       return new Promise((resolve, reject) => {
+        setex.commit('setSearch', payload)
         localStorage.setItem('search', payload)
-        this.getData()
+        // this.getData()
       })
     },
     getDataSort (setex, payload) {
