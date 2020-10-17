@@ -1,9 +1,9 @@
 <template>
   <div class="container-fluid">
     <Header />
-    <div class="row">
+    <div class="row d-flex justify-content-start">
       <Navbar />
-      <main class="mainbar">
+      <main>
         <Card />
         <Revenue />
         <Recent />
@@ -64,7 +64,7 @@ export default {
 main {
   display: flex;
   flex-direction: column;
-  width: 93%;
+  width: 90%;
   padding: 10px;
   overflow-y: scroll;
   height: 530px;

@@ -9,9 +9,13 @@
 </template>
 
 <script>
+import { mapActions } from 'vuex'
+
 export default {
   name: 'Navbar',
   methods: {
+    ...mapActions(['logout']),
+
     linkHistory () {
       this.$router.push({
         name: 'history'
@@ -39,8 +43,15 @@ export default {
 .icon {
   width: 35px;
   height: 35px;
-  margin-left: 5px;
-  margin-top: 20px;
+  margin-left: 12px;
+  margin-top: 30px;
+  cursor: pointer;
+}
+
+.icon:hover {
+  width: 40px;
+  height: 40px;
+  margin-top: 25px;
 }
 
 nav {
@@ -48,7 +59,7 @@ nav {
   flex-direction: column;
   background: #ffffff;
   box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.25);
-  width: 77px;
+  width: 85px;
   height: 585px;
   margin-left: 14px;
   padding-left: 9px;
