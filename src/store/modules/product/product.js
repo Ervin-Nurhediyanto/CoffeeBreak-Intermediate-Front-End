@@ -150,10 +150,14 @@ const product = {
               .then((res) => {
                 setex.commit('setProduct', res.data.result)
                 setex.commit('setPage', res.data.page)
-                const dataImg = res.data.result.map((item) => {
-                  return item.image
-                })
-                setex.commit('setUrlImage', dataImg)
+
+                if (res.data.result !== 'Produk yang anda cari tidak ada') {
+                  const dataImg = res.data.result.map((item) => {
+                    return item.image
+                  })
+                  setex.commit('setUrlImage', dataImg)
+                }
+
                 localStorage.setItem('image', this.state.allImage)
 
                 resolve(res.data.result)

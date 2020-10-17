@@ -13,11 +13,14 @@
         </div>
       </div>
 
-      <article class="col main">
+      <article v-if="allProduct === 'Produk yang anda cari tidak ada'">
+        <h2>Product Not Found</h2>
+      </article>
+      <article v-else class="col main">
         <Card />
       </article>
 
-      <Pagination />
+      <Pagination v-if="allProduct !== 'Produk yang anda cari tidak ada'" />
       <Notif />
     </div>
   </main>
