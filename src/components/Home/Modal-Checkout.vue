@@ -51,9 +51,9 @@
               </div>
             </div>
             <div class="col mb-md-2 mb-sm-2">
-              <button type="button" class="btn btn-primary">Print</button>
+              <button type="button" class="btn btn-primary" @click="handlePrint">Print</button>
               <h4 class="or">Or</h4>
-              <button type="button" class="btn btn-secondary">Send Email</button>
+              <button type="button" class="btn btn-secondary" @click="handleSendEmail">Send Email</button>
             </div>
           </div>
         </div>
@@ -73,6 +73,24 @@ export default {
       productList: 'productList',
       totalPrice: 'totalPrice'
     })
+  },
+  methods: {
+    handlePrint () {
+      this.$swal({
+        icon: 'info',
+        title: 'Maintenance Server',
+        showConfirmButton: false,
+        timer: 1500
+      })
+    },
+    handleSendEmail () {
+      this.$swal({
+        icon: 'info',
+        title: 'Maintenance Server',
+        showConfirmButton: false,
+        timer: 1500
+      })
+    }
   }
 }
 </script>
