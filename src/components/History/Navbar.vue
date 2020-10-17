@@ -1,10 +1,10 @@
 <template>
   <nav>
-    <img class="icon" src="../../assets/fork.png" @click="linkHome" />
-    <img class="icon" src="../../assets/clipboard.png" @click="linkHistory" />
-    <img class="icon" src="../../assets/add.png" data-toggle="modal" data-target="#myModal" />
-    <img class="icon" src="../../assets/product.png" @click="linkProduct" />
-    <img class="icon" src="../../assets/logout.png" @click="linkLogout" />
+    <img class="icon" title="Home" alt="Home" src="../../assets/fork.png" @click="linkHome" />
+    <img class="icon" title="History" alt="History" src="../../assets/clipboard.png" @click="linkHistory" />
+    <img class="icon" title="Add Product" alt="Add Product" src="../../assets/add.png" data-toggle="modal" data-target="#myModal" />
+    <img class="icon" title="Products" alt="Products" src="../../assets/product.png" @click="linkProduct" />
+    <img class="icon" title="Logout" alt="Logout" src="../../assets/logout.png" @click="linkLogout" />
   </nav>
 </template>
 
