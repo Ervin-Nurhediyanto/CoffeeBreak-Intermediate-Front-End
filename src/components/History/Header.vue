@@ -1,11 +1,8 @@
 <template>
-  <header>
-    <div class="menubar">
-      <img class="icon" src="../../assets/menu.png" />
-    </div>
-    <div class="history">
-      <h4 class>History</h4>
-    </div>
+  <header class="row justify-content-between">
+    <img class="icon" src="../../assets/menu.png" />
+    <h2 class>History</h2>
+    <div class="row"></div>
   </header>
 </template>
 
@@ -16,72 +13,20 @@ export default {
 </script>
 
 <style scoped>
-
+header {
+  padding: 20px;
+  background: #ffffff;
+  box-shadow: 0px 4px 0px rgba(0, 0, 0, 0.25);
+}
 .icon {
   width: 35px;
   height: 35px;
+  margin-left: 20px;
 }
-/* header */
-
-header {
-  display: flex;
-  flex-direction: row;
-  padding: 0;
-  background: #ffffff;
-  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.25);
-  height: 80px;
-}
-
-header .menubar {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  padding-left: 20px;
-  width: 6%;
-}
-header .history {
-  display: flex;
-  flex-direction: column;
-  width: 94%;
-  padding: 15px;
-}
-header h4 {
+header h2 {
+  font-family: Airbnb Cereal App;
   font-size: 30px;
-}
-
-@media (max-width: 768px) {
-  header {
-    display: flex;
-    flex-direction: row;
-    width: 100%;
-    padding: 0;
-    height:50px;
-  }
-  header .menubar {
-  margin-top: 10px;
-  margin-left: 10px
-}
-header .col-md {
-  margin-top: 10px
-}
-  .icon {
-    width: 25px;
-    height: 25px;
-  }
-  h4 {
-    font-size: 20px;
-  }
-}
-
-@media (max-width:768px) {
-  .icon {
-    width: 20px;
-    height: 20px;
-  }
-  header .menubar {
-  margin-top: 5px;
-  margin-left: 0;
-  padding-left: 10px;
-  }
+  line-height: 39px;
+  color: #000000;
 }
 </style>

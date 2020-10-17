@@ -57,14 +57,12 @@ aside .cart h2 {
 input {
   box-shadow: 0px 4px 0px rgba(0, 0, 0, 0.25);
 }
+
 @media (max-width: 768px) {
   .icon {
     width: 20px;
     height: 20px;
   }
-}
-
-@media (max-width: 768px) {
   .image {
     width: 100px;
     height: 80px;
