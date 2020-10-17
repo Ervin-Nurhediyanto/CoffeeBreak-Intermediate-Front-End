@@ -248,8 +248,8 @@ const product = {
     },
     getDataSort (setex, payload) {
       return new Promise((resolve, reject) => {
+        setex.commit('setSort', payload)
         localStorage.setItem('sort', payload)
-        this.getData()
       })
     },
     changePage (setex, payload) {

@@ -16,20 +16,33 @@
 </template>
 
 <script>
-import { mapActions } from 'vuex'
+import { mapGetters, mapActions } from 'vuex'
 
 export default {
   name: 'Sort',
   data () {
     return {
-      sort: ''
     }
   },
+  computed: {
+    ...mapGetters({
+      search: 'search'
+    })
+  },
   methods: {
-    ...mapActions(['getDataSort']),
-    handleSort (sort) {
-      this.getDataSort(sort)
-      this.$router.go(0)
+    ...mapActions([
+      'getDataSort',
+      'getAllData',
+      'getData'
+    ]),
+    handleSort (sortir) {
+      const data = {
+        search: this.search,
+        sort: sortir
+      }
+      this.getDataSort(sortir)
+      this.getAllData(data)
+      this.getData(data)
     }
   }
 }
