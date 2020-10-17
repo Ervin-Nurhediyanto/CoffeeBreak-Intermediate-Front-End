@@ -11,8 +11,11 @@
           </div>
         </div>
       </div>
-      <div class="row">
 
+      <div v-if="allProduct === 'Produk yang anda cari tidak ada'" class="row">
+        <h2>Product Not Found</h2>
+      </div>
+      <div v-else class="row">
       <form @submit.prevent="update_Data(product, product.id)" v-for="product in products" :key="product.id">
         <div class="col">
           <div class="row container-img">
@@ -38,16 +41,17 @@
             </select>
           </div>
           <div>
-            <button type="submit" class="btn btn-success" data-toggle="modal" data-target="#Notif">Update</button>
+
+            <button type="submit" class="btn btn-success">Update</button>
             <button class="btn btn-danger" data-toggle="modal" data-target="#NotifDelete" @click="delete_Data(product.id)">Delete</button>
           </div>
         </div>
       </form>
-
       </div>
-    <Pagination />
-    <Notif />
-    <NotifDelete :delId='delId' />
+
+    <Pagination v-if="allProduct !== 'Produk yang anda cari tidak ada'" />
+    <!-- <Notif /> -->
+    <!-- <NotifDelete :delId='delId' /> -->
     </div>
   </main>
 </template>
@@ -58,17 +62,17 @@ import DataMixin from '../Home/Home'
 import Search from '../../../components/Home/Search'
 import Sort from '../../../components/Home/Sort'
 import Pagination from '../../../components/Home/Pagination'
-import Notif from '../../../components/Home/Modal-Notif'
-import NotifDelete from '../../../components/Home/Modal-Delete'
+// import Notif from '../../../components/Home/Modal-Notif'
+// import NotifDelete from '../../../components/Home/Modal-Delete'
 
 export default {
   name: 'Product',
   components: {
     Search,
     Sort,
-    Pagination,
-    Notif,
-    NotifDelete
+    Pagination
+    // Notif,
+    // NotifDelete
   },
   data () {
     return {
@@ -80,18 +84,22 @@ export default {
   mixins: [DataMixin],
   computed: {
     ...mapGetters({
+      page: 'page',
+      search: 'search',
+      sort: 'sort'
     })
   },
   mounted () {
     this.getData()
   },
   methods: {
-    ...mapActions(['getData']),
-    ...mapActions(['nextPage']),
-    ...mapActions(['prevPage']),
-    ...mapActions(['getAllData']),
-    ...mapActions(['updateData']),
-    ...mapActions(['deleteData']),
+    ...mapActions([
+      'getData',
+      'getAllData',
+      'updateData',
+      'deleteData',
+      'changePage'
+    ]),
 
     onFileUpload (event) {
       this.FILE = event.target.files[0]
@@ -110,7 +118,26 @@ export default {
 
       this.updateData(data)
         .then((res) => {
-          this.$router.go(0)
+          const data = {
+            page: this.page,
+            search: this.search,
+            sort: this.sort
+          }
+          this.changePage(data)
+          this.$swal({
+            icon: 'success',
+            title: res.data.result,
+            showConfirmButton: false,
+            timer: 1500
+          })
+        })
+        .catch((err) => {
+          this.$swal({
+            icon: 'error',
+            title: err.response.data.result,
+            showConfirmButton: false,
+            timer: 1500
+          })
         })
     },
 
