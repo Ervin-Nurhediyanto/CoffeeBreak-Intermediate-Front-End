@@ -16,7 +16,7 @@
         <h2>Product Not Found</h2>
       </div>
       <div v-else class="row">
-      <form @submit.prevent="update_Data(product, product.id)" v-for="product in products" :key="product.id">
+      <form v-for="product in products" :key="product.id">
         <div class="col">
           <div class="row container-img">
             <img class="image" :src="product.image" />
@@ -41,17 +41,14 @@
             </select>
           </div>
           <div>
-
-            <button type="submit" class="btn btn-success">Update</button>
-            <button class="btn btn-danger" data-toggle="modal" data-target="#NotifDelete" @click="delete_Data(product.id)">Delete</button>
+            <button class="btn btn-success" @click.prevent="update_Data(product, product.id)">Update</button>
+            <button class="btn btn-danger" @click="delete_Data(product.id)">Delete</button>
           </div>
         </div>
       </form>
       </div>
 
     <Pagination v-if="allProduct !== 'Produk yang anda cari tidak ada'" />
-    <!-- <Notif /> -->
-    <!-- <NotifDelete :delId='delId' /> -->
     </div>
   </main>
 </template>
@@ -62,8 +59,6 @@ import DataMixin from '../Home/Home'
 import Search from '../../../components/Home/Search'
 import Sort from '../../../components/Home/Sort'
 import Pagination from '../../../components/Home/Pagination'
-// import Notif from '../../../components/Home/Modal-Notif'
-// import NotifDelete from '../../../components/Home/Modal-Delete'
 
 export default {
   name: 'Product',
@@ -71,8 +66,6 @@ export default {
     Search,
     Sort,
     Pagination
-    // Notif,
-    // NotifDelete
   },
   data () {
     return {
@@ -105,44 +98,77 @@ export default {
       this.FILE = event.target.files[0]
     },
     update_Data (product, id) {
-      const formData = new FormData()
-      formData.append('name', product.name)
-      formData.append('image', this.FILE, this.FILE.name)
-      formData.append('price', product.price)
-      formData.append('idCategory', product.idCategory)
+      this.$swal({
+        title: 'Do you want to save the changes?',
+        text: "You won't be able to revert this!",
+        icon: 'question',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Yes, delete it!'
+      }).then((result) => {
+        const formData = new FormData()
+        formData.append('name', product.name)
+        formData.append('image', this.FILE, this.FILE.name)
+        formData.append('price', product.price)
+        formData.append('idCategory', product.idCategory)
 
-      const data = {
-        formData: formData,
-        id: id
-      }
+        const data = {
+          formData: formData,
+          id: id
+        }
 
-      this.updateData(data)
-        .then((res) => {
+        this.updateData(data)
+          .then((res) => {
+            const data = {
+              page: this.page,
+              search: this.search,
+              sort: this.sort
+            }
+            this.changePage(data)
+            this.$swal({
+              icon: 'success',
+              title: res.data.result,
+              showConfirmButton: false,
+              timer: 1500
+            })
+          })
+          .catch((err) => {
+            this.$swal({
+              icon: 'error',
+              title: err.response.data.result,
+              showConfirmButton: false,
+              timer: 1500
+            })
+          })
+      })
+    },
+
+    delete_Data (id) {
+      this.$swal({
+        title: 'Are you sure?',
+        text: "You won't be able to revert this!",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Yes, delete it!'
+      }).then((result) => {
+        if (result.isConfirmed) {
+          this.deleteData(id)
           const data = {
             page: this.page,
             search: this.search,
             sort: this.sort
           }
           this.changePage(data)
-          this.$swal({
-            icon: 'success',
-            title: res.data.result,
-            showConfirmButton: false,
-            timer: 1500
-          })
-        })
-        .catch((err) => {
-          this.$swal({
-            icon: 'error',
-            title: err.response.data.result,
-            showConfirmButton: false,
-            timer: 1500
-          })
-        })
-    },
-
-    delete_Data (id) {
-      this.delId = id
+          this.$swal(
+            'Deleted!',
+            'Your product has been deleted.',
+            'success'
+          )
+        }
+      })
     },
 
     option () {
