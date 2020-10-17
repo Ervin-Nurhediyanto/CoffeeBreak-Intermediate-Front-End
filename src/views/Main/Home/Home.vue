@@ -1,7 +1,6 @@
 <template>
   <main class="col-md-11">
     <div class="row">
-
       <div class="col-md-12 col-sm-12">
         <div class="search-sort row">
           <div class="col-md-9 col-sm-9 d-flex justify-content-start search">

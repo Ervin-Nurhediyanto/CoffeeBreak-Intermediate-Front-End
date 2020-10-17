@@ -6,10 +6,10 @@
     <span></span>
     <i class="fa fa-caret-down fa-2x"></i>
       <ol>
-        <li><a href="#" @click="handleSort('name')">a-z</a></li>
-        <li><a href="#" @click="handleSort('name&order=DESC')">z-a</a></li>
-        <li><a href="#" @click="handleSort('price')">low price</a></li>
-        <li><a href="#" @click="handleSort('price&order=DESC')">high price</a></li>
+        <li @click="handleSort('name')"><a href="#">a-z</a></li>
+        <li @click="handleSort('name&order=DESC')"><a href="#">z-a</a></li>
+        <li @click="handleSort('price')"><a href="#">low price</a></li>
+        <li @click="handleSort('price&order=DESC')"><a href="#">high price</a></li>
       </ol>
   </div>
 
