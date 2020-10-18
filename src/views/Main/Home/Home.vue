@@ -1,26 +1,41 @@
 <template>
   <main class="col-md-11">
     <div class="row">
+      <!-- Search and Sort -->
       <div class="col-md-12 col-sm-12">
         <div class="search-sort row">
           <div class="col-md-9 col-sm-9 d-flex justify-content-start search">
             <Search />
           </div>
           <div class="col-md-2 col-sm-2 sort">
-            <Sort />
+            <Sort v-on:handleShowSort="handleShowSort($event)" />
           </div>
         </div>
       </div>
-
-      <article v-if="allProduct === 'Produk yang anda cari tidak ada'">
-        <h2>Product Not Found</h2>
-      </article>
-      <article v-else class="col main">
-        <Card />
-      </article>
-
+      <!-- End Search and Sort -->
+      <!-- Products -->
+        <!-- Desktop -->
+        <div class="desktop scroll">
+          <article v-if="allProduct === 'Produk yang anda cari tidak ada'">
+            <h2>Product Not Found</h2>
+          </article>
+          <article v-else class="col main">
+            <Card />
+          </article>
+        </div>
+        <!-- End Desktop -->
+        <!-- Mobile -->
+        <div class="mobile scroll mt-2 mb-2">
+          <article v-if="allProduct === 'Produk yang anda cari tidak ada'">
+            <h2>Product Not Found</h2>
+          </article>
+          <article v-else class="col main">
+            <Card />
+          </article>
+        </div>
+        <!-- End Mobile -->
+      <!-- End Products -->
       <Pagination v-if="allProduct !== 'Produk yang anda cari tidak ada'" />
-      <!-- <Notif /> -->
     </div>
   </main>
 </template>
@@ -31,8 +46,6 @@ import { mapActions, mapGetters } from 'vuex'
 import Search from '../../../components/Home/Search'
 import Sort from '../../../components/Home/Sort'
 import Pagination from '../../../components/Home/Pagination'
-// import Notif from '../../../components/Home/Modal-Notif'
-
 export default {
   name: 'Home',
   components: {
@@ -40,12 +53,12 @@ export default {
     Search,
     Sort,
     Pagination
-    // Notif
   },
   data () {
     return {
       search: '',
-      sort: ''
+      sort: '',
+      showMenu: true
     }
   },
   computed: {
@@ -83,6 +96,10 @@ export default {
       this.$router.go(0)
     },
 
+    handleShowSort (handleShowSort) {
+      this.showMenu = handleShowSort
+    },
+
     updateCart (updateCart) {
       if (this.checkId !== updateCart.id) {
         this.checkId.push(updateCart.id)
@@ -104,54 +121,50 @@ export default {
 </script>
 
 <style scoped>
-
-.red {
-  background-color: red;
-}
-
 .search-sort {
   padding-top: 15px;
   padding-left: 0px;
 }
-
 .search {
 padding-top: 10px;
 }
-
 aside {
   background: #ffffff;
   border: 1px solid #cecece;
   width: 30%;
 }
-
-h2,
-h3,
-h4,
-button {
+h2, h3, h4, button {
   font-family: Airbnb Cereal App;
 }
-
-/* Main */
-
 main {
-  height: 610px;
+  height: 576px;
   background: rgba(190, 195, 202, 0.3);
   flex-wrap: wrap;
-  overflow-y: scroll;
 }
-
-main::-webkit-scrollbar {
-  display: none;
-}
-
 .menu .row {
   justify-content: center;
 }
 main div {
   padding: 0;
 }
+.scroll {
+  height: 450px;
+  overflow-y: scroll;
+}
+.scroll::-webkit-scrollbar {
+  display: none;
+}
+.mobile {
+  display: none;
+}
 
 @media (max-width: 768px) {
+  .desktop {
+    display: none;
+  }
+  .mobile {
+    display: inline;
+  }
   main.col-md-11 {
     display: flex;
     flex-direction: column;
@@ -183,13 +196,6 @@ main div {
   aside .list .price h4 {
     font-size: 10px;
   }
-  aside .scroll {
-    overflow-y: scroll;
-    height: 300px;
-  }
-  aside .scroll::-webkit-scrollbar {
-    display: none;
-  }
   aside .btm .checkout {
     margin-top: 10px;
   }
@@ -202,7 +208,9 @@ main div {
   h5.totalPage {
     font-size: 15px;
   }
-
+  .scroll {
+  height: 180px;
+}
 }
 
 </style>

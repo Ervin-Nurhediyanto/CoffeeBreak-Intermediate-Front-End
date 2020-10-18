@@ -1,15 +1,15 @@
 <template>
 
   <div class="dropdown">
-    <input type="checkbox" name="" id="">
+    <input type="checkbox" name="" id="" @click="handleShowSort">
     <div class="text">Sort</div>
     <span></span>
     <i class="fa fa-caret-down fa-2x"></i>
-      <ol>
-        <li @click="handleSort('name')"><a href="#">a-z</a></li>
-        <li @click="handleSort('name&order=DESC')"><a href="#">z-a</a></li>
-        <li @click="handleSort('price')"><a href="#">low price</a></li>
-        <li @click="handleSort('price&order=DESC')"><a href="#">high price</a></li>
+      <ol @click="handleShowSort">
+        <li type="submit" @click="handleSort('name')"><a href="#">a-z</a></li>
+        <li type="submit" @click="handleSort('name&order=DESC')"><a href="#">z-a</a></li>
+        <li type="submit" @click="handleSort('price')"><a href="#">low price</a></li>
+        <li type="submit" @click="handleSort('price&order=DESC')"><a href="#">high price</a></li>
       </ol>
   </div>
 
@@ -17,11 +17,11 @@
 
 <script>
 import { mapGetters, mapActions } from 'vuex'
-
 export default {
   name: 'Sort',
   data () {
     return {
+      showMenu: true
     }
   },
   computed: {
@@ -43,6 +43,14 @@ export default {
       this.getDataSort(sortir)
       this.getAllData(data)
       this.getData(data)
+    },
+    handleShowSort () {
+      if (this.showMenu) {
+        this.showMenu = false
+      } else {
+        this.showMenu = true
+      }
+      this.$emit('handleShowSort', this.showMenu)
     }
   }
 }
@@ -57,7 +65,8 @@ export default {
 .dropdown{
     width: 150px;
     margin: 10px auto;
-    position: relative;
+    position: absolute;
+    z-index: 10000;
     right: 20px;
 }
 .dropdown input{
@@ -136,13 +145,24 @@ export default {
 
 @media (max-width: 768px) {
     .dropdown {
-        width: 120px;
+        width: 100px;
         right: 50px;
     }
     .dropdown .text {
         font-size: 15px;
         font-weight: bold;
     }
+    .dropdown ol li{
+    height: 30px;
+    background-color: black;
+    margin: 0 0 10px 0;
+    cursor: pointer;
+    text-align: center;
+    line-height: 20px;
+    border-radius: 50px;
+    font-size: 12px;
+    padding: 5px;
+}
 }
 
 </style>

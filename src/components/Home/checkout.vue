@@ -83,16 +83,15 @@ export default {
 <style scoped>
 
 .container-img {
-  max-width: 100px;
-  max-height: 100px;
+  width: 100px;
+  height: 100px;
   border-radius: 20px 0px 20px 0px;
   margin-bottom: 10px;
-  background-color: red;
 }
 
 .image-cart {
-  width: 100px;
-  height: 100px;
+  width: 100%;
+  height: 100%;
   object-fit: cover;
   padding-top: 0;
 }

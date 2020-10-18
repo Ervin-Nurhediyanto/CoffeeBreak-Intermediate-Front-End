@@ -133,13 +133,13 @@ export default {
 </script>
 
 <style scoped>
-.cos-container {
-  min-height: 500px;
+aside {
+  height: 663px;
 }
-
 .scroll {
-  height: 610px;
+  height: 575px;
   overflow-y: scroll;
+  object-fit: cover;
 }
 
 .scroll::-webkit-scrollbar {

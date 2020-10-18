@@ -71,7 +71,7 @@ i {
 
 @media (max-width: 768px) {
   input {
-    width: 120px;
+    width: 220px;
     height: 40px;
     margin-left: 10px;
   }
