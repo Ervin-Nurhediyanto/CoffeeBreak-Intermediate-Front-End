@@ -159,6 +159,13 @@ export default {
   box-shadow: inset -2px -2px #ffffff73, inset 4px 4px rgba(94, 104, 121, 0.288);
 }
 
+@media (max-width: 992px) {
+  .order {
+    top: 539px;
+    left: -165px;
+  }
+}
+
 @media (max-width: 768px) {
   .cofe-text {
     top: 80px;

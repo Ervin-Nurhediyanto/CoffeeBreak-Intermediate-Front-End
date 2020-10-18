@@ -85,6 +85,11 @@ export default {
   font-family: "Courier New", Courier, monospace;
 }
 
+.cover-bg {
+    width: 100%;
+    object-fit: cover;
+  }
+
 /* nav */
 .navbar {
   margin: 18px;
@@ -157,6 +162,13 @@ export default {
   position: absolute;
   top: 0px;
   font-size: 50px;
+}
+
+@media (max-width: 992px) {
+  .cover-bg {
+    width: 100%;
+    object-fit: cover;
+  }
 }
 
 @media (max-width: 768px) {
