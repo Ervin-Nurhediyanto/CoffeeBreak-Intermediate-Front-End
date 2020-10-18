@@ -45,6 +45,10 @@ h2, h3, h4, button {
   display: none;
 }
 
+@media (max-width: 922px) {
+
+}
+
 @media (max-width: 768px) {
   .mobile {
     display: inline;

@@ -81,40 +81,62 @@ export default {
 </script>
 
 <style scoped>
-
 .container-img {
   width: 100px;
   height: 100px;
   border-radius: 20px 0px 20px 0px;
   margin-bottom: 10px;
 }
-
 .image-cart {
   width: 100%;
   height: 100%;
+  border-radius: 20px 0px 20px 0px;
   object-fit: cover;
   padding-top: 0;
 }
-
 .item h3 {
   font-size: 18px;
 }
-
 .item h4 {
   font-size: 16px;
   font-weight: bold;
   color: black;
 }
-
 .select {
   width: 300px;
+}
+button {
+  width: 25px;
+  height: 25px;
+  font-size: 12px;
+  font-weight: bold;
+  border-radius: 10px;
+}
+
+@media (max-width: 922px) {
+  .container-img {
+    width: 80px;
+    height: 80px;
+  }
+  .select {
+    width: 200px;
+  }
+  .item h3 {
+    font-size: 15px;
+  }
+  .item h4 {
+    font-size: 12px;
+  }
+  .item h5 {
+    font-size: 15px;
+    font-weight:bold;
+  }
 }
 
 @media (max-width: 768px) {
   .image {
     width: 100px;
     height: 80px;
-    border-radius: 10px 10px 0px 0px;
   }
   header,
   aside .cart {
@@ -166,56 +188,22 @@ export default {
 }
 
 @media (max-width: 576px) {
-  .icon {
-    width: 15px;
-    height: 15px;
+  .container-img {
+    width: 80px;
+    height: 80px;
   }
-  .image {
-    width: 180px;
-    height: 150px;
-    border-radius: 10px 10px 0px 0px;
+  .select {
+    width: 400px;
   }
-  main {
-    height: 600px;
+  .item h3 {
+    font-size: 15px;
   }
-  main .menu .row {
-    flex-direction: column;
-  }
-  article h6 {
-    font-size: 20px;
-  }
-  aside .scroll {
-    overflow-y: scroll;
-    height: 600px;
-  }
-  aside .scroll::-webkit-scrollbar {
-    display: none;
-  }
-  aside .list h3 {
+  .item h4 {
     font-size: 12px;
-    flex-direction: column;
   }
-  aside .list h4 {
-    flex-direction: column;
-    font-size: 12px;
-    padding-top: 5px;
-  }
-  aside .list .select {
-    justify-content: center;
-    padding: 10px;
-    padding-top: 0;
-  }
-  aside .list .price {
-    flex-direction: column;
-  }
-  aside .btm {
-    padding: 5px;
-  }
-  aside .btm h3 {
-    font-size: 11px;
-  }
-  aside .btm p {
-    font-size: 10px;
+  .item h5 {
+    font-size: 15px;
+    font-weight:bold;
   }
 }
 </style>

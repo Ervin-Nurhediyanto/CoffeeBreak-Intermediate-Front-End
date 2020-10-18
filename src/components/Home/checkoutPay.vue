@@ -178,6 +178,7 @@ aside .btm .cancel {
   .checkout, .cancel {
       height: 30px;
       justify-content: center;
+      align-content: center;
       font-weight: bold;
   }
 }

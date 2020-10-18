@@ -2,7 +2,9 @@
   <div class="row list m-md-0 m-sm-0">
     <div class="col">
       <div class="row p-md-3 p-sm-1 d-flex justify-content-center">
-        <img class="image-empty" src="../../assets/food-and-restaurant.png" />
+        <div class="image-empty">
+          <img src="../../assets/food-and-restaurant.png" />
+        </div>
       </div>
       <div class="row d-flex justify-content-center">
         <h3>Your cart is empty</h3>
@@ -21,38 +23,53 @@ export default {
 </script>
 
 <style scope>
-
 .image-empty {
   width: 250px;
   height: 270px;
 }
+.image-empty img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
 .row {
   justify-content: center;
 }
-
 .cart {
   box-shadow: 0px 4px 1px rgba(0, 0, 0, 0.25);
   padding: 20px;
 }
-
 .list img {
   padding-top: 50px;
 }
-
 h2 {
   font-size: 30px;
   line-height: 40px;
 }
-
 h3 {
   font-size: 25px;
   line-height: 40px;
 }
-
 h4 {
   font-size: 12px;
   line-height: 25px;
   color: #cecece;
+}
+
+@media (max-width: 992px) {
+.image-empty {
+    width: 100px;
+    height: 150px;
+  }
+  h3 {
+  font-size: 20px;
+  line-height: 20px;
+}
+h4 {
+  font-size: 12px;
+  line-height: 25px;
+  color: #cecece;
+}
 }
 
 @media (max-width: 768px) {

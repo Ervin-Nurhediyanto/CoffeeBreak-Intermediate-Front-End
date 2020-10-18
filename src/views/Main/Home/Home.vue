@@ -14,26 +14,26 @@
       </div>
       <!-- End Search and Sort -->
       <!-- Products -->
-        <!-- Desktop -->
-        <div class="desktop scroll">
-          <article v-if="allProduct === 'Produk yang anda cari tidak ada'">
-            <h2>Product Not Found</h2>
-          </article>
-          <article v-else class="col main">
-            <Card />
-          </article>
-        </div>
-        <!-- End Desktop -->
-        <!-- Mobile -->
-        <div class="mobile scroll mt-2 mb-2">
-          <article v-if="allProduct === 'Produk yang anda cari tidak ada'">
-            <h2>Product Not Found</h2>
-          </article>
-          <article v-else class="col main">
-            <Card />
-          </article>
-        </div>
-        <!-- End Mobile -->
+      <!-- Desktop -->
+      <div class="desktop scroll">
+        <article v-if="allProduct === 'Produk yang anda cari tidak ada'">
+          <h2>Product Not Found</h2>
+        </article>
+        <article v-else class="col main">
+          <Card />
+        </article>
+      </div>
+      <!-- End Desktop -->
+      <!-- Mobile -->
+      <div class="mobile scroll mt-2 mb-2">
+        <article v-if="allProduct === 'Produk yang anda cari tidak ada'">
+          <h2>Product Not Found</h2>
+        </article>
+        <article v-else class="col main">
+          <Card />
+        </article>
+      </div>
+      <!-- End Mobile -->
       <!-- End Products -->
       <Pagination v-if="allProduct !== 'Produk yang anda cari tidak ada'" />
     </div>
@@ -126,14 +126,17 @@ export default {
   padding-left: 0px;
 }
 .search {
-padding-top: 10px;
+  padding-top: 10px;
 }
 aside {
   background: #ffffff;
   border: 1px solid #cecece;
   width: 30%;
 }
-h2, h3, h4, button {
+h2,
+h3,
+h4,
+button {
   font-family: Airbnb Cereal App;
 }
 main {
@@ -158,6 +161,23 @@ main div {
 }
 .mobile {
   display: none;
+}
+
+@media (max-width: 922px) {
+  .desktop {
+    display: none;
+  }
+  .mobile {
+    display: inline;
+  }
+  main {
+    height: 90vh;
+  }
+  .scroll {
+    height: 50vh;
+    margin-top: 5px;
+    margin-bottom: 5px;
+  }
 }
 
 @media (max-width: 768px) {
@@ -211,8 +231,8 @@ main div {
     font-size: 15px;
   }
   .scroll {
-  height: 180px;
-}
+    height: 180px;
+  }
 }
 
 @media (max-width: 576px) {
@@ -225,5 +245,4 @@ main div {
     margin-bottom: 5px;
   }
 }
-
 </style>

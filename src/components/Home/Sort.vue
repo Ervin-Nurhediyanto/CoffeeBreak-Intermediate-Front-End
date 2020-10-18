@@ -65,7 +65,6 @@ export default {
   width: 150px;
   margin: 10px auto;
   position: absolute;
-  z-index: 10000;
   right: 20px;
 }
 .dropdown input {
@@ -82,7 +81,7 @@ export default {
   height: 50px;
   line-height: 50px;
   transition: all 0.4s;
-  color: black;
+  color: transparent;
   font-family: Verdana, Geneva, Tahoma, sans-serif;
 }
 .dropdown i {
@@ -123,6 +122,7 @@ export default {
 }
 .dropdown ol li {
   height: 50px;
+  width: 100px;
   background-color: black;
   margin: 0 0 10px 0;
   cursor: pointer;
@@ -137,9 +137,45 @@ export default {
 }
 .dropdown input:checked ~ ol {
   display: block;
+  position: absolute;
+  z-index: 100;
 }
 .dropdown ol li:hover {
   background-color: rgb(72, 72, 72);
+}
+
+@media (max-width: 922px) {
+  .dropdown {
+    width: 100px;
+    right: 10px;
+  }
+  .dropdown .text {
+    font-size: 15px;
+    font-weight: bold;
+    color: transparent;
+  }
+  .dropdown ol li {
+    height: 30px;
+    line-height: 20px;
+    font-size: 12px;
+    padding: 5px;
+  }
+  .dropdown span {
+    width: 50px;
+    height: 50px;
+  }
+  .dropdown i {
+    width: 50px;
+    height: 50px;
+    line-height: 50px;
+    font-size: 16px;
+  }
+  .dropdown .text {
+    font-size: 16px;
+    width: 100%;
+    height: 50px;
+    line-height: 50px;
+  }
 }
 
 @media (max-width: 768px) {

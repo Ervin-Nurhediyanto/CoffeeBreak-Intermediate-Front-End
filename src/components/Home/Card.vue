@@ -130,6 +130,30 @@ h6 {
 div {
   margin: 10px;
 }
+
+@media (max-width: 922px) {
+  .container-img {
+    width: 120px;
+    height: 120px;
+  }
+  .tick {
+    top: 30px;
+    left: 30px;
+  }
+  h5 {
+    font-size: 15px;
+  }
+  h6 {
+    font-size: 12px;
+  }
+  main {
+    height: 310px;
+  }
+  div {
+    margin: 4px;
+  }
+}
+
 @media (max-width: 768px) {
   .container-img {
     width: 120px;

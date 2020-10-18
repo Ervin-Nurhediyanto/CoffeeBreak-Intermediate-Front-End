@@ -141,12 +141,17 @@ aside {
   overflow-y: scroll;
   object-fit: cover;
 }
-
 .scroll::-webkit-scrollbar {
   display: none;
 }
 .mobile {
   display: none;
+}
+
+@media (max-width: 992px) {
+  .scroll {
+    height: 90vh;
+  }
 }
 
 @media (max-width: 768px) {
@@ -167,6 +172,28 @@ aside {
     bottom: auto;
     top: 0px;
     height: 310px;
+    overflow-y: scroll;
+  }
+  .checkout::-webkit-scrollbar {
+  display: none;
+  }
+  .checkoutPay {
+    position: relative;
+    bottom: 0;
+    top: auto;
+  }
+}
+
+@media (max-width: 576px) {
+  .scroll {
+    margin-top: 20px;
+    height: 90vh;
+  }
+  .checkout {
+    position: relative;
+    bottom: auto;
+    top: 0px;
+    height: 65vh;
     overflow-y: scroll;
   }
   .checkout::-webkit-scrollbar {

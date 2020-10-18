@@ -100,6 +100,22 @@ nav button.btn-primary {
   border: 0;
 }
 
+@media (max-width: 922px) {
+  /* nav {
+    z-index: 10;
+  } */
+  .icon {
+    width: 20px;
+    height: 20px;
+    margin-left: 0;
+  }
+  .icon:hover {
+    width: 25px;
+    height: 25px;
+    margin-top: 25px;
+  }
+}
+
 @media (max-width: 768px) {
   .icon {
     width: 20px;
@@ -127,6 +143,7 @@ nav button.btn-primary {
   .icon {
     width: 15px;
     height: 15px;
+    margin-left: 5px;
   }
   .icon:hover {
     width: 20px;
