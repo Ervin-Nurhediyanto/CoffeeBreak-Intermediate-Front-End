@@ -217,10 +217,12 @@ main div {
 
 @media (max-width: 576px) {
   main {
-    height: 602px;
+    height: 668px;
   }
   .scroll {
-    height: 480px;
+    height: 555px;
+    margin-top: 5px;
+    margin-bottom: 5px;
   }
 }
 
