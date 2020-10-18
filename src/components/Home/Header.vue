@@ -2,27 +2,47 @@
   <header class="row justify-content-between">
     <img class="icon" src="../../assets/menu.png" />
     <h2 class>Food Items</h2>
-    <div class="row"></div>
+    <div class="row mr-2" @click="handleCart">
+      <i v-if="cartCount > 0" class="fas fa-shopping-cart text-danger mobile"></i>
+      <i v-else class="fas fa-shopping-cart mobile"></i>
+    </div>
   </header>
 </template>
 
 <script>
+import { mapGetters, mapMutations } from 'vuex'
 export default {
-  name: 'Home',
+  name: 'Header',
   data () {
     return {
-      search: '',
-      active: true
+      showCart: false
     }
   },
+  computed: {
+    ...mapGetters({
+      cartCount: 'cartCount',
+      empty: 'empty'
+    })
+  },
+  mounted () {
+  },
   methods: {
+    ...mapMutations([
+      'setShowCart'
+    ]),
+    handleCart () {
+      if (this.showCart) {
+        this.showCart = false
+      } else {
+        this.showCart = true
+      }
+      this.$emit('handleCart', this.showCart)
+    }
   }
 }
-
 </script>
 
 <style scoped>
-
 h2,
 h3,
 h4,
@@ -58,7 +78,14 @@ input {
   box-shadow: 0px 4px 0px rgba(0, 0, 0, 0.25);
 }
 
+.mobile {
+  display: none;
+}
+
 @media (max-width: 768px) {
+  .mobile {
+    display: inline;
+  }
   .icon {
     width: 20px;
     height: 20px;

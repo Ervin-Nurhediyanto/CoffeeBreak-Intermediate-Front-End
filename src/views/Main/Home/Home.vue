@@ -20,7 +20,7 @@
       </article>
 
       <Pagination v-if="allProduct !== 'Produk yang anda cari tidak ada'" />
-      <Notif />
+      <!-- <Notif /> -->
     </div>
   </main>
 </template>
@@ -31,7 +31,7 @@ import { mapActions, mapGetters } from 'vuex'
 import Search from '../../../components/Home/Search'
 import Sort from '../../../components/Home/Sort'
 import Pagination from '../../../components/Home/Pagination'
-import Notif from '../../../components/Home/Modal-Notif'
+// import Notif from '../../../components/Home/Modal-Notif'
 
 export default {
   name: 'Home',
@@ -39,8 +39,8 @@ export default {
     Card,
     Search,
     Sort,
-    Pagination,
-    Notif
+    Pagination
+    // Notif
   },
   data () {
     return {

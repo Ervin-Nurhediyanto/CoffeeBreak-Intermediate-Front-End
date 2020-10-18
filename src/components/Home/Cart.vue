@@ -1,10 +1,9 @@
 <template>
-  <div class="row cart m-md-0 m-sm-0 justify-content-center">
-      <h2>
-        Cart
-        <span class="count" >{{cartCount}}</span>
-      </h2>
-    </div>
+  <div class="row cart m-md-0 m-sm-0">
+    <i class="fas fa-backspace mobile" @click="handleCloseCart"></i>
+    <h2>Cart<span class="count" >{{cartCount}}</span></h2>
+    <div class="mobile"></div>
+  </div>
 </template>
 
 <script>
@@ -15,24 +14,24 @@ export default {
     ...mapGetters({
       cartCount: 'cartCount'
     })
+  },
+  methods: {
+    handleCloseCart () {
+      this.$emit('handleCloseCart', false)
+    }
   }
 }
 </script>
 
 <style scoped>
-
-h2,
-h3,
-h4,
-button {
+h2, h3, h4, button {
   font-family: Airbnb Cereal App;
 }
-
 .cart {
+  justify-content: center;
   box-shadow: 0px 4px 1px rgba(0, 0, 0, 0.25);
   padding: 20px;
 }
-
 .cart .count {
   background: #57cad5;
   border-radius: 100%;
@@ -42,7 +41,24 @@ button {
   line-height: 26px;
   color: #ffffff;
 }
+.mobile {
+  display: none;
+}
+
 @media (max-width: 768px) {
+  .mobile {
+    display: inline;
+  }
+  i {
+    font-size: 20px;
+    cursor: pointer;
+  }
+  i:hover {
+    color: red;
+  }
+  .cart {
+    justify-content: space-between;
+  }
   .image {
     width: 100px;
     height: 80px;

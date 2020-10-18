@@ -3,15 +3,16 @@
     <div class="cos-container">
       <div class="container-fluid">
         <div class="row">
-          <div class="col-md-9 col-sm-9 main-bar">
-            <Header />
+          <!-- Desktop -->
+          <div class="desktop col-md-9 col-sm-12 main-bar">
+            <Header v-on:handleCart="handleCart($event)" />
             <div class="row">
               <Navbar />
               <router-view />
             </div>
           </div>
-          <aside class="col-md-3 p-md-0 col-sm-3 p-sm-0">
-            <Cart v-on:toCart="addItemCart($event)" />
+          <aside class="desktop col-md-3 p-md-0 col-sm-12 p-sm-0">
+            <Cart v-on:handleCloseCart="handleCloseCart($event)" />
             <Empty v-if="empty" />
             <div v-else class="scroll">
               <div class="checkout">
@@ -25,6 +26,31 @@
               </div>
             </div>
           </aside>
+          <!-- End Desktop -->
+          <!-- Mobile -->
+          <div v-if="!showCart" class="mobile col-md-9 col-sm-12 main-bar">
+            <Header v-on:handleCart="handleCart($event)" />
+            <div class="row">
+              <Navbar />
+              <router-view />
+            </div>
+          </div>
+          <aside v-else class="mobile col-md-3 p-md-0 col-sm-12 p-sm-0">
+            <Cart v-on:handleCloseCart="handleCloseCart($event)" />
+            <Empty v-if="empty" />
+            <div v-else class="scroll">
+              <div class="checkout">
+                <Checkout />
+              </div>
+              <div class="checkoutPay">
+                <CheckoutPay
+                  :totalPrice="totals"
+                  v-on:cancel="cancelCart($event)"
+                />
+              </div>
+            </div>
+          </aside>
+          <!-- End Mobile -->
         </div>
         <Add />
         <CheckModal
@@ -67,6 +93,7 @@ export default {
   },
   data () {
     return {
+      showCart: false
     }
   },
   methods: {
@@ -94,6 +121,12 @@ export default {
       this.count = cancelCart.count
       this.totals = 0
       this.cartProducts = []
+    },
+    handleCart (handleCart) {
+      this.showCart = handleCart
+    },
+    handleCloseCart (handleCloseCart) {
+      this.showCart = handleCloseCart
     }
   }
 }
@@ -112,8 +145,17 @@ export default {
 .scroll::-webkit-scrollbar {
   display: none;
 }
+.mobile {
+  display: none;
+}
 
 @media (max-width: 768px) {
+  .desktop {
+    display: none;
+  }
+  .mobile {
+    display: inline;
+  }
   .cos-container {
     min-height: 310px;
   }
