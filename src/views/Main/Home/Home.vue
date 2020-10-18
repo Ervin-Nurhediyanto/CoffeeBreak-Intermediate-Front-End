@@ -1,5 +1,5 @@
 <template>
-  <main class="col-md-11">
+  <main class="col-11">
     <div class="row">
       <!-- Search and Sort -->
       <div class="col-md-12 col-sm-12">
@@ -148,7 +148,9 @@ main div {
   padding: 0;
 }
 .scroll {
-  height: 450px;
+  height: 440px;
+  margin-top: 10px;
+  margin-bottom: 10px;
   overflow-y: scroll;
 }
 .scroll::-webkit-scrollbar {
@@ -211,6 +213,15 @@ main div {
   .scroll {
   height: 180px;
 }
+}
+
+@media (max-width: 576px) {
+  main {
+    height: 602px;
+  }
+  .scroll {
+    height: 480px;
+  }
 }
 
 </style>

@@ -80,4 +80,17 @@ i {
   }
 }
 
+@media (max-width: 576px) {
+  input {
+    width: 150px;
+    height: 30px;
+    margin-left: 25px;
+  }
+  i {
+  font-size: 12px;
+  padding: 10px;
+  border-radius: 10px;
+  }
+}
+
 </style>

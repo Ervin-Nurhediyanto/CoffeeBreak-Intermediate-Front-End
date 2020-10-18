@@ -174,4 +174,38 @@ export default {
     line-height: 30px;
   }
 }
+
+@media (max-width: 576px) {
+  .dropdown {
+    width: 100px;
+    right: 20px;
+    top: -40px;
+  }
+  .dropdown .text {
+    font-size: 15px;
+    font-weight: bold;
+  }
+  .dropdown ol li {
+    height: 30px;
+    line-height: 20px;
+    font-size: 12px;
+    padding: 5px;
+  }
+  .dropdown span {
+    width: 30px;
+    height: 30px;
+  }
+  .dropdown i {
+    width: 30px;
+    height: 30px;
+    line-height: 30px;
+    font-size: 16px;
+  }
+  .dropdown .text {
+    font-size: 16px;
+    width: 100%;
+    height: 30px;
+    line-height: 30px;
+  }
+}
 </style>

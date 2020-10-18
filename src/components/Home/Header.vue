@@ -43,32 +43,23 @@ export default {
 </script>
 
 <style scoped>
-h2,
-h3,
-h4,
-button {
+h2, h3, h4, button {
   font-family: Airbnb Cereal App;
 }
-
 /* Header */
-
 header {
   padding: 20px;
   background: #ffffff;
   box-shadow: 0px 4px 0px rgba(0, 0, 0, 0.25);
 }
-
 header.row {
   justify-content: space-between;
 }
-
-header h2,
-aside .cart h2 {
+header h2, aside .cart h2 {
   font-size: 30px;
   line-height: 39px;
   color: #000000;
 }
-
 .icon {
   width: 35px;
   height: 35px;
@@ -77,7 +68,6 @@ aside .cart h2 {
 input {
   box-shadow: 0px 4px 0px rgba(0, 0, 0, 0.25);
 }
-
 .mobile {
   display: none;
 }
@@ -95,12 +85,10 @@ input {
     height: 80px;
     border-radius: 10px 10px 0px 0px;
   }
-  header,
-  aside .cart {
+  header, aside .cart {
     height: 50px;
   }
-  header h2,
-  aside .cart h2 {
+  header h2, aside .cart h2 {
     font-size: 20px;
     line-height: 20px;
   }
