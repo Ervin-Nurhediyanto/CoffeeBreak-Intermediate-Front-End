@@ -220,7 +220,7 @@ main div {
     height: 100vh;
   }
   .scroll {
-    height: 77vh;
+    height: 72vh;
     margin-top: 5px;
     margin-bottom: 5px;
   }
